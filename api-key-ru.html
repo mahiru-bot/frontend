@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Сесилия - Настройки API Ключа</title>
+        <script src="https://telegram.org/js/telegram-web-app.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    </head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+        * {
+            margin: 0;
+            text-decoration: none;
+            box-sizing: border-box;
+            font-family: Roboto, sans-serif;
+
+            -webkit-tap-highlight-color: transparent;
+
+            -webkit-touch-callout: none;
+                -webkit-user-select: none;    
+                    -moz-user-select: none;
+                        -ms-user-select: none;
+                            user-select: none;
+        }
+        body {
+            max-width: 100%;
+            overflow-x: hidden;
+            position: relative;
+
+            background-color: var(--tg-theme-secondary-bg-color);
+        }
+        body .display-setter {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        body .display-setter .info-container {
+            width: 85vw;
+            height: auto;
+            margin-top: 7.5vw;
+            margin-left: 7.5vw;
+            border-radius: 15px;
+            padding: 50px 0 50px 0;
+            justify-content: center;
+
+            background-color: var(--tg-theme-bg-color);
+        }
+
+        body .display-setter .info-container .img-container {
+            width: 100%;
+            height: auto;
+            display: flex;
+            justify-content: center;
+        }
+        body .display-setter .info-container .img-container img {
+            width: 25vw;
+            height: auto;
+        }
+
+        body .display-setter .info-container .title-container {
+            width: 100%;
+            height: auto;
+            display: flex;
+            margin-top: 25px;
+            justify-content: center;
+        }
+        body .display-setter .info-container .title-container h1 {
+            font-size: 1.5em;
+
+            color: var(--tg-theme-text-color);
+        }
+
+        body .display-setter .info-container .description-container {
+            width: 100%;
+            height: auto;
+            display: flex;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        body .display-setter .info-container .description-container .text {
+            width: 75%;
+            height: 100%;
+            display: flex;
+            text-align: center;
+            justify-content: center;
+        }
+        body .display-setter .info-container .description-container .text h3 {
+            font-size: 0.8em;
+            font-weight: 450;
+
+            color: var(--tg-theme-hint-color);
+        }
+
+        body .display-setter .info-container .link-container {
+            width: 100%;
+            height: auto;
+            display: flex;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        body .display-setter .info-container .link-container a {
+            font-size: 0.95em;
+
+            color: var(--tg-theme-link-color);
+        }
+
+
+        body .display-setter .input-container {
+            width: 85vw;
+            height: auto;
+            margin-top: 7.5vw;
+            margin-left: 7.5vw;
+            border-radius: 15px;
+            justify-content: center;
+
+            background-color: var(--tg-theme-bg-color);
+        }
+        body .display-setter .input-container input {
+            width: 77.5vw;
+            height: auto;
+            border: none;
+            outline: none;
+            margin: 3.75vw;
+            font-size: 1em;
+            position: relative;
+            padding: 18px 13px;
+            border-radius: 10px;
+                -webkit-transition: all .2s ease-out;
+                -moz-transition: all .2s ease-out;
+                -ms-transition: all .2s ease-out;
+                -o-transition: all .2s ease-out;
+                transition: all .2s ease-out;
+
+            color: var(--tg-theme-text-color);
+            background: var(--tg-theme-secondary-bg-color);
+        }
+        body .display-setter .input-container input:focus {
+            border: 2px solid var(--tg-theme-button-color);
+        }
+    </style>
+    <body>
+        <div class="display-setter">
+            <div class="info-container">
+                <div class="img-container">
+                    <img 
+                        alt="Key-Image"
+                        class="key-image"
+                        src="https://github.com/RealSosiso4ka/realsosiso4ka.github.io/blob/master/key-icon.png?raw=true"
+                    >
+                </div>
+                <div class="title-container">
+                    <h1>Сесилия - API Ключ</h1>
+                </div>
+                <div class="description-container">
+                    <div class="text">
+                        <h3>Введите API Ключ вашего сервера, чтобы позволить Сесилии генерировать изображения на вашей стороне.</h3>
+                    </div>
+                </div>
+                <div class="link-container">
+                    <a href="#">Узнать больше</a>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <input id="input" placeholder="Введите ваш ключ здесь" type="password">
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        Telegram.WebApp.ready();
+        Telegram.WebApp.MainButton.setText('Save').onClick(function () {
+            const data = JSON.stringify({key: colorPicker.color.hexString});
+            Telegram.WebApp.sendData(data);
+            Telegram.WebApp.close();
+        });
+
+        $('input').focus(function () {
+            if (Telegram.WebApp.isExpanded === false) {
+                Telegram.WebApp.expand();
+            }
+        });
+
+        $('input').on('input', function (e) {
+            if (e.target.value.length === 50) {
+                Telegram.WebApp.enableClosingConfirmation();
+
+                Telegram.WebApp.MainButton.show();
+            }
+            else if (e.target.value.length > 0) {
+                Telegram.WebApp.enableClosingConfirmation();
+
+                Telegram.WebApp.MainButton.hide();
+            } else {
+                Telegram.WebApp.disableClosingConfirmation();
+
+                Telegram.WebApp.MainButton.hide();
+            }
+        });
+    </script>
+</html>
