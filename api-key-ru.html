@@ -170,7 +170,7 @@
     <script type="text/javascript">
         Telegram.WebApp.ready();
         Telegram.WebApp.MainButton.setText('Сохранить').onClick(function () {
-            const data = JSON.stringify({key: colorPicker.color.hexString});
+            const data = JSON.stringify({key: colorPicker.color.hexString, endpoint: 'apiKey'});
             Telegram.WebApp.sendData(data);
             Telegram.WebApp.close();
         });
