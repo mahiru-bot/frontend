@@ -179,25 +179,23 @@
             if (Telegram.WebApp.isExpanded === false) {
                 Telegram.WebApp.expand();
             }
-        })
+        });
 
         $('input').on('input', function (e) {
             if (e.target.value.length === 50) {
-                Telegram.WebApp.enableClosingConfirmation()
+                Telegram.WebApp.enableClosingConfirmation();
 
-                Telegram.WebApp.MainButton.show()
-                Telegram.WebApp.MainButton.enable()
+                Telegram.WebApp.MainButton.show();
             }
             else if (e.target.value.length > 0) {
-                Telegram.WebApp.enableClosingConfirmation()
+                Telegram.WebApp.enableClosingConfirmation();
 
-                Telegram.WebApp.MainButton.show()
-                Telegram.WebApp.MainButton.disable()
+                Telegram.WebApp.MainButton.hide();
             } else {
-                Telegram.WebApp.disableClosingConfirmation()
+                Telegram.WebApp.disableClosingConfirmation();
 
-                Telegram.WebApp.MainButton.hide()
+                Telegram.WebApp.MainButton.hide();
             }
-        })
+        });
     </script>
 </html>
