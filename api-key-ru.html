@@ -170,7 +170,7 @@
     <script type="text/javascript">
         Telegram.WebApp.ready();
         Telegram.WebApp.MainButton.setText('Сохранить').onClick(function () {
-            const data = JSON.stringify({key: $('input').value, endpoint: 'apiKey'});
+            const data = JSON.stringify({key: $('input').val(), endpoint: 'apiKey'});
             Telegram.WebApp.sendData(data);
             Telegram.WebApp.close();
         });
