@@ -171,8 +171,24 @@
     <script type="text/javascript">
         Telegram.WebApp.ready();
         Telegram.WebApp.MainButton.setText('Save').onClick(function () {
-            const data = JSON.stringify({key: $('input').val(), endpoint: 'apiKey'});
-            Telegram.WebApp.sendData(data);
+            $.ajax({
+                'cache': false,
+                "async": true,
+                "crossDomain": true,
+                "data": JSON.stringify({key: $('input').val(), auth_id: getUrlParameter('auth_id'), user_id: Telegram.WebApp.initDataUnsafe.user.id}),
+                "url": "http://127.0.0.1:8000/api/updateAuthKey/",
+                "type": "POST",
+                "headers": {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                },
+                success: function(msg) {
+                    console.log(msg);
+                },
+                error: function(msg) {
+                    console.log(msg);
+                }
+            });
             Telegram.WebApp.close();
         });
 
@@ -192,10 +208,18 @@
                 Telegram.WebApp.enableClosingConfirmation();
 
                 Telegram.WebApp.MainButton.hide();
-            } else {
-                Telegram.WebApp.disableClosingConfirmation();
+            } 
+            else {
+                if (getUrlParameter('api_key') === '') {
+                    Telegram.WebApp.disableClosingConfirmation();
 
-                Telegram.WebApp.MainButton.hide();
+                    Telegram.WebApp.MainButton.hide();
+                } 
+                else {
+                    Telegram.WebApp.enableClosingConfirmation();
+
+                    Telegram.WebApp.MainButton.show();
+                }
             }
         });
 
