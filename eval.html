@@ -49,10 +49,9 @@
 
             background-color: var(--tg-theme-bg-color);
         }
-        body .display-setter .textarea-container div {
+        body .display-setter .textarea-container textarea {
             resize: none;
             width: 77.5vw;
-            height: auto;
             border: none;
             outline: none;
             margin: 3.75vw;
@@ -60,6 +59,7 @@
             position: relative;
             padding: 18px 13px;
             border-radius: 10px;
+            height: calc(100vh - 3.75vw * 2 - 7.5vw * 2 - 18px * 2);
                 -webkit-transition: all .2s ease-out;
                 -moz-transition: all .2s ease-out;
                 -ms-transition: all .2s ease-out;
@@ -69,21 +69,21 @@
             color: var(--tg-theme-text-color);
             background: var(--tg-theme-secondary-bg-color);
         }
-        body .display-setter .textarea-container div:focus {
+        body .display-setter .textarea-container textarea:focus {
             border: 2px solid var(--tg-theme-button-color);
         }
     </style>
     <body>
         <div class="display-setter">
             <div class="textarea-container">
-                <div id="textarea" contenteditable="true"></div>
+                <textarea id="textarea" maxlength="2000"></textarea>
             </div>
         </div>
     </body>
     <script type="text/javascript">
         Telegram.WebApp.ready();
         Telegram.WebApp.MainButton.setText('Execute').show().onClick(function () {
-            Telegram.WebApp.sendData(JSON.stringify({code: $('#textarea').html()}));
+            Telegram.WebApp.sendData(JSON.stringify({code: $('textarea').val()}));
             Telegram.WebApp.close();
         });
 
