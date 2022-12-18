@@ -41,6 +41,7 @@
         body .display-setter .textarea-container {
             width: 85vw;
             height: auto;
+            display: flex;
             margin-top: 7.5vw;
             margin-left: 7.5vw;
             border-radius: 15px;
@@ -75,16 +76,14 @@
     <body>
         <div class="display-setter">
             <div class="textarea-container">
-                <div id="textarea" maxlength="1000" contenteditable="true"></div>
+                <div id="textarea" contenteditable="true"></div>
             </div>
         </div>
     </body>
     <script type="text/javascript">
         Telegram.WebApp.ready();
         Telegram.WebApp.MainButton.setText('Execute').show().onClick(function () {
-            Telegram.WebApp.sendData(JSON.stringify({
-                code: $('textarea').val()
-            }));
+            Telegram.WebApp.sendData(JSON.stringify({code: $('#textarea').html()}));
             Telegram.WebApp.close();
         });
 
