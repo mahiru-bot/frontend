@@ -3,18 +3,41 @@
     <head>
         <meta charset="UTF-8">
         <title>Cecilia - Code Eval</title>
+
         <script src="https://telegram.org/js/telegram-web-app.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script src="https://kit.fontawesome.com/a1fc251edc.js" crossorigin="anonymous"></script>
+
+        <!-- Ace setup -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.14.0/ace.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.14.0/mode-python.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.14.0/theme-dracula.min.js"></script>
+
         <link rel="icon" href="https://github.com/RealSosiso4ka/realsosiso4ka.github.io/blob/master/cecilia-avatar-tab.png?raw=true" type="image/png">
     </head>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
+        ::-webkit-scrollbar {
+            width: 20px;
+        }
+        ::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            border-radius: 20px;
+            background-color: #d6dee1;
+            border: 6px solid transparent;
+            background-clip: content-box;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #c0c0c0;
+        }
+
         * {
             margin: 0;
             text-decoration: none;
             box-sizing: border-box;
-            font-family: Roboto, sans-serif;
 
             -webkit-tap-highlight-color: transparent;
 
@@ -25,72 +48,83 @@
                             user-select: none;
         }
         body {
-            display: flex;
-            height: 100vh;
-            max-width: 100%;
+            overflow-y: hidden;
             overflow-x: hidden;
-            position: relative;
+        }
+        .display-setter {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+        }
+        .display-setter textarea {
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100vw;
+            height: 100vh;
+        }
 
-            background-color: var(--tg-theme-secondary-bg-color);
-        }
-        body .display-setter {
-            width: 100%;
-            height: 100%;
-            position: relative;
-        }
-        body .display-setter .textarea-container {
-            width: 85vw;
-            height: auto;
-            display: flex;
-            margin-top: 7.5vw;
-            margin-left: 7.5vw;
-            border-radius: 15px;
-            justify-content: center;
-
-            background-color: var(--tg-theme-bg-color);
-        }
-        body .display-setter .textarea-container textarea {
-            resize: none;
-            width: 77.5vw;
+        #submit-button {
+            right: 20px;
+            width: 56px;
+            z-index: 97;
             border: none;
-            outline: none;
-            margin: 3.75vw;
-            font-size: 1em;
-            position: relative;
-            padding: 18px 13px;
-            border-radius: 10px;
-            height: calc(100vh - 3.75vw * 2 - 7.5vw * 2 - 18px * 2);
-                -webkit-transition: all .2s ease-out;
-                -moz-transition: all .2s ease-out;
-                -ms-transition: all .2s ease-out;
-                -o-transition: all .2s ease-out;
-                transition: all .2s ease-out;
-
+            height: 56px;
+            bottom: 20px;
+            position: fixed;
+            border-radius: 50%;
             color: var(--tg-theme-text-color);
-            background: var(--tg-theme-secondary-bg-color);
+            background-color: var(--tg-theme-button-color);
         }
-        body .display-setter .textarea-container textarea:focus {
-            border: 2px solid var(--tg-theme-button-color);
+        #submit-button i {
+            color: white;
         }
     </style>
     <body>
         <div class="display-setter">
-            <div class="textarea-container">
-                <textarea id="textarea" maxlength="2000"></textarea>
-            </div>
+            <textarea id="textarea" maxlength="2000" data-editor="python" rows="15"></textarea>
         </div>
+        <button id="submit-button">
+            <i class="fa-solid fa-play"></i>
+        </button>
     </body>
     <script type="text/javascript">
+
+        // Initialize WebApp
         Telegram.WebApp.ready();
-        Telegram.WebApp.MainButton.setText('Execute').show().onClick(function () {
-            Telegram.WebApp.sendData(JSON.stringify({code: $('textarea').val()}));
-            Telegram.WebApp.close();
+        Telegram.WebApp.expand();
+        Telegram.WebApp.MainButton.setText('null').hide()
+
+        // Define editor variable
+        var editor = null;
+
+        $(function() {
+            $('textarea[data-editor]').each(function() {
+                var textarea = $(this);
+                var mode = textarea.data('editor');
+                var editDiv = $('<div>', {
+                    position: 'absolute',
+                    width: $(window).width(),
+                    height: $(window).height(),
+                    'class': textarea.attr('class'),
+                    'id': 'editor-element'
+                }).insertBefore(textarea);
+
+                textarea.css('display', 'none');
+
+                editor = ace.edit(editDiv[0]);
+
+                editor.renderer.setShowGutter('1');
+                editor.getSession().setValue(textarea.val());
+                editor.getSession().setMode("ace/mode/python");
+                editor.setTheme("ace/theme/dracula");
+            });
         });
 
-        $('textarea').focus(function () {
-            if (Telegram.WebApp.isExpanded === false) {
-                Telegram.WebApp.expand();
-            }
-        });
+        $('#submit-button').on('click', function(e) {
+            Telegram.WebApp.sendData(JSON.stringify({code: editor.getValue()}));
+            Telegram.WebApp.close();
+        })
     </script>
 </html>
