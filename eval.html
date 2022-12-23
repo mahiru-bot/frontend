@@ -115,6 +115,10 @@
 
                 editor = ace.edit(editDiv[0]);
 
+                editor.setOptions({
+                    fontSize: "1.2em"
+                });
+
                 editor.renderer.setShowGutter('1');
                 editor.getSession().setValue(textarea.val());
                 editor.getSession().setMode("ace/mode/python");
