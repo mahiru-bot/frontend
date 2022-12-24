@@ -633,13 +633,24 @@
             button.appendChild(circle);
         });
 
-        $('#diffuser-button, #diffusers-cancel-button').click(function (event) {
+        function toggleDiffusersWindow() {
             $('#diffusers-window').toggleClass('show-window');
+
+            if ($('#diffusers-window').hasClass('show-window')) {
+                $('body').css("overflow", "hidden");
+            }
+            else {
+                $('body').css("overflow", "unset");
+            }
+        }
+
+        $('#diffuser-button, #diffusers-cancel-button').click(function (event) {
+            toggleDiffusersWindow();
         });
 
         $(document).click(function(event) {
             if (event.target === document.getElementById('diffusers-window')) {
-                $('#diffusers-window').toggleClass('show-window');
+                toggleDiffusersWindow();
             }
         });
 
@@ -653,7 +664,7 @@
             diffuserID = $(this).attr("data-id");
             $(this).addClass('selected');
 
-            $('#diffusers-window').toggleClass('show-window');
+            toggleDiffusersWindow();
         });
     </script>
 </html>
