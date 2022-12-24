@@ -352,12 +352,19 @@
         }
 
         body .prompt-page {
-            display: none
+            display: none;
+        }
+        body .loading-page {
+            display: none;
         }
 
-        body .loading-page {
+        body .prompt-page.visible {
+            display: flex
+        }
+        body .loading-page.visible {
             display: flex;
         }
+
         body .loading-page .display-setter {
             width: 100vw;
             height: 100vh;
@@ -367,8 +374,8 @@
             justify-content: center;
         }
         body .loading-page .display-setter .loader {
-            width: 48px;
-            height: 48px;
+            width: 90px;
+            height: 90px;
             position: relative;
             display: inline-block;
         }
@@ -377,8 +384,8 @@
             top: 0;
             left: 0;
             content: '';  
-            width: 48px;
-            height: 48px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             position: absolute;
             box-sizing: border-box;
@@ -402,12 +409,12 @@
 
     </style>
     <body>
-        <div class="loading-page">
+        <div id="loading-page" class="loading-page visible">
             <div class="display-setter">
                 <span class="loader"></span>
             </div>
         </div>
-        <div class="prompt-page">
+        <div id="prompt-page" class="prompt-page">
             <div class="display-setter">
                 <div id="diffusers-window" class="diffusers-window">
                     <div class="diffuser-selector">
