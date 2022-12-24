@@ -278,6 +278,7 @@
     </body>
     <script type="text/javascript">
         Telegram.WebApp.ready();
+        Telegram.WebApp.expand();
         Telegram.WebApp.MainButton.setText('Save').onClick(function () {
             $.ajax({
                 'cache': false,
@@ -298,12 +299,6 @@
                 }
             });
             Telegram.WebApp.close();
-        });
-
-        $('input').focus(function () {
-            if (Telegram.WebApp.isExpanded === false) {
-                Telegram.WebApp.expand();
-            }
         });
 
         $('input').on('input', function (e) {
