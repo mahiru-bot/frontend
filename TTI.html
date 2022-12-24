@@ -450,7 +450,12 @@
                 <span class="loader"></span>
             </div>
         </div>
-        <div id="prompt-page" class="prompt-page visible">
+        <div id="error-page" class="error-page visible">
+            <div class="display-setter">
+                
+            </div>
+        </div>
+        <div id="prompt-page" class="prompt-page">
             <div class="display-setter">
                 <div id="diffusers-window" class="diffusers-window">
                     <div class="diffuser-selector">
@@ -554,11 +559,12 @@
         });
 
         $(document).ready(function () {
+            var auth_id = getUrlParameter('auth_id');
             $.ajax({
                 'cache': false,
                 'async': true,
                 'crossDomain': true,
-                'url': `http://127.0.0.1:8000/api/fetchTask/?auth_id=${getUrlParameter('auth_id')}&user_id=${Telegram.WebApp.initDataUnsafe.user.id}`,
+                'url': `http://127.0.0.1:8000/api/fetchTask/?auth_id=${auth_id}&user_id=${Telegram.WebApp.initDataUnsafe.user.id}`,
                 'type': 'GET',
                 'headers': {
                     'Content-Type': 'application/json',
@@ -567,8 +573,8 @@
                 success: function(msg) {
                     console.log(msg);
                 },
-                error: function(msg) {
-                    console.log(msg);
+                error: function(xhr, msg) {
+                    console.log(xhr.status, msg);
                 }
             });
         });
@@ -634,7 +640,7 @@
         });
 
         $('div[id=diffuser-option]').click(function (event) {
-            $(`#diffuser-option[data-id=${diffuserID}]`).removeClass('selected');
+            $(`.option[data-id=${diffuserID}]`).removeClass('selected');
             diffuserID = $(this).attr("data-id");
             $(this).addClass('selected');
         });
