@@ -257,8 +257,7 @@
             border-radius: 10px;
             box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);
 
-            background-color: #282828;
-            /* background-color: var(--tg-theme-bg-color); */
+            background-color: var(--tg-theme-bg-color);
         }
         .diffusers-window .diffuser-selector .title {
             width: 100%;
@@ -270,8 +269,7 @@
             font-size: 1.25em;
             margin-left: 20px;
 
-            color: #fff;
-            /* color: var(--tg-theme-text-color); */
+            color: var(--tg-theme-text-color);
         }
         .diffusers-window .diffuser-selector .options-container {
             width: 100%;
@@ -297,34 +295,26 @@
             align-items: center;
             justify-content: center;
 
-            border: 3px solid #535353;
-            /* border: 3px solid var(--tg-theme-hint-color); */
-            
-            background-color: #282828;
-            /* background-color: var(--tg-theme-bg-color); */
+            border: 3px solid var(--tg-theme-hint-color);
+            background-color: var(--tg-theme-bg-color);
         }
         .diffusers-window .diffuser-selector .options-container .option .circle .inner-circle {
             width: 9px;
             height: 9px;
             display: none;
-            margin-top: 1px;
-            margin-left: 1px;
             border-radius: 50%;
-            background-color: #8a3ae6;
 
-            /* background-color: var(--tg-theme-link-color); */
+            background-color: var(--tg-theme-link-color);
         }
         .diffusers-window .diffuser-selector .options-container .option p {
-            color: #fff;
             font-size: 1em;
             margin-left: 10px;
 
-            /* color: var(--tg-theme-text-color); */
+            color: var(--tg-theme-text-color);
         }
 
         .diffusers-window .diffuser-selector .options-container .option.selected > .circle {
-            border: 3px solid #8a3ae6;
-            /* border: 3px solid var(--tg-theme-link-color); */
+            border: 3px solid var(--tg-theme-link-color);
         }
         .diffusers-window .diffuser-selector .options-container .option.selected > .circle .inner-circle {
             display: block;
@@ -347,9 +337,8 @@
         }
         .diffusers-window .diffuser-selector .footer .cancel-button p {
             font-size: 1em;
-            color: #8a3ae6;
 
-            /* color: var(--tg-theme-link-color); */
+            color: var(--tg-theme-link-color);
         }
         .show-window {
             opacity: 1;
@@ -364,7 +353,7 @@
             <div id="diffusers-window" class="diffusers-window">
                 <div class="diffuser-selector">
                     <div class="title">
-                        <h2>Diffuser Model</h2>
+                        <h2>Diffuser model</h2>
                     </div>
                     <div class="options-container">
                         <div id="diffuser-option" class="option selected">
