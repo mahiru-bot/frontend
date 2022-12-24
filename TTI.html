@@ -36,7 +36,6 @@
             height: 100%;
             position: relative;
         }
-
         body .prompt-page .diffusers-window {
             top: -10vh;
             left: -10vw;
@@ -52,6 +51,12 @@
             justify-content: center;
             background-color: rgba(0, 0, 0, 0.5);
             transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+        }
+        body .prompt-page .diffusers-window.show-window {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1.0);
+            transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
         }
         body .prompt-page .diffusers-window .diffuser-selector {
             width: 85vw;
@@ -144,12 +149,6 @@
             font-weight: 500;
 
             color: var(--tg-theme-button-color);
-        }
-        .show-window {
-            opacity: 1;
-            visibility: visible;
-            transform: scale(1.0);
-            transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
         }
 
         body .prompt-page .display-setter .info-container {
@@ -374,84 +373,84 @@
             justify-content: center;
         }
         body .loading-page .display-setter .loader {
-            transform: rotateZ(45deg);
-            perspective: 1000px;
-            border-radius: 50%;
             width: 80px;
             height: 80px;
+            border-radius: 50%;
             margin-bottom: 50px;
+            perspective: 1000px;
+            transform: rotateZ(45deg);
             color: var(--tg-theme-text-color);
         }
         body .loading-page .display-setter .loader:before,
         body .loading-page .display-setter .loader:after {
-            content: '';
-            display: block;
-            position: absolute;
             top: 0;
             left: 0;
+            content: '';
             width: inherit;
+            display: block;
             height: inherit;
+            position: absolute;
             border-radius: 50%;
             transform: rotateX(70deg);
             animation: 1s spin linear infinite;
         }
         body .loading-page .display-setter .loader:after {
-            color: var(--tg-theme-button-color);;
             transform: rotateY(70deg);
             animation-delay: .4s;
+
+            color: var(--tg-theme-button-color);
         }
         @keyframes rotate {
             0% {
-            transform: translate(-50%, -50%) rotateZ(0deg);
+                transform: translate(-50%, -50%) rotateZ(0deg);
             }
             100% {
-            transform: translate(-50%, -50%) rotateZ(360deg);
+                transform: translate(-50%, -50%) rotateZ(360deg);
             }
         }
         @keyframes rotateccw {
             0% {
-            transform: translate(-50%, -50%) rotate(0deg);
+                transform: translate(-50%, -50%) rotate(0deg);
             }
             100% {
-            transform: translate(-50%, -50%) rotate(-360deg);
+                transform: translate(-50%, -50%) rotate(-360deg);
             }
         }
         @keyframes spin {
             0%,
             100% {
-            box-shadow: .2em 0px 0 0px currentcolor;
+                box-shadow: .2em 0px 0 0px currentcolor;
             }
             12% {
-            box-shadow: .2em .2em 0 0 currentcolor;
+                box-shadow: .2em .2em 0 0 currentcolor;
             }
             25% {
-            box-shadow: 0 .2em 0 0px currentcolor;
+                box-shadow: 0 .2em 0 0px currentcolor;
             }
             37% {
-            box-shadow: -.2em .2em 0 0 currentcolor;
+                box-shadow: -.2em .2em 0 0 currentcolor;
             }
             50% {
-            box-shadow: -.2em 0 0 0 currentcolor;
+                box-shadow: -.2em 0 0 0 currentcolor;
             }
             62% {
-            box-shadow: -.2em -.2em 0 0 currentcolor;
+                box-shadow: -.2em -.2em 0 0 currentcolor;
             }
             75% {
-            box-shadow: 0px -.2em 0 0 currentcolor;
+                box-shadow: 0px -.2em 0 0 currentcolor;
             }
             87% {
-            box-shadow: .2em -.2em 0 0 currentcolor;
+                box-shadow: .2em -.2em 0 0 currentcolor;
             }
         }
-
     </style>
     <body>
-        <div id="loading-page" class="loading-page visible">
+        <div id="loading-page" class="loading-page">
             <div class="display-setter">
                 <span class="loader"></span>
             </div>
         </div>
-        <div id="prompt-page" class="prompt-page">
+        <div id="prompt-page" class="prompt-page visible">
             <div class="display-setter">
                 <div id="diffusers-window" class="diffusers-window">
                     <div class="diffuser-selector">
@@ -459,19 +458,19 @@
                             <h2>Diffuser model</h2>
                         </div>
                         <div class="options-container">
-                            <div id="diffuser-option" class="option selected">
+                            <div id="diffuser-option" class="option selected" data-id="0">
                                 <div class="circle">
                                     <div class="inner-circle"></div>
                                 </div>
                                 <p>Stable Diffusion</p>
                             </div>
-                            <div id="diffuser-option" class="option">
+                            <div id="diffuser-option" class="option" data-id="2">
                                 <div class="circle">
                                     <div class="inner-circle"></div>
                                 </div>
                                 <p>Eimis Anime Diffusion</p>
                             </div>
-                            <div id="diffuser-option" class="option">
+                            <div id="diffuser-option" class="option" data-id="1">
                                 <div class="circle">
                                     <div class="inner-circle"></div>
                                 </div>
@@ -528,19 +527,21 @@
         </div>
     </body>
     <script type="text/javascript">
+        var diffuserID = '0';
+
         Telegram.WebApp.ready();
         Telegram.WebApp.expand();
-        Telegram.WebApp.MainButton.setText('Save').onClick(function () {
+        Telegram.WebApp.MainButton.setText('Generate').onClick(function () {
             $.ajax({
                 'cache': false,
-                "async": true,
-                "crossDomain": true,
-                "data": JSON.stringify({key: $('input').val(), auth_id: getUrlParameter('auth_id'), user_id: Telegram.WebApp.initDataUnsafe.user.id}),
-                "url": "http://127.0.0.1:8000/api/updateAuthKey/",
-                "type": "POST",
-                "headers": {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
+                'async': true,
+                'crossDomain': true,
+                'data': JSON.stringify({prompt: $('input').val(), auth_id: getUrlParameter('auth_id'), user_id: Telegram.WebApp.initDataUnsafe.user.id, diffuser_id: diffuserID}),
+                'url': 'http://127.0.0.1:8000/api/createTask/',
+                'type': 'POST',
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
                 },
                 success: function(msg) {
                     console.log(msg);
@@ -549,31 +550,39 @@
                     console.log(msg);
                 }
             });
-            Telegram.WebApp.close();
+            Telegram.WebApp.MainButton.hide();
+        });
+
+        $(document).ready(function () {
+            $.ajax({
+                'cache': false,
+                'async': true,
+                'crossDomain': true,
+                'url': `http://127.0.0.1:8000/api/fetchTask/?auth_id=${getUrlParameter('auth_id')}&user_id=${Telegram.WebApp.initDataUnsafe.user.id}`,
+                'type': 'GET',
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                success: function(msg) {
+                    console.log(msg);
+                },
+                error: function(msg) {
+                    console.log(msg);
+                }
+            });
         });
 
         $('input').on('input', function (e) {
-            if (e.target.value.length === 50) {
+            if (e.target.value.length >= 1) {
                 Telegram.WebApp.enableClosingConfirmation();
 
                 Telegram.WebApp.MainButton.show();
             }
-            else if (e.target.value.length > 0) {
-                Telegram.WebApp.enableClosingConfirmation();
+            else {
+                Telegram.WebApp.disableClosingConfirmation();
 
                 Telegram.WebApp.MainButton.hide();
-            } 
-            else {
-                if (getUrlParameter('api_key') === '') {
-                    Telegram.WebApp.disableClosingConfirmation();
-
-                    Telegram.WebApp.MainButton.hide();
-                } 
-                else {
-                    Telegram.WebApp.enableClosingConfirmation();
-
-                    Telegram.WebApp.MainButton.show();
-                }
             }
         });
 
@@ -592,10 +601,6 @@
             }
             return '';
         };
-
-        $(document).ready(function () {
-            $('input').val(getUrlParameter('api_key'))
-        });
 
         $('#diffuser-button, #diffuser-option, #diffusers-cancel-button').click(function (event) {
             const button = event.currentTarget;
@@ -626,6 +631,12 @@
             if (event.target === document.getElementById('diffusers-window')) {
                 $('#diffusers-window').toggleClass('show-window');
             }
+        });
+
+        $('div[id=diffuser-option]').click(function (event) {
+            $(`#diffuser-option[data-id=${diffuserID}]`).removeClass('selected');
+            diffuserID = $(this).attr("data-id");
+            $(this).addClass('selected');
         });
     </script>
 </html>
