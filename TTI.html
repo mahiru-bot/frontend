@@ -159,11 +159,12 @@
             transition: background 400ms;
         }
         span.ripple {
+            z-index: 0;
             position: absolute;
             border-radius: 50%;
             transform: scale(0);
             animation: ripple 600ms linear;
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.1);
         }
         @keyframes ripple {
             to {
@@ -218,24 +219,181 @@
             border: 2px solid var(--tg-theme-button-color);
         }
 
-        textarea::-webkit-scrollbar {
+        body .display-setter .input-container textarea::-webkit-scrollbar {
             width: 20px;
         }
-        textarea::-webkit-scrollbar-track {
+        body .display-setter .input-container textarea::-webkit-scrollbar-track {
             background-color: transparent;
         }
-        textarea::-webkit-scrollbar-thumb {
+        body .display-setter .input-container textarea::-webkit-scrollbar-thumb {
             border-radius: 20px;
             border: 6px solid transparent;
             background-clip: content-box;
             background-color: var(--tg-theme-hint-color);
         }
-        textarea::-webkit-scrollbar-thumb:hover {
+        body .display-setter .input-container textarea::-webkit-scrollbar-thumb:hover {
             background-color: var(--tg-theme-secondary-bg-color);
+        }
+
+        .diffusers-window {
+            top: -10vh;
+            left: -10vw;
+            opacity: 0;
+            z-index: 1;
+            width: 120vw;
+            height: 120vh;
+            display: flex;
+            position: fixed;
+            visibility: hidden;
+            align-items: center;
+            transform: scale(0.9);
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+        }
+        .diffusers-window .diffuser-selector {
+            width: 90vw;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);
+
+            background-color: #282828;
+            /* background-color: var(--tg-theme-bg-color); */
+        }
+        .diffusers-window .diffuser-selector .title {
+            width: 100%;
+            height: auto;
+            display: flex;
+        }
+        .diffusers-window .diffuser-selector .title h2 {
+            margin-top: 20px;
+            font-size: 1.25em;
+            margin-left: 20px;
+
+            color: #fff;
+            /* color: var(--tg-theme-text-color); */
+        }
+        .diffusers-window .diffuser-selector .options-container {
+            width: 100%;
+            height: auto;
+            margin-top: 20px;
+        }
+        .diffusers-window .diffuser-selector .options-container .option {
+            width: 100%;
+            height: auto;
+            display: flex;
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+            align-items: center;
+            padding: 12px 20px 12px 20px;
+            transition: background 400ms;
+        }
+        .diffusers-window .diffuser-selector .options-container .option .circle {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+
+            border: 3px solid #535353;
+            /* border: 3px solid var(--tg-theme-hint-color); */
+            
+            background-color: #282828;
+            /* background-color: var(--tg-theme-bg-color); */
+        }
+        .diffusers-window .diffuser-selector .options-container .option .circle .inner-circle {
+            width: 9px;
+            height: 9px;
+            display: none;
+            margin-top: 1px;
+            margin-left: 1px;
+            border-radius: 50%;
+            background-color: #8a3ae6;
+
+            /* background-color: var(--tg-theme-link-color); */
+        }
+        .diffusers-window .diffuser-selector .options-container .option p {
+            color: #fff;
+            font-size: 1em;
+            margin-left: 10px;
+
+            /* color: var(--tg-theme-text-color); */
+        }
+
+        .diffusers-window .diffuser-selector .options-container .option.selected > .circle {
+            border: 3px solid #8a3ae6;
+            /* border: 3px solid var(--tg-theme-link-color); */
+        }
+        .diffusers-window .diffuser-selector .options-container .option.selected > .circle .inner-circle {
+            display: block;
+        }
+
+        .diffusers-window .diffuser-selector .footer {
+            width: 100%;
+            height: auto;
+            padding: 10px;
+            display: flex;
+        }
+        .diffusers-window .diffuser-selector .footer .cancel-button {
+            padding: 10px;
+            cursor: pointer;
+            overflow: hidden;
+            margin-left: auto;
+            position: relative;
+            border-radius: 5px;
+            transition: background 400ms;
+        }
+        .diffusers-window .diffuser-selector .footer .cancel-button p {
+            font-size: 1em;
+            color: #8a3ae6;
+
+            /* color: var(--tg-theme-link-color); */
+        }
+        .show-window {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1.0);
+            transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
         }
     </style>
     <body>
         <div class="display-setter">
+
+            <div id="diffusers-window" class="diffusers-window">
+                <div class="diffuser-selector">
+                    <div class="title">
+                        <h2>Diffuser Model</h2>
+                    </div>
+                    <div class="options-container">
+                        <div id="diffuser-option" class="option selected">
+                            <div class="circle">
+                                <div class="inner-circle"></div>
+                            </div>
+                            <p>Stable Diffusion</p>
+                        </div>
+                        <div id="diffuser-option" class="option">
+                            <div class="circle">
+                                <div class="inner-circle"></div>
+                            </div>
+                            <p>Eimis Anime Diffusion</p>
+                        </div>
+                        <div id="diffuser-option" class="option">
+                            <div class="circle">
+                                <div class="inner-circle"></div>
+                            </div>
+                            <p>Anything V3</p>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <div id="diffusers-cancel-button" class="cancel-button">
+                            <p>Cancel</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="info-container">
                 <div class="img-container">
                     <svg viewBox="0 0 106 34">
@@ -346,17 +504,17 @@
             $('input').val(getUrlParameter('api_key'))
         });
 
-        $('#diffuser-button').on('click', function (event) {
+        $('#diffuser-button, #diffuser-option, #diffusers-cancel-button').click(function (event) {
             const button = event.currentTarget;
 
-            const circle = document.createElement("span");
+            const circle = document.createElement('span');
             const diameter = Math.max(button.clientWidth, button.clientHeight);
             const radius = diameter / 2;
 
             circle.style.width = circle.style.height = `${diameter}px`;
             circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
             circle.style.top = `${event.clientY - button.offsetTop - radius}px`;
-            circle.classList.add("ripple");
+            circle.classList.add('ripple');
 
             const ripple = $('.ripple');
 
@@ -365,6 +523,16 @@
             }
 
             button.appendChild(circle);
+        });
+
+        $('#diffuser-button, #diffusers-cancel-button').click(function (event) {
+            $('#diffusers-window').toggleClass('show-window');
+        });
+
+        $(document).click(function(event) {
+            if (event.target === document.getElementById('diffusers-window')) {
+                $('#diffusers-window').toggleClass('show-window');
+            }
         });
     </script>
 </html>
