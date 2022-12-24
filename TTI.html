@@ -574,7 +574,15 @@
                     console.log(msg);
                 },
                 error: function(xhr, msg) {
-                    console.log(xhr.status, msg);
+                    if (xhr.status === 404) {
+                        $('#prompt-page').addClass('visible');
+                    } else {
+                        Telegram.WebApp.showAlert(
+                            `An unexpected error occured while trying to load data: ${msg}.`, 
+                            function () {
+                                return Telegram.WebApp.close();
+                            });
+                    }
                 }
             });
         });
