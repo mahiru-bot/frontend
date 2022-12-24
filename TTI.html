@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Cecilia - Text to Image</title>
+        <script src="https://telegram.org/js/telegram-web-app.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <link rel="icon" href="https://github.com/RealSosiso4ka/realsosiso4ka.github.io/blob/master/cecilia-avatar-tab.png?raw=true" type="image/png">
+    </head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+        * {
+            margin: 0;
+            text-decoration: none;
+            box-sizing: border-box;
+            font-family: Roboto, sans-serif;
+
+            -webkit-tap-highlight-color: transparent;
+
+            -webkit-touch-callout: none;
+                -webkit-user-select: none;    
+                    -moz-user-select: none;
+                        -ms-user-select: none;
+                            user-select: none;
+        }
+        body {
+            max-width: 100%;
+            overflow-x: hidden;
+            position: relative;
+
+            background-color: var(--tg-theme-secondary-bg-color);
+        }
+        body .display-setter {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        body .display-setter .info-container {
+            width: 85vw;
+            height: auto;
+            margin-top: 7.5vw;
+            margin-left: 7.5vw;
+            border-radius: 15px;
+            padding: 50px 0 50px 0;
+            justify-content: center;
+
+            background-color: var(--tg-theme-bg-color);
+        }
+
+        body .display-setter .info-container .img-container {
+            width: 100%;
+            height: auto;
+            display: flex;
+            justify-content: center;
+        }
+        body .display-setter .info-container .img-container svg {
+            width: 40vw;
+            height: 12vw;
+            position: absolute;
+        }
+        body .display-setter .info-container .img-container svg .sparkles path {
+            fill: rgb(249, 175, 70);
+            transform-origin: 50% 50%;
+            transform-box: fill-box;
+            animation: sparkle var(--duration) var(--delay) infinite ease-in-out;
+        }
+        @keyframes sparkle {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(0);
+            }
+            70% {
+                transform: scale(-1, 0);
+            }
+            80% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(0);
+            }
+        }
+        body .display-setter .info-container .img-container img {
+            width: 25vw;
+            height: auto;
+        }
+
+        body .display-setter .info-container .title-container {
+            width: 100%;
+            height: auto;
+            display: flex;
+            margin-top: 25px;
+            justify-content: center;
+        }
+        body .display-setter .info-container .title-container h1 {
+            font-size: 1.5em;
+
+            color: var(--tg-theme-text-color);
+        }
+
+        body .display-setter .info-container .description-container {
+            width: 100%;
+            height: auto;
+            display: flex;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        body .display-setter .info-container .description-container .text {
+            width: 75%;
+            height: 100%;
+            display: flex;
+            text-align: center;
+            justify-content: center;
+        }
+        body .display-setter .info-container .description-container .text h3 {
+            font-size: 0.8em;
+            font-weight: 450;
+
+            color: var(--tg-theme-hint-color);
+        }
+
+        body .display-setter .info-container .link-container {
+            width: 100%;
+            height: auto;
+            display: flex;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        body .display-setter .info-container .link-container a {
+            font-size: 0.95em;
+
+            color: var(--tg-theme-link-color);
+        }
+
+
+        body .display-setter .input-container {
+            width: 85vw;
+            height: auto;
+            margin-top: 7.5vw;
+            margin-left: 7.5vw;
+            border-radius: 15px;
+            justify-content: center;
+
+            background-color: var(--tg-theme-bg-color);
+        }
+        body .display-setter .input-container textarea {
+            width: 77.5vw;
+            height: auto;
+            resize: none;
+            border: none;
+            outline: none;
+            margin: 3.75vw;
+            font-size: 1em;
+            position: relative;
+            padding: 18px 13px;
+            border-radius: 10px;
+                -webkit-transition: all .2s ease-out;
+                -moz-transition: all .2s ease-out;
+                -ms-transition: all .2s ease-out;
+                -o-transition: all .2s ease-out;
+                transition: all .2s ease-out;
+
+            color: var(--tg-theme-text-color);
+            background: var(--tg-theme-secondary-bg-color);
+        }
+        body .display-setter .input-container textarea:focus {
+            border: 2px solid var(--tg-theme-button-color);
+        }
+
+        textarea::-webkit-scrollbar {
+            width: 20px;
+        }
+        textarea::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+        textarea::-webkit-scrollbar-thumb {
+            border-radius: 20px;
+            border: 6px solid transparent;
+            background-clip: content-box;
+            background-color: var(--tg-theme-hint-color);
+        }
+        textarea::-webkit-scrollbar-thumb:hover {
+            background-color: var(--tg-theme-secondary-bg-color);
+        }
+    </style>
+    <body>
+        <div class="display-setter">
+            <div class="info-container">
+                <div class="img-container">
+                    <svg viewBox="0 0 106 34">
+                        <g class="sparkles">
+                            <path style="--duration: 2s; --delay: 0s" d="M2.5740361 5.33344622s1.1875777-6.20179466 2.24320232 0c0 0 5.9378885 1.05562462 0 2.11124925 0 0-1.05562463 6.33374774-2.24320233 0-3.5627331-.6597654-3.29882695-1.31953078 0-2.11124925z" />
+                            <path style="--duration: 1.5s; --delay: 0.9s" d="M33.5173993 29.97263826s1.03464615-5.40315215 1.95433162 0c0 0 5.17323078.91968547 0 1.83937095 0 0-.91968547 5.51811283-1.95433162 0-3.10393847-.57480342-2.8740171-1.14960684 0-1.83937095z" />
+                            <path style="--duration: 1.7s; --delay: 0.4s" d="M69.03038108 1.71240809s.73779281-3.852918 1.39360864 0c0 0 3.68896404.65581583 0 1.31163166 0 0-.65581583 3.93489497-1.39360864 0-2.21337842-.4098849-2.04942447-.81976979 0-1.31163166z" />
+                            <path style="--duration: 2.1s; --delay: 1.1s" d="M99.18160965 12.79394657s1.61168639-8.41658446 3.0442965 0c0 0 8.05843194 1.43261013 0 2.86522025 0 0-1.43261011 8.59566072-3.0442965 0-4.83505916-.89538133-4.47690663-1.79076265 0-2.86522025z" />
+                        </g>
+                    </svg>
+                    <img 
+                        alt="TTI-Image"
+                        class="tti-image"
+                        src="https://github.com/JokelBaf/jokelbaf.github.io/blob/master/text-to-img-icon.png?raw=true"
+                    >
+                </div>
+                <div class="title-container">
+                    <h1>Text to Image</h1>
+                </div>
+                <div class="description-container">
+                    <div class="text">
+                        <h3>Generate beautiful anime art or awesome art-style picture from your text description.</h3>
+                    </div>
+                </div>
+                <div class="link-container">
+                    <a href="#">How this works?</a>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <textarea id="input" placeholder="Enter your prompt" type="text" maxlength="250"></textarea>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        Telegram.WebApp.ready();
+        Telegram.WebApp.MainButton.setText('Save').onClick(function () {
+            $.ajax({
+                'cache': false,
+                "async": true,
+                "crossDomain": true,
+                "data": JSON.stringify({key: $('input').val(), auth_id: getUrlParameter('auth_id'), user_id: Telegram.WebApp.initDataUnsafe.user.id}),
+                "url": "http://127.0.0.1:8000/api/updateAuthKey/",
+                "type": "POST",
+                "headers": {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                },
+                success: function(msg) {
+                    console.log(msg);
+                },
+                error: function(msg) {
+                    console.log(msg);
+                }
+            });
+            Telegram.WebApp.close();
+        });
+
+        $('input').focus(function () {
+            if (Telegram.WebApp.isExpanded === false) {
+                Telegram.WebApp.expand();
+            }
+        });
+
+        $('input').on('input', function (e) {
+            if (e.target.value.length === 50) {
+                Telegram.WebApp.enableClosingConfirmation();
+
+                Telegram.WebApp.MainButton.show();
+            }
+            else if (e.target.value.length > 0) {
+                Telegram.WebApp.enableClosingConfirmation();
+
+                Telegram.WebApp.MainButton.hide();
+            } 
+            else {
+                if (getUrlParameter('api_key') === '') {
+                    Telegram.WebApp.disableClosingConfirmation();
+
+                    Telegram.WebApp.MainButton.hide();
+                } 
+                else {
+                    Telegram.WebApp.enableClosingConfirmation();
+
+                    Telegram.WebApp.MainButton.show();
+                }
+            }
+        });
+
+        function getUrlParameter(sParam) {
+            var sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
+            return '';
+        };
+
+        $(document).ready(function () {
+            $('input').val(getUrlParameter('api_key'))
+        })
+    </script>
+</html>
