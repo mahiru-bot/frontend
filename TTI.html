@@ -644,9 +644,16 @@
         });
 
         $('div[id=diffuser-option]').click(function (event) {
+
+            if ($(this).attr("data-id") === diffuserID) {
+                return;
+            }
             $(`.option[data-id=${diffuserID}]`).removeClass('selected');
+
             diffuserID = $(this).attr("data-id");
             $(this).addClass('selected');
+
+            $('#diffusers-window').toggleClass('show-window');
         });
     </script>
 </html>
