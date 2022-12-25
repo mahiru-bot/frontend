@@ -5,6 +5,7 @@
         <title>Cecilia - Text to Image</title>
         <script src="https://telegram.org/js/telegram-web-app.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script src="https://kit.fontawesome.com/a1fc251edc.js" crossorigin="anonymous"></script>
         <link rel="icon" href="https://github.com/RealSosiso4ka/realsosiso4ka.github.io/blob/master/cecilia-avatar-tab.png?raw=true" type="image/png">
     </head>
     <style>
@@ -443,11 +444,142 @@
                 box-shadow: .2em -.2em 0 0 currentcolor;
             }
         }
+
+
+    
+        body .complete-page .display-setter {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            position: relative;
+            align-items: center;
+            justify-content: center;
+        }
+        body .complete-page .display-setter .data-container {
+            width: 85vw;
+            height: auto;
+            border-radius: 15px;
+            padding: 25px 25px 25px 25px;
+            justify-content: center;
+
+            background-color: var(--tg-theme-bg-color);
+        }
+        body .complete-page .display-setter .data-container .title-container {
+            width: 100%;
+            height: auto;
+            display: flex;
+        }
+        body .complete-page .display-setter .data-container .title-container h2 {
+            font-size: 1.3em;
+
+            color: var(--tg-theme-text-color);
+        }
+        body .complete-page .display-setter .data-container .title-container button {
+            border: none;
+            outline: none;
+            cursor: pointer;
+            font-size: 1.2em;
+            background: none;
+            margin-left: auto;
+
+            color: var(--tg-theme-hint-color);
+        }
+        body .complete-page .display-setter .data-container .img-container {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 20px 0 20px 0;
+            justify-content: center;
+        }
+        body .complete-page .display-setter .data-container .img-container img {
+            width: 50%;
+            height: auto;
+            border-radius: 35px;
+
+            border: 25px solid rgba(118, 93, 228, 0.25);
+        }
+        body .complete-page .display-setter .data-container .id-container {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        body .complete-page .display-setter .data-container .id-container h3 {
+            color: var(--tg-theme-text-color);
+        }
+        body .complete-page .display-setter .data-container .prompt-container {
+            width: 100%;
+            display: flex;
+            margin-top: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+        body .complete-page .display-setter .data-container .prompt-container .container {
+            width: 50%;
+            height: 100%;
+            display: flex;
+            text-align: center;
+            justify-content: center;
+        }
+        body .complete-page .display-setter .data-container .prompt-container .container p {
+            color: var(--tg-theme-hint-color);
+        }
+        body .complete-page .display-setter .data-container .footer {
+            width: 100%;
+            height: auto;
+            display: flex;
+            margin-top: 40px;
+            align-items: center;
+            justify-content: center;
+        }
+        body .complete-page .display-setter .data-container .footer button {
+            border: none;
+            padding: 15px;
+            outline: none;
+            cursor: pointer;
+            background: none;
+            overflow: hidden;
+            font-weight: 500;
+            margin-right: 20px;
+            position: relative;
+            border-radius: 10px;
+
+            color: var(--tg-theme-text-color);
+            background-color: var(--tg-theme-button-color);
+        }
+
+
+
     </style>
     <body>
-        <div id="loading-page" class="loading-page visible">
+        <div id="loading-page" class="loading-page">
             <div class="display-setter">
                 <span class="loader"></span>
+            </div>
+        </div>
+        <div id="complete-page" class="complete-page">
+            <div class="display-setter">
+                <div class="data-container">
+                    <div class="title-container">
+                        <h2>Image Generated</h2>
+                        <button><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div class="img-container">
+                        <img src="https://media.discordapp.net/attachments/922054608208154644/1056613721641861120/result_4.png" alt="Result Image">
+                    </div>
+                    <div class="id-container">
+                        <h3>GSF235FG435SAF</h3>
+                    </div>
+                    <div class="prompt-container">
+                        <div class="container">
+                            <p>Neko girl sitting on the beach beautiful purple hair blue eyes sun chill pretty</p>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <button id="download-button"><i class="fa-solid fa-download"></i></button>
+                        <button id="save-to-pf-button">Save to profile</button>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="prompt-page" class="prompt-page">
@@ -558,41 +690,41 @@
             Telegram.WebApp.MainButton.hide();
         });
 
-        $(document).ready(function () {
-            var auth_id = getUrlParameter('auth_id');
-            $.ajax({
-                'cache': false,
-                'async': true,
-                'crossDomain': true,
-                'url': `http://127.0.0.1:8000/api/fetchTask/?auth_id=${auth_id}&user_id=${Telegram.WebApp.initDataUnsafe.user.id}`,
-                'type': 'GET',
-                'headers': {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
-                },
-                success: function(xhr, msg) {
-                    console.log(msg);
-                },
-                error: function(xhr, error) {
-                    if (xhr.status === 404) {
-                        $('#loading-page').removeClass('visible');
-                        $('#prompt-page').addClass('visible');
-                    } else {
-                        try {
-                            var xhrError = JSON.parse(xhr.responseText)['message'];
-                        }
-                        catch (error) {
-                            var xhrError = 'API Server is temporarily unavailable.';
-                        }
-                        Telegram.WebApp.showAlert(
-                            `An unexpected error occured while trying to load data: ${xhrError}`, 
-                            function () {
-                                return Telegram.WebApp.close();
-                            });
-                        }
-                }
-            });
-        });
+        // $(document).ready(function () {
+        //     var auth_id = getUrlParameter('auth_id');
+        //     $.ajax({
+        //         'cache': false,
+        //         'async': true,
+        //         'crossDomain': true,
+        //         'url': `http://127.0.0.1:8000/api/fetchTask/?auth_id=${auth_id}&user_id=${Telegram.WebApp.initDataUnsafe.user.id}`,
+        //         'type': 'GET',
+        //         'headers': {
+        //             'Content-Type': 'application/json',
+        //             'Access-Control-Allow-Origin': '*'
+        //         },
+        //         success: function(xhr, msg) {
+        //             console.log(msg);
+        //         },
+        //         error: function(xhr, error) {
+        //             if (xhr.status === 404) {
+        //                 $('#loading-page').removeClass('visible');
+        //                 $('#prompt-page').addClass('visible');
+        //             } else {
+        //                 try {
+        //                     var xhrError = JSON.parse(xhr.responseText)['message'];
+        //                 }
+        //                 catch (error) {
+        //                     var xhrError = 'API Server is temporarily unavailable.';
+        //                 }
+        //                 Telegram.WebApp.showAlert(
+        //                     `An unexpected error occured while trying to load data: ${xhrError}`, 
+        //                     function () {
+        //                         return Telegram.WebApp.close();
+        //                     });
+        //                 }
+        //         }
+        //     });
+        // });
 
         $('input').on('input', function (e) {
             if (e.target.value.length >= 1) {
@@ -623,7 +755,7 @@
             return '';
         };
 
-        $('#diffuser-button, #diffuser-option, #diffusers-cancel-button').click(function (event) {
+        $('#diffuser-button, #diffuser-option, #diffusers-cancel-button, #save-to-pf-button, #download-button').click(function (event) {
             const button = event.currentTarget;
 
             const circle = document.createElement('span');
