@@ -6,6 +6,7 @@
         <script src="https://telegram.org/js/telegram-web-app.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
         <script src="https://kit.fontawesome.com/a1fc251edc.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
         <link rel="icon" href="https://github.com/RealSosiso4ka/realsosiso4ka.github.io/blob/master/cecilia-avatar-tab.png?raw=true" type="image/png">
     </head>
     <style>
@@ -492,7 +493,9 @@
         }
         body .complete-page .display-setter .data-container .img-container img {
             width: 90%;
+            z-index: 2;
             height: auto;
+            cursor: grab;
             border-radius: 15px;
 
             border: 10px solid rgba(118, 93, 228, 0.25);
@@ -556,6 +559,7 @@
         body .complete-page .save-notification {
             left: 2.5vw;
             width: 95%;
+            z-index: 4;
             height: auto;
             bottom: -60px;
             padding: 16px;
@@ -596,6 +600,59 @@
             color: var(--tg-theme-link-color);
         }
 
+        body .complete-page .draggable-left,
+        body .complete-page .draggable-right
+        {
+            top: 0;
+            z-index: 3;
+            width: 20vw;
+            height: 100vh;
+            position: fixed;
+            pointer-events: none;
+        }
+        body .complete-page .draggable-left {
+            left: 0;
+        }
+        body .complete-page .draggable-right {
+            right: 0;
+        }
+        body .complete-page .draggable-left .shadow,
+        body .complete-page .draggable-right .shadow {
+            top: 0;
+            opacity: 0;
+            z-index: 3;
+            width: 10vw;
+            height: 100vh;
+            position: fixed;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        body .complete-page .draggable-left .shadow {
+            left: -10vw;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 50px 0px 50px 0px rgba(134, 92, 219, 0.5);
+        }
+        body .complete-page .draggable-right .shadow {
+            left: 100vw;
+            transition: all 0.3s ease-in-out;
+            box-shadow: -50px 0px 50px 0px rgba(134, 92, 219, 0.5);
+        }
+        body .complete-page .draggable-left.visible,
+        body .complete-page .draggable-right.visible {
+            cursor: pointer;
+            pointer-events: auto;
+        }
+        body .complete-page .draggable-left.visible > .shadow,
+        body .complete-page .draggable-right.visible > .shadow {
+            opacity: 1;
+            visibility: visible;
+        }
+        body .complete-page .draggable-left.visible:hover > .shadow {
+            box-shadow: 50px 0px 50px 0px rgba(134, 92, 219, 0.7);
+        }
+        body .complete-page .draggable-right.visible:hover > .shadow {
+            box-shadow: -50px 0px 50px 0px rgba(134, 92, 219, 0.7);
+        }
 
 
     </style>
@@ -606,6 +663,12 @@
             </div>
         </div>
         <div id="complete-page" class="complete-page">
+            <div id="draggable-left" class="draggable-left">
+                <div class="shadow"></div>
+            </div>
+            <div id="draggable-right" class="draggable-right">
+                <div class="shadow"></div>
+            </div>
             <div class="display-setter">
                 <div class="data-container">
                     <div class="title-container">
@@ -613,7 +676,7 @@
                         <button><i class="fa-solid fa-xmark"></i></button>
                     </div>
                     <div class="img-container">
-                        <img src="https://media.discordapp.net/attachments/922054608208154644/1056613721641861120/result_4.png" alt="Result Image">
+                        <img id="result-img" src="https://media.discordapp.net/attachments/922054608208154644/1056613721641861120/result_4.png" alt="Result Image">
                     </div>
                     <div class="id-container">
                         <h3>GSF235FG435SAF</h3>
@@ -832,10 +895,10 @@
             $('#diffusers-window').toggleClass('show-window');
 
             if ($('#diffusers-window').hasClass('show-window')) {
-                $('body').css("overflow", "hidden");
+                $('body').css('overflow', 'hidden');
             }
             else {
-                $('body').css("overflow", "unset");
+                $('body').css('overflow', 'unset');
             }
         }
 
@@ -851,12 +914,12 @@
 
         $('div[id=diffuser-option]').click(function (event) {
 
-            if ($(this).attr("data-id") === diffuserID) {
+            if ($(this).attr('data-id') === diffuserID) {
                 return;
             }
             $(`.option[data-id=${diffuserID}]`).removeClass('selected');
 
-            diffuserID = $(this).attr("data-id");
+            diffuserID = $(this).attr('data-id');
             $(this).addClass('selected');
 
             $('.diffuser').hide().text(diffusersData[diffuserID]).fadeIn(300)
@@ -871,5 +934,35 @@
                 $('.save-notification').removeClass('show');
             }, 3000);
         })
+
+        $(function() {
+            $('#result-img').draggable({
+                revert: true,
+                start: function(event, ui) {
+                    $('#draggable-left').addClass('visible');
+                    $('#draggable-right').addClass('visible');
+                },
+                stop: function(event, ui) {
+                    $('#draggable-left').removeClass('visible');
+                    $('#draggable-right').removeClass('visible');
+                },
+            });
+            $('#draggable-left').droppable({
+                accept: 'img',
+                drop: function(event, ui) {
+                    console.log('Dropped!')
+                }
+            });
+            $('#draggable-right').droppable({
+                accept: 'img',
+                drop: function(event, ui) {
+                    $('.save-notification').addClass('show');
+
+                    setTimeout(function() {
+                        $('.save-notification').removeClass('show');
+                    }, 3000);
+                }
+            });
+        });
     </script>
 </html>
