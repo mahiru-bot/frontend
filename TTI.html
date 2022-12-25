@@ -669,7 +669,7 @@
             diffuserID = $(this).attr("data-id");
             $(this).addClass('selected');
 
-            $('.diffuser').text(diffusersData[diffuserID])
+            $('.diffuser').hide().text(diffusersData[diffuserID]).fadeIn(300)
 
             toggleDiffusersWindow();
         });
