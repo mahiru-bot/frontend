@@ -568,11 +568,12 @@
         }
         body .complete-page .save-notification.show {
             bottom: 5px;
+            align-items: center;
             transition: all 0.3s ease-in-out;
         }
         body .complete-page .save-notification i {
             font-size: 1.5em;
-            margin-right: 10px;
+            margin-right: 15px;
 
             color: var(--tg-theme-text-color);
         }
@@ -849,9 +850,11 @@
         });
 
         $('#save-to-pf-button').click(function (event) {
-            $('.save-notification').addClass('show').delay(3000).queue(function () {
+            $('.save-notification').addClass('show');
+
+            setTimeout(function() {
                 $('.save-notification').removeClass('show');
-            })
+            }, 3000);
         })
     </script>
 </html>
