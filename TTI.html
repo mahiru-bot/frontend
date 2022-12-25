@@ -528,6 +528,11 @@
     </body>
     <script type="text/javascript">
         var diffuserID = '0';
+        var diffusersData = {
+            '0': 'Stable Diffusion',
+            '1': 'Anything V3',
+            '2': 'Eimis Anime Diffusion'
+        }
 
         Telegram.WebApp.ready();
         Telegram.WebApp.expand();
@@ -663,6 +668,8 @@
 
             diffuserID = $(this).attr("data-id");
             $(this).addClass('selected');
+
+            $('.diffuser').text(diffusersData[diffuserID])
 
             toggleDiffusersWindow();
         });
