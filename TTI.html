@@ -570,16 +570,16 @@
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
                 },
-                success: function(msg) {
+                success: function(xhr, msg) {
                     console.log(msg);
                 },
-                error: function(xhr, msg) {
+                error: function(xhr, error) {
                     if (xhr.status === 404) {
                         $('#loading-page').removeClass('visible');
                         $('#prompt-page').addClass('visible');
                     } else {
                         Telegram.WebApp.showAlert(
-                            `An unexpected error occured while trying to load data: ${msg}.`, 
+                            `An unexpected error occured while trying to load data: ${xhr.responseText}.`, 
                             function () {
                                 return Telegram.WebApp.close();
                             });
