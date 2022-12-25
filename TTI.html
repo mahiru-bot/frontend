@@ -553,6 +553,32 @@
             font-size: 0.9em;
         }
 
+        body .complete-page .save-notification {
+            left: 5vw;
+            width: 95%;
+            height: auto;
+            bottom: -40px;
+            padding: 10px;
+            display: flex;
+            position: fixed;
+            border-radius: 10px;
+            transition: all 0.3s ease-in-out;
+
+            background-color: var(--tg-theme-bg-color);
+        }
+        body .complete-page .save-notification.show {
+            bottom: 5px;
+            transition: all 0.3s ease-in-out;
+        }
+        body .complete-page .save-notification i {
+            margin-right: 10px;
+
+            color: var(--tg-theme-text-color);
+        }
+        body .complete-page .save-notification p {
+            color: var(--tg-theme-text-color);
+        }
+
 
 
     </style>
@@ -585,6 +611,10 @@
                         <button id="save-to-pf-button" class="right">Save to profile</button>
                     </div>
                 </div>
+            </div>
+            <div class="save-notification">
+                <i class="fa-solid fa-circle-check"></i>
+                <p>Done! Image saved to your profile.</p>
             </div>
         </div>
         <div id="prompt-page" class="prompt-page">
@@ -816,5 +846,11 @@
 
             toggleDiffusersWindow();
         });
+
+        $('#save-to-pf-button').click(function (event) {
+            $('.save-notification').addClass('show').delay(3000).queue(function () {
+                $('.save-notification').removeClass('show');
+            })
+        })
     </script>
 </html>
