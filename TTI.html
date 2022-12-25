@@ -492,11 +492,11 @@
             justify-content: center;
         }
         body .complete-page .display-setter .data-container .img-container img {
-            width: 50%;
+            width: 80%;
             height: auto;
-            border-radius: 35px;
+            border-radius: 15px;
 
-            border: 25px solid rgba(118, 93, 228, 0.25);
+            border: 10px solid rgba(118, 93, 228, 0.25);
         }
         body .complete-page .display-setter .data-container .id-container {
             width: 100%;
@@ -515,7 +515,7 @@
             justify-content: center;
         }
         body .complete-page .display-setter .data-container .prompt-container .container {
-            width: 50%;
+            width: 80%;
             height: 100%;
             display: flex;
             text-align: center;
@@ -540,12 +540,14 @@
             background: none;
             overflow: hidden;
             font-weight: 500;
-            margin-right: 20px;
             position: relative;
             border-radius: 10px;
 
             color: var(--tg-theme-text-color);
             background-color: var(--tg-theme-button-color);
+        }
+        body .complete-page .display-setter .data-container .footer button.left {
+            margin-right: 10px;
         }
 
 
@@ -576,8 +578,8 @@
                         </div>
                     </div>
                     <div class="footer">
-                        <button id="download-button"><i class="fa-solid fa-download"></i></button>
-                        <button id="save-to-pf-button">Save to profile</button>
+                        <button id="download-button" class="left"><i class="fa-solid fa-download"></i></button>
+                        <button id="save-to-pf-button" class="right">Save to profile</button>
                     </div>
                 </div>
             </div>
