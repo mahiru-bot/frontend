@@ -582,10 +582,10 @@
                             var xhrError = JSON.parse(xhr.responseText)['message'];
                         }
                         catch (error) {
-                            var xhrError = 'API Server is temporarily unavailable.'
+                            var xhrError = 'API Server is temporarily unavailable.';
                         }
                         Telegram.WebApp.showAlert(
-                            `An unexpected error occured while trying to load data: ${xhrError}.`, 
+                            `An unexpected error occured while trying to load data: ${xhrError}`, 
                             function () {
                                 return Telegram.WebApp.close();
                             });
