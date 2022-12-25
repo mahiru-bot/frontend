@@ -578,8 +578,14 @@
                         $('#loading-page').removeClass('visible');
                         $('#prompt-page').addClass('visible');
                     } else {
+                        try {
+                            var xhrError = JSON.parse(xhr.responseText);
+                        }
+                        catch (error) {
+                            var xhrError = 'API Server is temporarily unavailable.'
+                        }
                         Telegram.WebApp.showAlert(
-                            `An unexpected error occured while trying to load data: ${xhr.responseText}.`, 
+                            `An unexpected error occured while trying to load data: ${xhrError}.`, 
                             function () {
                                 return Telegram.WebApp.close();
                             });
