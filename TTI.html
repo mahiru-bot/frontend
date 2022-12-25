@@ -579,7 +579,7 @@
                         $('#prompt-page').addClass('visible');
                     } else {
                         try {
-                            var xhrError = JSON.parse(xhr.responseText);
+                            var xhrError = JSON.parse(xhr.responseText)['message'];
                         }
                         catch (error) {
                             var xhrError = 'API Server is temporarily unavailable.'
