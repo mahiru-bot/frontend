@@ -666,12 +666,12 @@
                 <i class="fa-solid fa-circle-check"></i>
                 <p>Done! Image saved to <a href="#">your profile</a>.</p>
             </div>
-            <div id="draggable-left" class="draggable-left">
+            <!-- <div id="draggable-left" class="draggable-left">
                 <div class="shadow"></div>
             </div>
             <div id="draggable-right" class="draggable-right">
                 <div class="shadow"></div>
-            </div>
+            </div> -->
             <div class="display-setter">
                 <div class="data-container">
                     <div class="title-container">
@@ -937,10 +937,10 @@
         $(function() {
             $('#result-img').draggable({
                 revert: true,
-                start: function(event, ui) {
-                    $('#draggable-left').addClass('visible');
-                    $('#draggable-right').addClass('visible');
-                },
+                // start: function(event, ui) {
+                //     $('#draggable-left').addClass('visible');
+                //     $('#draggable-right').addClass('visible');
+                // },
                 revert: function() {
                     var parentOffset = $(this).parent().offset();
                     var relX = event.pageX - parentOffset.left;
@@ -956,8 +956,8 @@
                         console.log('Dropped!')
                     }
 
-                    $('#draggable-left').removeClass('visible');
-                    $('#draggable-right').removeClass('visible');
+                    // $('#draggable-left').removeClass('visible');
+                    // $('#draggable-right').removeClass('visible');
 
                     return true;
                 }
