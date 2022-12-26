@@ -943,45 +943,25 @@
                     $('#draggable-left').addClass('visible');
                     $('#draggable-right').addClass('visible');
                 },
-                // stop: function(event, ui) {
-                //     var parentOffset = $(this).parent().offset();
-                //     var relX = event.pageX - parentOffset.left;
-                //     var relY = event.pageY - parentOffset.top;
+                revert: function() {
+                    var parentOffset = $(this).parent().offset();
+                    var relX = event.pageX - parentOffset.left;
 
-                //     alert(`x: ${relX}, y: ${relY}`)
+                    if (relX >= $(window).width() - $(window).width()/5) {
+                        $('.save-notification').addClass('show');
 
-                //     // $('#draggable-left').removeClass('visible');
-                //     // $('#draggable-right').removeClass('visible');
-                // }
-                revert: function(socketObj) {
-                    var $helper = $("#result-img");
-                    
-                    if (socketObj === false) {
-                        // Drop was rejected, revert the helper.
-                        // $helper.animate($helper.originalPosition);
-                        return true;
-                    } else {
-                        alert('dropped')
-                        // Drop was accepted, don't revert.
-                        // $helper.animate($helper.originalPosition);
-                        return true;
+                        setTimeout(function() {
+                            $('.save-notification').removeClass('show');
+                        }, 3000);
+                    } 
+                    else if (relX <= $(window).width()/5) {
+                        console.log('Dropped!')
                     }
-                }
-            });
-            $('#draggable-left').droppable({
-                accept: 'img',
-                drop: function(event, ui) {
-                    console.log('Dropped!')
-                }
-            });
-            $('#draggable-right').droppable({
-                accept: 'img',
-                drop: function(event, ui) {
-                    $('.save-notification').addClass('show');
 
-                    setTimeout(function() {
-                        $('.save-notification').removeClass('show');
-                    }, 3000);
+                    $('#draggable-left').removeClass('visible');
+                    $('#draggable-right').removeClass('visible');
+
+                    return true;
                 }
             });
         });
