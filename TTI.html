@@ -943,15 +943,29 @@
                     $('#draggable-left').addClass('visible');
                     $('#draggable-right').addClass('visible');
                 },
-                stop: function(event, ui) {
-                    var parentOffset = $(this).parent().offset();
-                    var relX = event.pageX - parentOffset.left;
-                    var relY = event.pageY - parentOffset.top;
+                // stop: function(event, ui) {
+                //     var parentOffset = $(this).parent().offset();
+                //     var relX = event.pageX - parentOffset.left;
+                //     var relY = event.pageY - parentOffset.top;
 
-                    alert(`x: ${relX}, y: ${relY}`)
+                //     alert(`x: ${relX}, y: ${relY}`)
 
-                    // $('#draggable-left').removeClass('visible');
-                    // $('#draggable-right').removeClass('visible');
+                //     // $('#draggable-left').removeClass('visible');
+                //     // $('#draggable-right').removeClass('visible');
+                // }
+                revert: function(socketObj) {
+                    var $helper = $("#result-img");
+                    
+                    if (socketObj === false) {
+                        // Drop was rejected, revert the helper.
+                        // $helper.animate($helper.originalPosition);
+                        return true;
+                    } else {
+                        alert('dropped')
+                        // Drop was accepted, don't revert.
+                        // $helper.animate($helper.originalPosition);
+                        return true;
+                    }
                 }
             });
             $('#draggable-left').droppable({
