@@ -568,14 +568,13 @@
             position: fixed;
             overflow: hidden;
             border-radius: 10px;
+            align-items: center;
             transition: all 0.3s ease-in-out;
 
             background-color: var(--tg-theme-bg-color);
         }
         body .complete-page .save-notification.show {
             bottom: 5px;
-            align-items: center;
-            transition: all 0.3s ease-in-out;
         }
         body .complete-page .save-notification.show i {
             animation: tick-animation 0.4s ease-in-out;
@@ -663,6 +662,10 @@
             </div>
         </div>
         <div id="complete-page" class="complete-page">
+            <div class="save-notification">
+                <i class="fa-solid fa-circle-check"></i>
+                <p>Done! Image saved to <a href="#">your profile</a>.</p>
+            </div>
             <div id="draggable-left" class="draggable-left">
                 <div class="shadow"></div>
             </div>
@@ -691,10 +694,6 @@
                         <button id="save-to-pf-button" class="right">Save to profile</button>
                     </div>
                 </div>
-            </div>
-            <div class="save-notification">
-                <i class="fa-solid fa-circle-check"></i>
-                <p>Done! Image saved to <a href="#">your profile</a>.</p>
             </div>
         </div>
         <div id="prompt-page" class="prompt-page">
