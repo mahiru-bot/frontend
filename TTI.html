@@ -926,10 +926,10 @@
                     var relX = event.pageX - parentOffset.left;
 
                     if (relX >= $(window).width() - $(window).width()/5) {
-                        document.getElementById('save-notification').classList.add('show')
+                        $('#save-notification').addClass('show');
 
                         setTimeout(function() {
-                            document.getElementById('save-notification').classList.remove('show')
+                            $('#save-notification').removeClass('show');
                         }, 3000);
                     } 
                     else if (relX <= $(window).width()/5) {
