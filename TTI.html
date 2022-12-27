@@ -797,7 +797,7 @@
             } : null;
         }
 
-        $(function () {
+        $(document).ready(function () {
             var tgColor = window
                             .getComputedStyle(document.body)
                                 .getPropertyValue('--tg-theme-button-color');
@@ -805,11 +805,11 @@
             var ceciliaColor = hexToRgb(tgColor);
 
             if (!ceciliaColor) {
-                document.body.style.setProperty('--cecilia-color', `${ceciliaColor.r}, ${ceciliaColor.b}, ${ceciliaColor.b}`);
+                document.body.style.setProperty('--cecilia-color', `${ceciliaColor.r}, ${ceciliaColor.g}, ${ceciliaColor.b}`);
             }
         });
 
-        // $(function () {
+        // $(document).ready(function () {
         //     var auth_id = getUrlParameter('auth_id');
         //     $.ajax({
         //         'cache': false,
