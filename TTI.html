@@ -914,6 +914,14 @@
             }, 3000);
         })
 
+        async function showSaveNotification() {
+            $('#save-notification').addClass('show');
+
+            setTimeout(function() {
+                $('#save-notification').removeClass('show');
+            }, 3000);
+        }
+
         $(function() {
             $('#result-img').draggable({
                 revert: true,
@@ -921,16 +929,12 @@
                     $('#shadow-left').addClass('visible');
                     $('#shadow-right').addClass('visible');
                 },
-                revert: function() {
+                revert: async function() {
                     var parentOffset = $(this).parent().offset();
                     var relX = event.pageX - parentOffset.left;
 
                     if (relX >= $(window).width() - $(window).width()/5) {
-                        $('#save-notification').addClass('show');
-
-                        setTimeout(function() {
-                            $('#save-notification').removeClass('show');
-                        }, 3000);
+                        await showSaveNotification();
                     } 
                     else if (relX <= $(window).width()/5) {
                         console.log('Dropped!')
