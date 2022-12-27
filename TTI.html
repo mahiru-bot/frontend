@@ -924,7 +924,9 @@
                     var relX = event.pageX - parentOffset.left;
 
                     if (relX >= $(window).width() - $(window).width()/5) {
-                        $('#save-notification').addClass('show');
+                        setTimeout(function() {
+                            $('#save-notification').addClass('show');
+                        }, 500);
 
                         setTimeout(function() {
                             $('#save-notification').removeClass('show');
