@@ -926,10 +926,12 @@
                     var relX = event.pageX - parentOffset.left;
 
                     if (relX >= $(window).width() - $(window).width()/5) {
-                        $('#save-notification').trigger('showEvent');
+                        setTimeout(function() {
+                            $('#save-notification').addClass('show');
+                        }, 1);
 
                         setTimeout(function() {
-                            $('#save-notification').trigger('hideEvent');
+                            $('#save-notification').removeClass('show');
                         }, 3000);
                     }
                     else if (relX <= $(window).width()/5) {
@@ -943,12 +945,5 @@
                 }
             });
         });
-
-        $('#save-notification').on('showEvent', function() {
-            $('#save-notification').addClass('show');
-        })
-        $('#save-notification').on('hideEvent', function() {
-            $('#save-notification').removeClass('show');
-        })
     </script>
 </html>
