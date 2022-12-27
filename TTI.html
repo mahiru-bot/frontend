@@ -600,56 +600,38 @@
             color: var(--tg-theme-link-color);
         }
 
-        body .complete-page .draggable-left,
-        body .complete-page .draggable-right
-        {
-            top: 0;
-            z-index: 2;
-            width: 20vw;
-            height: 100vh;
-            position: fixed;
-            pointer-events: none;
-        }
-        body .complete-page .draggable-left {
-            left: 0;
-        }
-        body .complete-page .draggable-right {
-            right: 0;
-        }
-        body .complete-page .draggable-left .shadow,
-        body .complete-page .draggable-right .shadow {
+        body .complete-page .shadow-left,
+        body .complete-page .shadow-right {
             top: 0;
             opacity: 0;
+            z-index: 2;
             width: 10vw;
             height: 100vh;
             position: fixed;
             visibility: hidden;
             pointer-events: none;
         }
-        body .complete-page .draggable-left .shadow {
+        body .complete-page .shadow-left {
             left: -10vw;
             transition: all 0.3s ease-in-out;
             box-shadow: 50px 0px 50px 0px rgba(134, 92, 219, 0.5);
         }
-        body .complete-page .draggable-right .shadow {
+        body .complete-page .shadow-right {
             left: 100vw;
             transition: all 0.3s ease-in-out;
             box-shadow: -50px 0px 50px 0px rgba(134, 92, 219, 0.5);
         }
-        body .complete-page .draggable-left.visible,
-        body .complete-page .draggable-right.visible {
+        body .complete-page .shadow-left.visible,
+        body .complete-page .shadow-right.visible {
+            opacity: 1;
             cursor: pointer;
+            visibility: visible;
             pointer-events: auto;
         }
-        body .complete-page .draggable-left.visible > .shadow,
-        body .complete-page .draggable-right.visible > .shadow {
-            opacity: 1;
-            visibility: visible;
-        }
-        body .complete-page .draggable-left.visible:hover > .shadow {
+        body .complete-page .shadow-left.visible:hover {
             box-shadow: 50px 0px 50px 0px rgba(134, 92, 219, 0.7);
         }
-        body .complete-page .draggable-right.visible:hover > .shadow {
+        body .complete-page .shadow-right.visible:hover {
             box-shadow: -50px 0px 50px 0px rgba(134, 92, 219, 0.7);
         }
 
@@ -666,12 +648,10 @@
                 <i class="fa-solid fa-circle-check"></i>
                 <p>Done! Image saved to <a href="#">your profile</a>.</p>
             </div>
-            <!-- <div id="draggable-left" class="draggable-left">
-                <div class="shadow"></div>
-            </div>
-            <div id="draggable-right" class="draggable-right">
-                <div class="shadow"></div>
-            </div> -->
+            
+            <div id="shadow-left" class="shadow-left"></div>
+            <div id="shadow-right" class="shadow-right"></div>
+            
             <div class="display-setter">
                 <div class="data-container">
                     <div class="title-container">
@@ -937,10 +917,10 @@
         $(function() {
             $('#result-img').draggable({
                 revert: true,
-                // start: function(event, ui) {
-                //     $('#draggable-left').addClass('visible');
-                //     $('#draggable-right').addClass('visible');
-                // },
+                start: function(event, ui) {
+                    $('#shadow-left').addClass('visible');
+                    $('#shadow-right').addClass('visible');
+                },
                 revert: function() {
                     var parentOffset = $(this).parent().offset();
                     var relX = event.pageX - parentOffset.left;
@@ -956,8 +936,8 @@
                         console.log('Dropped!')
                     }
 
-                    // $('#draggable-left').removeClass('visible');
-                    // $('#draggable-right').removeClass('visible');
+                    $('#shadow-left').removeClass('visible');
+                    $('#shadow-right').removeClass('visible');
 
                     return true;
                 }
