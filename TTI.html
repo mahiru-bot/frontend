@@ -610,15 +610,14 @@
             position: fixed;
             visibility: hidden;
             pointer-events: none;
+            transition: all 0.3s ease-in-out;
         }
         body .complete-page .shadow-left {
             left: -10vw;
-            transition: all 0.3s ease-in-out;
             box-shadow: 50px 0px 50px 0px rgba(134, 92, 219, 0.5);
         }
         body .complete-page .shadow-right {
             left: 100vw;
-            transition: all 0.3s ease-in-out;
             box-shadow: -50px 0px 50px 0px rgba(134, 92, 219, 0.5);
         }
         body .complete-page .shadow-left.visible,
@@ -916,7 +915,6 @@
 
         $(function() {
             $('#result-img').draggable({
-                revert: true,
                 start: function(event, ui) {
                     $('#shadow-left').addClass('visible');
                     $('#shadow-right').addClass('visible');
@@ -926,9 +924,7 @@
                     var relX = event.pageX - parentOffset.left;
 
                     if (relX >= $(window).width() - $(window).width()/5) {
-                        setTimeout(function() {
-                            $('#save-notification').addClass('show');
-                        }, 1);
+                        $('#save-notification').addClass('show');
 
                         setTimeout(function() {
                             $('#save-notification').removeClass('show');
