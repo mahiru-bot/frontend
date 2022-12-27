@@ -490,20 +490,30 @@
             color: var(--tg-theme-hint-color);
         }
         body .complete-page .display-setter .data-container .img-container {
+            z-index: 2;
             width: 100%;
             display: flex;
+            position: relative;
             align-items: center;
             padding: 30px 0 25px 0;
             justify-content: center;
         }
-        body .complete-page .display-setter .data-container .img-container img {
+        body .complete-page .display-setter .data-container .img-container .result-img {
             width: 90%;
-            z-index: 2;
+            z-index: auto;
             height: auto;
             cursor: grab;
             border-radius: 15px;
-
-            border: 10px solid rgba(var(--cecilia-color), 0.25);
+            background-size: 100%;
+            background-repeat: no-repeat;
+        }
+        body .complete-page .display-setter .data-container .img-container .result-img img {
+            width: 100%;
+            z-index: -1;
+            height: auto;
+            position: relative;
+            border-radius: 15px;
+            filter: blur(30px) saturate(4);
         }
         body .complete-page .display-setter .data-container .id-container {
             width: 100%;
@@ -662,8 +672,11 @@
                         <h2>Image Generated</h2>
                         <button><i class="fa-solid fa-xmark"></i></button>
                     </div>
+                    <div class="blurred-bg"></div>
                     <div class="img-container">
-                        <img id="result-img" src="https://media.discordapp.net/attachments/922054608208154644/1056613721641861120/result_4.png" alt="Result Image">
+                        <div class="result-img" id="result-img" style="background-image: url('https://media.discordapp.net/attachments/922054608208154644/1056613721641861120/result_4.png');">
+                            <img src="https://media.discordapp.net/attachments/922054608208154644/1056613721641861120/result_4.png" alt="Result Image"> 
+                        </div>
                     </div>
                     <div class="id-container">
                         <h3>GSF235FG435SAF</h3>
