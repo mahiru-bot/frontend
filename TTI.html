@@ -13,6 +13,10 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
+        :root {
+            --cecilia-color: 255, 255, 255;
+        }
+
         * {
             margin: 0;
             text-decoration: none;
@@ -499,7 +503,7 @@
             cursor: grab;
             border-radius: 15px;
 
-            border: 10px solid rgba(118, 93, 228, 0.25);
+            border: 10px solid rgba(var(--cecilia-color), 0.25);
         }
         body .complete-page .display-setter .data-container .id-container {
             width: 100%;
@@ -570,6 +574,7 @@
             border-radius: 10px;
             align-items: center;
             transition: all 0.3s ease-in-out;
+            box-shadow: 0px 0px 15px 0px rgb(0 0 0 / 30%);
 
             background-color: var(--tg-theme-bg-color);
         }
@@ -614,11 +619,11 @@
         }
         body .complete-page .shadow-left {
             left: -10vw;
-            box-shadow: 50px 0px 50px 0px rgba(134, 92, 219, 0.5);
+            box-shadow: 50px 0px 50px 0px rgba(var(--cecilia-color), 0.5);
         }
         body .complete-page .shadow-right {
             left: 100vw;
-            box-shadow: -50px 0px 50px 0px rgba(134, 92, 219, 0.5);
+            box-shadow: -50px 0px 50px 0px rgba(var(--cecilia-color), 0.5);
         }
         body .complete-page .shadow-left.visible,
         body .complete-page .shadow-right.visible {
@@ -628,10 +633,10 @@
             pointer-events: auto;
         }
         body .complete-page .shadow-left.visible:hover {
-            box-shadow: 50px 0px 50px 0px rgba(134, 92, 219, 0.7);
+            box-shadow: 50px 0px 50px 0px rgba(var(--cecilia-color), 0.7);
         }
         body .complete-page .shadow-right.visible:hover {
-            box-shadow: -50px 0px 50px 0px rgba(134, 92, 219, 0.7);
+            box-shadow: -50px 0px 50px 0px rgba(var(--cecilia-color), 0.7);
         }
 
 
@@ -783,7 +788,28 @@
             Telegram.WebApp.MainButton.hide();
         });
 
-        // $(document).ready(function () {
+        function hexToRgb(hex) {
+            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        }
+
+        $(function () {
+            var tgColor = window
+                            .getComputedStyle(document.body)
+                                .getPropertyValue('--tg-theme-button-color');
+
+            var ceciliaColor = hexToRgb(tgColor);
+
+            if (!ceciliaColor) {
+                document.body.style.setProperty('--cecilia-color', `${ceciliaColor.r}, ${ceciliaColor.b}, ${ceciliaColor.b}`);
+            }
+        });
+
+        // $(function () {
         //     var auth_id = getUrlParameter('auth_id');
         //     $.ajax({
         //         'cache': false,
