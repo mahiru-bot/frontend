@@ -644,7 +644,7 @@
             </div>
         </div>
         <div id="complete-page" class="complete-page">
-            <div class="save-notification">
+            <div id="save-notification" class="save-notification">
                 <i class="fa-solid fa-circle-check"></i>
                 <p>Done! Image saved to <a href="#">your profile</a>.</p>
             </div>
@@ -926,10 +926,10 @@
                     var relX = event.pageX - parentOffset.left;
 
                     if (relX >= $(window).width() - $(window).width()/5) {
-                        $('.save-notification').addClass('show');
+                        $('#save-notification').addClass('show');
 
                         setTimeout(function() {
-                            $('.save-notification').removeClass('show');
+                            $('#save-notification').removeClass('show');
                         }, 3000);
                     } 
                     else if (relX <= $(window).width()/5) {
