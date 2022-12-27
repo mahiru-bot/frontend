@@ -906,10 +906,20 @@
         });
 
         $('#save-to-pf-button').click(function (event) {
-            $('.save-notification').addClass('show');
+            var newNotification = $('#save-notification').clone(true);
+            
+            $('#complete-page').append(newNotification);
 
             setTimeout(function() {
-                $('.save-notification').removeClass('show');
+                newNotification.addClass('show');
+            }, 0);
+
+            setTimeout(function() {
+                newNotification.removeClass('show');
+
+                setTimeout(function() {
+                    newNotification.remove();
+                }, 300);
             }, 3000);
         })
 
@@ -923,13 +933,21 @@
                     var parentOffset = $(this).parent().offset();
                     var relX = event.pageX - parentOffset.left;
 
+                    var newNotification = $('#save-notification').clone(true);
+
+                    $('#complete-page').append(newNotification);
+
                     if (relX >= $(window).width() - $(window).width()/5) {
                         setTimeout(function() {
-                            $('#save-notification').addClass('show');
+                            newNotification.addClass('show');
                         }, 300);
 
                         setTimeout(function() {
-                            $('#save-notification').removeClass('show');
+                            newNotification.removeClass('show');
+
+                            setTimeout(function() {
+                                newNotification.remove();
+                            }, 300);
                         }, 3000);
                     }
                     else if (relX <= $(window).width()/5) {
