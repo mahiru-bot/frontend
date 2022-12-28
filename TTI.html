@@ -699,7 +699,7 @@
                     <div class="data-container">
                         <div class="title-container">
                             <h2>Image Generated</h2>
-                            <button><i class="fa-solid fa-xmark"></i></button>
+                            <button id="result-close"><i class="fa-solid fa-xmark"></i></button>
                         </div>
                         <div class="blurred-bg"></div>
                         <div class="img-container">
@@ -1096,6 +1096,10 @@
                 axis: "x",
                 revertDuration: 300
             });
+        });
+
+        $('#result-close').click(function () {
+            Telegram.WebApp.close();
         });
     </script>
 </html>
