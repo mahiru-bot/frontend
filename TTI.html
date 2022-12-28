@@ -461,7 +461,7 @@
         }
 
 
-        bodt .complete-page {
+        body .complete-page {
             overflow-x: hidden;
         }
         body .complete-page .display-setter {
@@ -705,8 +705,8 @@
                         </div>
                         <div class="blurred-bg"></div>
                         <div class="img-container">
-                            <div class="result-img" id="result-img" style="background-image: url('https://media.discordapp.net/attachments/922054608208154644/1056613721641861120/result_4.png');">
-                                <img id="result-image" src="https://media.discordapp.net/attachments/922054608208154644/1056613721641861120/result_4.png" alt="Result Image" crossorigin="anonymous"> 
+                            <div class="result-img" id="result-img" style="background-image: none;">
+                                <img id="result-image" alt="Result Image" crossorigin="anonymous"> 
                             </div>
                         </div>
                         <div class="id-container">
@@ -714,7 +714,7 @@
                         </div>
                         <div class="prompt-container">
                             <div class="container">
-                                <p id="prompt-text">Neko girl sitting on the beach beautiful purple hair blue eyes sun chill pretty</p>
+                                <p id="prompt-text">None</p>
                             </div>
                         </div>
                         <div class="footer">
@@ -865,7 +865,7 @@
 
 
         function updateResultColor() {
-            var colorArray = colorThief.getColor($('#result-image')[ 0 ]);
+            var colorArray = colorThief.getColor(document.getElementById('#result-image'));
 
             document.body.style.setProperty('--result-color', `${colorArray[0]}, ${colorArray[1]}, ${colorArray[2]}`);
         }
