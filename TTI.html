@@ -371,7 +371,7 @@
         }
 
         body .complete-page.visible {
-            display: flex;
+            display: block;
         }
         body .prompt-page.visible {
             display: flex
@@ -913,7 +913,7 @@
                     else {
                         var resultURL = "data:image/png;base64," + data['result'];
 
-                        $('#result-image').src = resultURL;
+                        $('#result-image').attr('src', resultURL);
                         $('#result-img').css("background-image", "url('" + resultURL.replace(/(\r\n|\n|\r)/gm, "") + "')");
 
                         $('#loading-page').removeClass('visible');
