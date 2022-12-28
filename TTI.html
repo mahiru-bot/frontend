@@ -864,18 +864,17 @@
         function updateResultColor() {
             img = document.getElementById('result-image');
 
-            console.log(img)
-
             if (img.complete) {
                 var colorArray = colorThief.getColor(img);
+
+                document.body.style.setProperty('--result-color', `${colorArray[0]}, ${colorArray[1]}, ${colorArray[2]}`);
             } else {
                 img.addEventListener('load', function() {
                     var colorArray = colorThief.getColor(img);
+
+                    document.body.style.setProperty('--result-color', `${colorArray[0]}, ${colorArray[1]}, ${colorArray[2]}`);
                 });
             }
-            console.log(colorArray)
-
-            document.body.style.setProperty('--result-color', `${colorArray[0]}, ${colorArray[1]}, ${colorArray[2]}`);
         }
 
 
