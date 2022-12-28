@@ -803,7 +803,7 @@
 
         const colorThief = new ColorThief();
 
-        
+
         Telegram.WebApp.ready();
         Telegram.WebApp.expand();
         Telegram.WebApp.MainButton.setText('Generate').onClick(function () {
@@ -853,7 +853,7 @@
 
             var tgBgColor = window
                             .getComputedStyle(document.body)
-                                .getPropertyValue('--tg-theme-button-color');
+                                .getPropertyValue('--tg-theme-bg-color');
 
             var ceciliaColor = hexToRgb(tgColor);
             var ceciliaBgColor = hexToRgb(tgBgColor);
