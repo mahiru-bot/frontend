@@ -17,6 +17,7 @@
         :root {
             --result-color: 255, 255, 255;
             --cecilia-color: 255, 255, 255;
+            --cecilia-theme-bg-color: var(--tg-theme-bg-color);
         }
 
         * {
@@ -467,7 +468,7 @@
             padding: 2px;
             border-radius: 15px;
             margin: 7.5vw 0 8.5vw 0;
-	        animation: bg-gradient 5s ease infinite;
+	        animation: bg-gradient 10s ease infinite;
 
             background: linear-gradient(-45deg, rgba(var(--cecilia-color), 0.9), rgba(var(--result-color), 0.9));
             background-size: 400% 400%;
@@ -487,7 +488,7 @@
             border-radius: 15px;
             padding: 20px 20px 30px 20px;
 
-            background-color: var(--tg-theme-bg-color);
+            background-color: rgba(var(--cecilia-theme-bg-color), 0.7);
         }
         body .complete-page .display-setter .wrapper .data-container .title-container {
             width: 100%;
@@ -846,10 +847,18 @@
                             .getComputedStyle(document.body)
                                 .getPropertyValue('--tg-theme-button-color');
 
+            var tgBgColor = window
+                            .getComputedStyle(document.body)
+                                .getPropertyValue('--tg-theme-button-color');
+
             var ceciliaColor = hexToRgb(tgColor);
+            var ceciliaBgColor = hexToRgb(tgBgColor);
 
             if (!!ceciliaColor) {
                 document.body.style.setProperty('--cecilia-color', `${ceciliaColor.r}, ${ceciliaColor.g}, ${ceciliaColor.b}`);
+            }
+            if (!!ceciliaBgColor) {
+                document.body.style.setProperty('--cecilia-theme-bg-color', `${ceciliaBgColor.r}, ${ceciliaBgColor.g}, ${ceciliaBgColor.b}`);
             }
         });
 
