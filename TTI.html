@@ -824,7 +824,7 @@
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
                 },
-                success: function(msg) {
+                success: function(data, textStatus, xhr) {
                     $('#prompt-page').removeClass('visible');
                     $('#loading-page').addClass('visible');
 
@@ -832,7 +832,7 @@
                         location.reload();
                     }, 5000);
                 },
-                error: function(msg) {
+                error: function(xhr, error) {
                     if (xhr.status === 409) {
                         location.reload();
                     } else {
