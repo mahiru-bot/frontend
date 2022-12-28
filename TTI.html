@@ -828,9 +828,7 @@
                     $('#prompt-page').removeClass('visible');
                     $('#loading-page').addClass('visible');
 
-                    setTimeout(function() {
-                        location.reload();
-                    }, 5000);
+                    setTimeout(fetchTask, 5000);
                 },
                 error: function(xhr, error) {
                     if (xhr.status === 409) {
@@ -892,7 +890,7 @@
         });
 
 
-        $(document).ready(function () {
+        function fetchTask() {
             var auth_id = getUrlParameter('auth_id');
             $.ajax({
                 'cache': false,
@@ -906,9 +904,7 @@
                 },
                 success: function(data, textStatus, xhr) {
                     if (xhr.status === 202) {
-                        setTimeout(function() {
-                            location.reload();
-                        }, 5000);
+                        setTimeout(fetchTask, 5000);
                     }
                     else {
                         var resultURL = "data:image/png;base64," + data['result'];
@@ -941,6 +937,11 @@
                         }
                 }
             });
+        }
+
+
+        $(document).ready(function () {
+            fetchTask();
         });
 
 
