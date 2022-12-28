@@ -360,6 +360,9 @@
             background-color: var(--tg-theme-secondary-bg-color);
         }
 
+        body .complete-page {
+            display: none;
+        }
         body .prompt-page {
             display: none;
         }
@@ -367,6 +370,9 @@
             display: none;
         }
 
+        body .complete-page.visible {
+            display: flex;
+        }
         body .prompt-page.visible {
             display: flex
         }
@@ -468,12 +474,12 @@
             padding: 2px;
             border-radius: 15px;
             margin: 7.5vw 0 8.5vw 0;
-	        animation: bg-gradient 10s ease infinite;
+	        animation: wrapper-gradient 10s ease infinite;
 
             background: linear-gradient(-45deg, rgb(var(--cecilia-color)), rgb(var(--result-color)));
             background-size: 400% 400%;
         }
-        @keyframes bg-gradient {
+        @keyframes wrapper-gradient {
             0% {
                 background-position: 0% 50%;
             }
@@ -811,7 +817,7 @@
                 'cache': false,
                 'async': true,
                 'crossDomain': true,
-                'data': JSON.stringify({prompt: $('input').val(), auth_id: getUrlParameter('auth_id'), user_id: Telegram.WebApp.initDataUnsafe.user.id, diffuser_id: diffuserID}),
+                'data': JSON.stringify({prompt: $('input').val(), auth_id: getUrlParameter('auth_id'), user_id: Telegram.WebApp.initDataUnsafe.user.id, task_type: 'TTI', diffuser_id: diffuserID}),
                 'url': 'http://127.0.0.1:8000/api/createTask/',
                 'type': 'POST',
                 'headers': {
@@ -819,10 +825,29 @@
                     'Access-Control-Allow-Origin': '*'
                 },
                 success: function(msg) {
-                    console.log(msg);
+                    $('#prompt-page').removeClass('visible');
+                    $('#loading-page').addClass('visible');
+
+                    setTimeout(function() {
+                        location.reload();
+                    }, 5000);
                 },
                 error: function(msg) {
-                    console.log(msg);
+                    if (xhr.status === 409) {
+                        location.reload();
+                    } else {
+                        try {
+                            var xhrError = JSON.parse(xhr.responseText)['message'];
+                        }
+                        catch (error) {
+                            var xhrError = 'API Server is temporarily unavailable.';
+                        }
+                        Telegram.WebApp.showAlert(
+                            `An unexpected error occured while trying to load data: ${xhrError}`, 
+                            function () {
+                                return Telegram.WebApp.close();
+                            });
+                        }
                 }
             });
             Telegram.WebApp.MainButton.hide();
@@ -839,11 +864,11 @@
         }
 
 
-        $('#result-image').on('load', function () {
+        function updateResultColor() {
             var colorArray = colorThief.getColor($(this)[ 0 ]);
 
             document.body.style.setProperty('--result-color', `${colorArray[0]}, ${colorArray[1]}, ${colorArray[2]}`);
-        });
+        }
 
 
         $(document).ready(function () {
@@ -867,41 +892,53 @@
         });
 
 
-        // $(document).ready(function () {
-        //     var auth_id = getUrlParameter('auth_id');
-        //     $.ajax({
-        //         'cache': false,
-        //         'async': true,
-        //         'crossDomain': true,
-        //         'url': `http://127.0.0.1:8000/api/fetchTask/?auth_id=${auth_id}&user_id=${Telegram.WebApp.initDataUnsafe.user.id}`,
-        //         'type': 'GET',
-        //         'headers': {
-        //             'Content-Type': 'application/json',
-        //             'Access-Control-Allow-Origin': '*'
-        //         },
-        //         success: function(xhr, msg) {
-        //             console.log(msg);
-        //         },
-        //         error: function(xhr, error) {
-        //             if (xhr.status === 404) {
-        //                 $('#loading-page').removeClass('visible');
-        //                 $('#prompt-page').addClass('visible');
-        //             } else {
-        //                 try {
-        //                     var xhrError = JSON.parse(xhr.responseText)['message'];
-        //                 }
-        //                 catch (error) {
-        //                     var xhrError = 'API Server is temporarily unavailable.';
-        //                 }
-        //                 Telegram.WebApp.showAlert(
-        //                     `An unexpected error occured while trying to load data: ${xhrError}`, 
-        //                     function () {
-        //                         return Telegram.WebApp.close();
-        //                     });
-        //                 }
-        //         }
-        //     });
-        // });
+        $(document).ready(function () {
+            var auth_id = getUrlParameter('auth_id');
+            $.ajax({
+                'cache': false,
+                'async': true,
+                'crossDomain': true,
+                'url': `http://127.0.0.1:8000/api/fetchTask/?auth_id=${auth_id}&user_id=${Telegram.WebApp.initDataUnsafe.user.id}`,
+                'type': 'GET',
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                success: function(data, textStatus, xhr) {
+                    if (xhr.status === 202) {
+                        setTimeout(function() {
+                            location.reload();
+                        }, 5000);
+                    }
+                    else {
+                        var resultURL = "data:image/png;base64," + data['result'];
+
+                        $('#result-image').src = resultURL;
+                        $('#result-img').css("background-image", "url('" + resultURL.replace(/(\r\n|\n|\r)/gm, "") + "')");
+
+                        updateResultColor();
+                    }
+                },
+                error: function(xhr, error) {
+                    if (xhr.status === 404) {
+                        $('#loading-page').removeClass('visible');
+                        $('#prompt-page').addClass('visible');
+                    } else {
+                        try {
+                            var xhrError = JSON.parse(xhr.responseText)['message'];
+                        }
+                        catch (error) {
+                            var xhrError = 'API Server is temporarily unavailable.';
+                        }
+                        Telegram.WebApp.showAlert(
+                            `An unexpected error occured while trying to load data: ${xhrError}`, 
+                            function () {
+                                return Telegram.WebApp.close();
+                            });
+                        }
+                }
+            });
+        });
 
 
         $('input').on('input', function (e) {
