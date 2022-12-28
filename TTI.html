@@ -389,74 +389,60 @@
             justify-content: center;
         }
         body .loading-page .display-setter .loader {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            margin-bottom: 50px;
-            perspective: 1000px;
-            transform: rotateZ(45deg);
-            color: var(--tg-theme-text-color);
-        }
-        body .loading-page .display-setter .loader:before,
-        body .loading-page .display-setter .loader:after {
-            top: 0;
-            left: 0;
-            content: '';
-            width: inherit;
-            display: block;
-            height: inherit;
+            -webkit-animation: rotate 2s linear infinite;
+                    animation: rotate 2s linear infinite;
+            z-index: 2;
             position: absolute;
-            border-radius: 50%;
-            transform: rotateX(70deg);
-            animation: 1s spin linear infinite;
+            top: 46%;
+            left: 50%;
+            margin: -25px 0 0 -25px;
+            width: 50px;
+            height: 50px;
         }
-        body .loading-page .display-setter .loader:after {
-            transform: rotateY(70deg);
-            animation-delay: .4s;
+        body .loading-page .display-setter .loader .path {
+            stroke: var(--tg-theme-button-color);
+            stroke-linecap: round;
+            -webkit-animation: dash 1.5s ease-in-out infinite;
+                    animation: dash 1.5s ease-in-out infinite;
+        }
 
-            color: var(--tg-theme-button-color);
+        @-webkit-keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
         }
+
         @keyframes rotate {
-            0% {
-                transform: translate(-50%, -50%) rotateZ(0deg);
-            }
             100% {
-                transform: translate(-50%, -50%) rotateZ(360deg);
+                transform: rotate(360deg);
             }
         }
-        @keyframes rotateccw {
+        @-webkit-keyframes dash {
             0% {
-                transform: translate(-50%, -50%) rotate(0deg);
-            }
-            100% {
-                transform: translate(-50%, -50%) rotate(-360deg);
-            }
-        }
-        @keyframes spin {
-            0%,
-            100% {
-                box-shadow: .2em 0px 0 0px currentcolor;
-            }
-            12% {
-                box-shadow: .2em .2em 0 0 currentcolor;
-            }
-            25% {
-                box-shadow: 0 .2em 0 0px currentcolor;
-            }
-            37% {
-                box-shadow: -.2em .2em 0 0 currentcolor;
+                stroke-dasharray: 1, 150;
+                stroke-dashoffset: 0;
             }
             50% {
-                box-shadow: -.2em 0 0 0 currentcolor;
+                stroke-dasharray: 90, 150;
+                stroke-dashoffset: -35;
             }
-            62% {
-                box-shadow: -.2em -.2em 0 0 currentcolor;
+            100% {
+                stroke-dasharray: 90, 150;
+                stroke-dashoffset: -124;
             }
-            75% {
-                box-shadow: 0px -.2em 0 0 currentcolor;
+        }
+        @keyframes dash {
+            0% {
+                stroke-dasharray: 1, 150;
+                stroke-dashoffset: 0;
             }
-            87% {
-                box-shadow: .2em -.2em 0 0 currentcolor;
+            50% {
+                stroke-dasharray: 90, 150;
+                stroke-dashoffset: -35;
+            }
+            100% {
+                stroke-dasharray: 90, 150;
+                stroke-dashoffset: -124;
             }
         }
 
@@ -681,7 +667,9 @@
     <body>
         <div id="loading-page" class="loading-page visible">
             <div class="display-setter">
-                <span class="loader"></span>
+                <svg class="loader" viewBox="0 0 50 50">
+                    <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+                </svg>
             </div>
         </div>
         <div id="complete-page" class="complete-page">
