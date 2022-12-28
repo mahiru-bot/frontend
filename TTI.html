@@ -803,6 +803,7 @@
 
         const colorThief = new ColorThief();
 
+        
         Telegram.WebApp.ready();
         Telegram.WebApp.expand();
         Telegram.WebApp.MainButton.setText('Generate').onClick(function () {
@@ -827,6 +828,7 @@
             Telegram.WebApp.MainButton.hide();
         });
 
+
         function hexToRgb(hex) {
             var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
             return result ? {
@@ -836,11 +838,13 @@
             } : null;
         }
 
+
         $('#result-image').on('load', function () {
             var colorArray = colorThief.getColor($(this)[ 0 ]);
 
             document.body.style.setProperty('--result-color', `${colorArray[0]}, ${colorArray[1]}, ${colorArray[2]}`);
         });
+
 
         $(document).ready(function () {
             var tgColor = window
@@ -861,6 +865,7 @@
                 document.body.style.setProperty('--cecilia-theme-bg-color', `${ceciliaBgColor.r}, ${ceciliaBgColor.g}, ${ceciliaBgColor.b}`);
             }
         });
+
 
         // $(document).ready(function () {
         //     var auth_id = getUrlParameter('auth_id');
@@ -898,6 +903,7 @@
         //     });
         // });
 
+
         $('input').on('input', function (e) {
             if (e.target.value.length >= 1) {
                 Telegram.WebApp.enableClosingConfirmation();
@@ -910,6 +916,7 @@
                 Telegram.WebApp.MainButton.hide();
             }
         });
+
 
         function getUrlParameter(sParam) {
             var sPageURL = window.location.search.substring(1),
@@ -926,6 +933,7 @@
             }
             return '';
         };
+
 
         $('#diffuser-button, #diffuser-option, #diffusers-cancel-button, #save-to-pf-button, #download-button').click(function (event) {
             const button = event.currentTarget;
@@ -948,6 +956,7 @@
             button.appendChild(circle);
         });
 
+
         function toggleDiffusersWindow() {
             $('#diffusers-window').toggleClass('show-window');
 
@@ -959,15 +968,18 @@
             }
         }
 
+
         $('#diffuser-button, #diffusers-cancel-button').click(function (event) {
             toggleDiffusersWindow();
         });
+
 
         $(document).click(function(event) {
             if (event.target === document.getElementById('diffusers-window')) {
                 toggleDiffusersWindow();
             }
         });
+
 
         $('div[id=diffuser-option]').click(function (event) {
 
@@ -983,6 +995,7 @@
 
             toggleDiffusersWindow();
         });
+
 
         $('#save-to-pf-button').click(function (event) {
             var newNotification = $('#save-notification').clone(true);
@@ -1001,6 +1014,7 @@
                 }, 300);
             }, 3000);
         })
+
 
         $(function() {
             $('#result-img').draggable({
