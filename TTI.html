@@ -865,7 +865,7 @@
 
 
         function updateResultColor() {
-            var colorArray = colorThief.getColor($(this)[ 0 ]);
+            var colorArray = colorThief.getColor($('#result-image')[0]);
 
             document.body.style.setProperty('--result-color', `${colorArray[0]}, ${colorArray[1]}, ${colorArray[2]}`);
         }
