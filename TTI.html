@@ -817,7 +817,7 @@
                 'cache': false,
                 'async': true,
                 'crossDomain': true,
-                'data': JSON.stringify({prompt: $('input').val(), auth_id: getUrlParameter('auth_id'), user_id: Telegram.WebApp.initDataUnsafe.user.id, task_type: 'TTI', diffuser_id: diffuserID}),
+                'data': JSON.stringify({prompt: $('#input').val(), auth_id: getUrlParameter('auth_id'), user_id: Telegram.WebApp.initDataUnsafe.user.id, task_type: 'TTI', diffuser_id: diffuserID}),
                 'url': 'http://127.0.0.1:8000/api/createTask/',
                 'type': 'POST',
                 'headers': {
