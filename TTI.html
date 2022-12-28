@@ -865,7 +865,15 @@
 
 
         function updateResultColor() {
-            var colorArray = colorThief.getColor(document.getElementById('#result-image'));
+            img = document.getElementById('#result-image');
+
+            if (img.complete) {
+                var colorArray = colorThief.getColor(img);
+            } else {
+                img.addEventListener('load', function() {
+                    var colorArray = colorThief.getColor(img);
+                });
+            }
 
             document.body.style.setProperty('--result-color', `${colorArray[0]}, ${colorArray[1]}, ${colorArray[2]}`);
         }
