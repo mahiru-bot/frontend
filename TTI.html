@@ -459,28 +459,46 @@
             align-items: center;
             justify-content: center;
         }
-        body .complete-page .display-setter .data-container {
+        body .complete-page .display-setter .wrapper {
             width: 85vw;
             height: auto;
+            padding: 2px;
+            border-radius: 15px;
+            margin: 7.5vw 0 8.5vw 0;
+	        background-size: 200% 200%;
+	        animation: bg-gradient 4s ease infinite;
+            background: linear-gradient(-45deg, rgba(var(--cecilia-color), 0.9), rgba(255, 255, 255, 0.9));
+        }
+        @keyframes bg-gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        body .complete-page .display-setter .wrapper .data-container {
             border-radius: 15px;
             justify-content: center;
-            margin: 7.5vw 0 8.5vw 0;
             padding: 20px 20px 30px 20px;
-            border: solid 2px rgba(var(--cecilia-color), 0.5);
+            /* border: solid 2px rgba(var(--cecilia-color), 0.5); */
 
             background-color: var(--tg-theme-bg-color);
         }
-        body .complete-page .display-setter .data-container .title-container {
+        body .complete-page .display-setter .wrapper .data-container .title-container {
             width: 100%;
             height: auto;
             display: flex;
         }
-        body .complete-page .display-setter .data-container .title-container h2 {
+        body .complete-page .display-setter .wrapper .data-container .title-container h2 {
             font-size: 1.3em;
 
             color: var(--tg-theme-text-color);
         }
-        body .complete-page .display-setter .data-container .title-container button {
+        body .complete-page .display-setter .wrapper .data-container .title-container button {
             border: none;
             outline: none;
             cursor: pointer;
@@ -490,7 +508,7 @@
 
             color: var(--tg-theme-hint-color);
         }
-        body .complete-page .display-setter .data-container .img-container {
+        body .complete-page .display-setter .wrapper .data-container .img-container {
             z-index: 2;
             width: 100%;
             display: flex;
@@ -499,7 +517,7 @@
             padding: 28px 0 28px 0;
             justify-content: center;
         }
-        body .complete-page .display-setter .data-container .img-container .result-img {
+        body .complete-page .display-setter .wrapper .data-container .img-container .result-img {
             width: 90%;
             z-index: auto;
             height: auto;
@@ -509,7 +527,7 @@
             background-size: 100%;
             background-repeat: no-repeat;
         }
-        body .complete-page .display-setter .data-container .img-container .result-img img {
+        body .complete-page .display-setter .wrapper .data-container .img-container .result-img img {
             width: 100%;
             z-index: -1;
             height: auto;
@@ -517,34 +535,34 @@
             border-radius: 15px;
             filter: blur(30px) saturate(4);
         }
-        body .complete-page .display-setter .data-container .id-container {
+        body .complete-page .display-setter .wrapper .data-container .id-container {
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        body .complete-page .display-setter .data-container .id-container h3 {
+        body .complete-page .display-setter .wrapper .data-container .id-container h3 {
             color: var(--tg-theme-text-color);
         }
-        body .complete-page .display-setter .data-container .prompt-container {
+        body .complete-page .display-setter .wrapper .data-container .prompt-container {
             width: 100%;
             display: flex;
             margin-top: 15px;
             align-items: center;
             justify-content: center;
         }
-        body .complete-page .display-setter .data-container .prompt-container .container {
+        body .complete-page .display-setter .wrapper .data-container .prompt-container .container {
             width: 90%;
             height: 100%;
             display: flex;
             text-align: center;
             justify-content: center;
         }
-        body .complete-page .display-setter .data-container .prompt-container .container p {
+        body .complete-page .display-setter .wrapper .data-container .prompt-container .container p {
             font-size: 0.9em;
             color: var(--tg-theme-hint-color);
         }
-        body .complete-page .display-setter .data-container .footer {
+        body .complete-page .display-setter .wrapper .data-container .footer {
             width: 100%;
             height: auto;
             display: flex;
@@ -552,7 +570,7 @@
             align-items: center;
             justify-content: center;
         }
-        body .complete-page .display-setter .data-container .footer button {
+        body .complete-page .display-setter .wrapper .data-container .footer button {
             border: none;
             padding: 15px;
             outline: none;
@@ -566,10 +584,10 @@
             color: var(--tg-theme-text-color);
             background-color: var(--tg-theme-button-color);
         }
-        body .complete-page .display-setter .data-container .footer button.left {
+        body .complete-page .display-setter .wrapper .data-container .footer button.left {
             margin-right: 15px;
         }
-        body .complete-page .display-setter .data-container .footer button i {
+        body .complete-page .display-setter .wrapper .data-container .footer button i {
             font-size: 0.9em;
         }
 
@@ -669,28 +687,30 @@
             <div id="shadow-right" class="shadow-right"></div>
             
             <div class="display-setter">
-                <div class="data-container">
-                    <div class="title-container">
-                        <h2>Image Generated</h2>
-                        <button><i class="fa-solid fa-xmark"></i></button>
-                    </div>
-                    <div class="blurred-bg"></div>
-                    <div class="img-container">
-                        <div class="result-img" id="result-img" style="background-image: url('https://media.discordapp.net/attachments/922054608208154644/1056613721641861120/result_4.png');">
-                            <img src="https://media.discordapp.net/attachments/922054608208154644/1056613721641861120/result_4.png" alt="Result Image"> 
+                <div class="wrapper">
+                    <div class="data-container">
+                        <div class="title-container">
+                            <h2>Image Generated</h2>
+                            <button><i class="fa-solid fa-xmark"></i></button>
                         </div>
-                    </div>
-                    <div class="id-container">
-                        <h3>GSF235FG435SAF</h3>
-                    </div>
-                    <div class="prompt-container">
-                        <div class="container">
-                            <p>Neko girl sitting on the beach beautiful purple hair blue eyes sun chill pretty</p>
+                        <div class="blurred-bg"></div>
+                        <div class="img-container">
+                            <div class="result-img" id="result-img" style="background-image: url('https://media.discordapp.net/attachments/922054608208154644/1056613721641861120/result_4.png');">
+                                <img src="https://media.discordapp.net/attachments/922054608208154644/1056613721641861120/result_4.png" alt="Result Image"> 
+                            </div>
                         </div>
-                    </div>
-                    <div class="footer">
-                        <button id="download-button" class="left"><i class="fa-solid fa-download"></i> Download</button>
-                        <button id="save-to-pf-button" class="right">Save to profile</button>
+                        <div class="id-container">
+                            <h3>GSF235FG435SAF</h3>
+                        </div>
+                        <div class="prompt-container">
+                            <div class="container">
+                                <p>Neko girl sitting on the beach beautiful purple hair blue eyes sun chill pretty</p>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <button id="download-button" class="left"><i class="fa-solid fa-download"></i> Download</button>
+                            <button id="save-to-pf-button" class="right">Save to profile</button>
+                        </div>
                     </div>
                 </div>
             </div>
