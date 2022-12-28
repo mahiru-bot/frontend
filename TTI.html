@@ -8,12 +8,14 @@
         <script src="https://kit.fontawesome.com/a1fc251edc.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
         <script type="text/javascript" src="jquery-ui-touch-punch.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.2/color-thief.min.js"></script>
         <link rel="icon" href="https://github.com/RealSosiso4ka/realsosiso4ka.github.io/blob/master/cecilia-avatar-tab.png?raw=true" type="image/png">
     </head>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
         :root {
+            --result-color: 255, 255, 255;
             --cecilia-color: 255, 255, 255;
         }
 
@@ -467,7 +469,7 @@
             margin: 7.5vw 0 8.5vw 0;
 	        animation: bg-gradient 5s ease infinite;
 
-            background: linear-gradient(-45deg, rgba(var(--cecilia-color), 0.9), rgba(255, 255, 255, 0.9));
+            background: linear-gradient(-45deg, rgba(var(--cecilia-color), 0.9), rgba(var(--result-color), 0.9));
             background-size: 400% 400%;
         }
         @keyframes bg-gradient {
@@ -695,7 +697,7 @@
                         <div class="blurred-bg"></div>
                         <div class="img-container">
                             <div class="result-img" id="result-img" style="background-image: url('https://media.discordapp.net/attachments/922054608208154644/1056613721641861120/result_4.png');">
-                                <img src="https://media.discordapp.net/attachments/922054608208154644/1056613721641861120/result_4.png" alt="Result Image"> 
+                                <img id="result-image" src="https://media.discordapp.net/attachments/922054608208154644/1056613721641861120/result_4.png" alt="Result Image" crossorigin="anonymous"> 
                             </div>
                         </div>
                         <div class="id-container">
@@ -798,6 +800,8 @@
             '2': 'Eimis Anime Diffusion'
         }
 
+        const colorThief = new ColorThief();
+
         Telegram.WebApp.ready();
         Telegram.WebApp.expand();
         Telegram.WebApp.MainButton.setText('Generate').onClick(function () {
@@ -830,6 +834,12 @@
                 b: parseInt(result[3], 16)
             } : null;
         }
+
+        $('#result-image').on('load', function () {
+            var colorArray = colorThief.getColor($(this)[ 0 ]);
+
+            document.body.style.setProperty('--result-color', `${colorArray[0]}, ${colorArray[1]}, ${colorArray[2]}`);
+        });
 
         $(document).ready(function () {
             var tgColor = window
