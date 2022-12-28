@@ -864,6 +864,8 @@
         function updateResultColor() {
             img = document.getElementById('result-image');
 
+            console.log(img)
+
             if (img.complete) {
                 var colorArray = colorThief.getColor(img);
             } else {
@@ -871,6 +873,7 @@
                     var colorArray = colorThief.getColor(img);
                 });
             }
+            console.log(colorArray)
 
             document.body.style.setProperty('--result-color', `${colorArray[0]}, ${colorArray[1]}, ${colorArray[2]}`);
         }
@@ -918,11 +921,16 @@
 
                         $('#result-image').attr('src', resultURL);
                         $('#result-img').css("background-image", "url('" + resultURL.replace(/(\r\n|\n|\r)/gm, "") + "')");
-
-                        var trimmedPrompt = data['prompt'].substr(0, 85);
-                        trimmedPrompt = trimmedPrompt.substr(0, Math.min(trimmedPrompt.length, trimmedPrompt.lastIndexOf(" ")));
-
-                        $('#prompt-text').text(trimmedPrompt);
+                        
+                        if (data['prompt'].length > 85) {
+                            var trimmedPrompt = data['prompt'].substr(0, 85);
+                            trimmedPrompt = trimmedPrompt.substr(0, Math.min(trimmedPrompt.length, trimmedPrompt.lastIndexOf(" ")));
+                        
+                            $('#prompt-text').text(trimmedPrompt);
+                        }
+                        else {
+                            $('#prompt-text').text(data['prompt']);
+                        }
                         
                         $('#loading-page').removeClass('visible');
                         $('#complete-page').addClass('visible');
