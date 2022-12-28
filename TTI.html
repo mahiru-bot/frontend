@@ -461,9 +461,6 @@
         }
 
 
-        body .complete-page {
-            overflow-x: hidden;
-        }
         body .complete-page .display-setter {
             display: flex;
             position: relative;
@@ -865,7 +862,7 @@
 
 
         function updateResultColor() {
-            img = document.getElementById('#result-image');
+            img = document.getElementById('result-image');
 
             if (img.complete) {
                 var colorArray = colorThief.getColor(img);
@@ -1020,7 +1017,7 @@
                 $('body').css('overflow', 'hidden');
             }
             else {
-                $('body').css('overflow', 'unset');
+                $('body').css('overflow', '');
             }
         }
 
