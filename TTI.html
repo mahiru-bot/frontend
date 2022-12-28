@@ -916,6 +916,9 @@
                         $('#result-image').src = resultURL;
                         $('#result-img').css("background-image", "url('" + resultURL.replace(/(\r\n|\n|\r)/gm, "") + "')");
 
+                        $('#loading-page').removeClass('visible');
+                        $('#complete-page').addClass('visible');
+
                         updateResultColor();
                     }
                 },
