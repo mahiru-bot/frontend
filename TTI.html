@@ -712,7 +712,7 @@
                         </div>
                         <div class="prompt-container">
                             <div class="container">
-                                <p>Neko girl sitting on the beach beautiful purple hair blue eyes sun chill pretty</p>
+                                <p id="prompt-text">Neko girl sitting on the beach beautiful purple hair blue eyes sun chill pretty</p>
                             </div>
                         </div>
                         <div class="footer">
@@ -912,6 +912,11 @@
                         $('#result-image').attr('src', resultURL);
                         $('#result-img').css("background-image", "url('" + resultURL.replace(/(\r\n|\n|\r)/gm, "") + "')");
 
+                        var trimmedPrompt = data['prompt'].substr(0, 85);
+                        trimmedPrompt = trimmedPrompt.substr(0, Math.min(trimmedPrompt.length, trimmedPrompt.lastIndexOf(" ")));
+
+                        $('#prompt-text').text(trimmedPrompt);
+                        
                         $('#loading-page').removeClass('visible');
                         $('#complete-page').addClass('visible');
 
