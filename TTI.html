@@ -672,17 +672,18 @@
             height: auto;
             position: fixed;
             overflow: hidden;
-            border-radius: 10px;
+            border-radius: 15px;
             transition: all 0.3s ease-in-out;
             box-shadow: 0px 0px 15px 0px rgb(0 0 0 / 30%);
         }
         body .progress-notification .inner {
-            padding: 16px;
+            padding: 20px;
             display: flex;
             align-items: center;
-            border-radius: 10px;
+            border-radius: 15px;
 
-            background-color: var(--tg-theme-bg-color);
+            backdrop-filter: blur(10px);
+            background-color: rgba(var(--cecilia-color), 0.7);
         }
         body .progress-notification.waiting,
         body .progress-notification.processing,
