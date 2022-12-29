@@ -670,17 +670,20 @@
             width: 95vw;
             z-index: 4;
             height: auto;
-            padding: 16px;
-            display: flex;
             position: fixed;
             overflow: hidden;
             border-radius: 10px;
-            align-items: center;
             transition: all 0.3s ease-in-out;
-            border: 2px solid rgba(255, 255, 255, 0);
             box-shadow: 0px 0px 15px 0px rgb(0 0 0 / 30%);
+        }
+        body .progress-notification .inner {
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            border-radius: 10px;
 
-            background-color: var(--tg-theme-bg-color);
+            background-color: black;
+            /* background-color: var(--tg-theme-bg-color); */
         }
         body .progress-notification.waiting,
         body .progress-notification.processing,
@@ -688,41 +691,14 @@
         {
             top: 5px;
         }
-        body .progress-notification.waiting {
-            border: 2px solid rgb(255 151 0);
-            background-color: rgb(198 140 56 / 90%);
-            box-shadow: 0px 0px 15px 0px rgb(255 134 0 / 30%);
-        }
-        body .progress-notification.processing {
-            border: 2px solid rgb(0 137 255);
-            background-color: rgb(56 101 198 / 90%);
-            box-shadow: 0px 0px 15px 0px rgb(17 0 255 / 30%);
-        }
-        body .progress-notification.complete {
-            border: 2px solid rgb(32 255 0);
-            background-color: rgb(59 174 70 / 90%);
-            box-shadow: 0px 0px 15px 0px rgb(0 255 38 / 30%);
-        }
-        body .progress-notification i {
+        body .progress-notification .inner i {
             display: none;
             font-size: 1.5em;
             margin-right: 15px;
 
             color: var(--tg-theme-text-color);
         }
-        body .progress-notification.waiting > i,
-        body .progress-notification.waiting > p {
-            color: #f7f4ed;
-        }
-        body .progress-notification.processing > i,
-        body .progress-notification.processing > p {
-            color: #edf1f7;
-        }
-        body .progress-notification.complete > i,
-        body .progress-notification.complete > p {
-            color: #eff7ed;
-        }
-        body .progress-notification p {
+        body .progress-notification .inner p {
             display: none;
 
             color: var(--tg-theme-text-color);
@@ -730,12 +706,14 @@
     </style>
     <body>
         <div id="progress-notification" class="progress-notification">
-            <i class="fa-solid fa-clock waiting"></i>
-            <i class="fa-solid fa-circle-info processing"></i>
-            <i class="fa-solid fa-circle-check complete"></i>
-            <p class="waiting">Waiting for server to accept this task.</p>
-            <p class="processing">Task accepted and now processing.</p>
-            <p class="complete">Image generation finished.</p>
+            <div  class="inner">
+                <i class="fa-solid fa-clock waiting"></i>
+                <i class="fa-solid fa-circle-info processing"></i>
+                <i class="fa-solid fa-circle-check complete"></i>
+                <p class="waiting">Waiting for server to accept this task.</p>
+                <p class="processing">Task accepted and now processing.</p>
+                <p class="complete">Image generation finished.</p>
+            </div>
         </div>
         <div id="loading-page" class="loading-page visible">
             <div class="display-setter">
@@ -1041,8 +1019,8 @@
             setTimeout(function() {
                 newNotification.addClass(type);
 
-                newNotification.children(`i.${type}`).css({'display': 'block'})
-                newNotification.children(`p.${type}`).css({'display': 'block'})
+                newNotification.children('div.inner').children(`i.${type}`).css({'display': 'block'})
+                newNotification.children('div.inner').children(`p.${type}`).css({'display': 'block'})
             }, 10);
 
             setTimeout(function() {
@@ -1051,8 +1029,8 @@
                 setTimeout(function() {
                     newNotification.remove();
 
-                    newNotification.children(`i.${type}`).css({'display': 'none'})
-                    newNotification.children(`p.${type}`).css({'display': 'none'})
+                    newNotification.children('div.inner').children(`i.${type}`).css({'display': 'none'})
+                    newNotification.children('div.inner').children(`p.${type}`).css({'display': 'none'})
                 }, 300);
             }, 3000);
         }
