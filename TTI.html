@@ -699,7 +699,7 @@
         }
     </style>
     <body>
-        <div id="process-notification" class="progress-notification">
+        <div id="progress-notification" class="progress-notification">
             <i class="fa-solid fa-clock waiting"></i>
             <i class="fa-solid fa-microchip processing"></i>
             <i class="fa-solid fa-circle-check complete"></i>
@@ -1004,7 +1004,7 @@
 
 
         function showProcessNotification(type) {
-            var newNotification = $('#process-notification').clone(true);
+            var newNotification = $('#progress-notification').clone(true);
 
             $('body').append(newNotification);
 
