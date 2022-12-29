@@ -400,7 +400,7 @@
             height: 50px;
         }
         body .loading-page .display-setter .loader .path {
-            stroke: var(--tg-theme-button-color);
+            stroke: rgba(var(--cecilia-color), 0.9);
             stroke-linecap: round;
             -webkit-animation: dash 1.5s ease-in-out infinite;
                     animation: dash 1.5s ease-in-out infinite;
@@ -662,9 +662,51 @@
             box-shadow: -50px 0px 50px 0px rgba(var(--cecilia-color), 0.7);
         }
 
+        body .progress-notification {
+            top: -60px;
+            left: 2.5vw;
+            width: 95vw;
+            z-index: 4;
+            height: auto;
+            padding: 16px;
+            display: flex;
+            position: fixed;
+            overflow: hidden;
+            border-radius: 10px;
+            align-items: center;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0px 0px 15px 0px rgb(0 0 0 / 30%);
 
+            background-color: var(--tg-theme-bg-color);
+        }
+        body .progress-notification.waiting,
+        body .progress-notification.processing,
+        body .progress-notification.complete
+        {
+            top: 5px;
+        }
+        body .progress-notification i {
+            display: none;
+            font-size: 1.5em;
+            margin-right: 15px;
+
+            color: var(--tg-theme-text-color);
+        }
+        body .progress-notification p {
+            display: none;
+
+            color: var(--tg-theme-text-color);
+        }
     </style>
     <body>
+        <div id="process-notification" class="progress-notification">
+            <i class="fa-solid fa-clock waiting"></i>
+            <i class="fa-solid fa-microchip processing"></i>
+            <i class="fa-solid fa-circle-check complete"></i>
+            <p class="waiting">Task created. Waiting for server to start its processing.</p>
+            <p class="processing">Server accepted task and started its processing.</p>
+            <p class="complete">Image generated. Thanks for your patience!</p>
+        </div>
         <div id="loading-page" class="loading-page visible">
             <div class="display-setter">
                 <svg class="loader" viewBox="0 0 50 50">
@@ -695,7 +737,7 @@
                             </div>
                         </div>
                         <div class="id-container">
-                            <h3>GSF235FG435SAF</h3>
+                            <h3 id="file_id">GSF235FG435SAF</h3>
                         </div>
                         <div class="prompt-container">
                             <div class="container">
@@ -793,6 +835,7 @@
             '1': 'Anything V3',
             '2': 'Eimis Anime Diffusion'
         }
+        var lastFetchStatus = null;
 
         const colorThief = new ColorThief();
 
@@ -812,6 +855,8 @@
                     'Access-Control-Allow-Origin': '*'
                 },
                 success: function(data, textStatus, xhr) {
+                    showProcessNotification('waiting');
+
                     $('#prompt-page').removeClass('visible');
                     $('#loading-page').addClass('visible');
 
@@ -825,7 +870,7 @@
                             var xhrError = JSON.parse(xhr.responseText)['message'];
                         }
                         catch (error) {
-                            var xhrError = 'API Server is temporarily unavailable.';
+                            var xhrError = 'Server is temporarily unavailable.';
                         }
                         Telegram.WebApp.showAlert(
                             `An unexpected error occured while trying to load data: ${xhrError}`, 
@@ -902,8 +947,14 @@
                 success: function(data, textStatus, xhr) {
                     if (xhr.status === 202) {
                         setTimeout(fetchTask, 5000);
+
+                        if (lastFetchStatus !== xhr.status) {
+                            showProcessNotification('processing');
+                        }
                     }
                     else {
+                        showProcessNotification('complete');
+
                         var resultURL = "data:image/png;base64," + data['result'];
 
                         $('#result-image').attr('src', resultURL);
@@ -918,23 +969,28 @@
                         else {
                             $('#prompt-text').text(data['prompt']);
                         }
+
+                        $('#file_id').text(data['file_id']);
                         
                         $('#loading-page').removeClass('visible');
                         $('#complete-page').addClass('visible');
 
                         updateResultColor();
                     }
+                    lastFetchStatus = xhr.status;
                 },
                 error: function(xhr, error) {
                     if (xhr.status === 404) {
                         $('#loading-page').removeClass('visible');
                         $('#prompt-page').addClass('visible');
+
+                        lastFetchStatus = xhr.status;
                     } else {
                         try {
                             var xhrError = JSON.parse(xhr.responseText)['message'];
                         }
                         catch (error) {
-                            var xhrError = 'API Server is temporarily unavailable.';
+                            var xhrError = 'Server is temporarily unavailable.';
                         }
                         Telegram.WebApp.showAlert(
                             `An unexpected error occured while trying to load data: ${xhrError}`, 
@@ -944,6 +1000,31 @@
                         }
                 }
             });
+        }
+
+
+        function showProcessNotification(type) {
+            var newNotification = $('#process-notification').clone(true);
+
+            $('body').append(newNotification);
+
+            setTimeout(function() {
+                newNotification.addClass(type);
+
+                newNotification.children(`i.${type}`).css({'display': 'block'})
+                newNotification.children(`p.${type}`).css({'display': 'block'})
+            }, 10);
+
+            setTimeout(function() {
+                newNotification.removeClass(type);
+
+                setTimeout(function() {
+                    newNotification.remove();
+
+                    newNotification.children(`i.${type}`).css({'display': 'none'})
+                    newNotification.children(`p.${type}`).css({'display': 'none'})
+                }, 300);
+            }, 3000);
         }
 
 
