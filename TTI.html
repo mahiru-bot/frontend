@@ -630,6 +630,91 @@
             color: var(--tg-theme-link-color);
         }
 
+        body .complete-page .download-notification {
+            left: 2.5vw;
+            width: 95%;
+            z-index: 4;
+            height: auto;
+            bottom: -60px;
+            padding: 16px;
+            display: flex;
+            position: fixed;
+            overflow: hidden;
+            border-radius: 10px;
+            align-items: center;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0px 0px 15px 0px rgb(0 0 0 / 30%);
+
+            background-color: var(--tg-theme-bg-color);
+        }
+        body .complete-page .download-notification.show {
+            bottom: 5px;
+        }
+        body .complete-page .download-notification .d-container {
+            height: 100%;
+            margin-right: 10px;
+            aspect-ratio: 16/9;
+        }
+        body .complete-page .download-notification .d-container .downloading {
+            width: 15px;
+            height: 16px;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+        body .complete-page .download-notification .d-container .downloading .custom-arrow {
+            top: 0;
+            left: 50%;
+            width: 7px;
+            height: 8px;
+            position: absolute;
+            margin-left: -3.5px;
+            animation-duration: 1.2s;
+            animation-name: downloading;
+            animation-iteration-count: infinite;
+
+            background-color: var(--tg-theme-text-color);
+        }
+        body .complete-page .download-notification .d-container .downloading .custom-arrow:after {
+            top: 100%;
+            content: '';
+            left: -4.5px;
+            display: block;
+            position: absolute;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+
+            border-top: 7.5px solid var(--tg-theme-text-color);
+        }
+        body .complete-page .download-notification .d-container .bar {
+            width: 15px;
+            height: 2px;
+            margin: 0 auto;
+
+            background-color: var(--tg-theme-text-color);
+        }
+        @keyframes downloading {
+            0% {
+                top: 0;
+                opacity: 1;
+            }
+            50% {
+                top: 110%;
+                opacity: 0;
+            }
+            52% {
+                top: -110%;
+                opacity: 0;
+            }
+            100% {
+                top: 0;
+                opacity: 1;
+            }
+        }
+        body .complete-page .download-notification p {
+            color: var(--tg-theme-text-color);
+        }
+
         body .complete-page .shadow-left,
         body .complete-page .shadow-right {
             top: 0;
@@ -723,9 +808,20 @@
             </div>
         </div>
         <div id="complete-page" class="complete-page">
+
             <div id="save-notification" class="save-notification">
                 <i class="fa-solid fa-circle-check"></i>
                 <p>Done! Image saved to <a href="#">your profile</a>.</p>
+            </div>
+
+            <div id="download-notification" class="download-notification">
+                <div class="d-container">
+                    <div class="downloading">
+                        <span class="custom-arrow"></span>
+                    </div>
+                    <div class="bar"></div>
+                </div>
+                <p>Image is downloading to your device.</p>
             </div>
             
             <div id="shadow-left" class="shadow-left"></div>
@@ -1041,6 +1137,40 @@
         });
 
 
+        function downloadFile(fileUrl, fileName) {
+            var anchor = document.createElement("a");
+            anchor.href = fileUrl;
+            anchor.download = fileName;
+
+            document.body.appendChild(anchor);
+
+            anchor.click();
+
+            document.body.removeChild(anchor);
+        }
+
+
+        $('#download-button').click(function() {
+            downloadFile(document.getElementById('#result-image').attr('src'), $('#file_id').text());
+
+            var newNotification = $('#download-notification').clone(true);
+            
+            $('#complete-page').append(newNotification);
+
+            setTimeout(function() {
+                newNotification.addClass('show');
+            }, 0);
+
+            setTimeout(function() {
+                newNotification.removeClass('show');
+
+                setTimeout(function() {
+                    newNotification.remove();
+                }, 300);
+            }, 3000);
+        });
+
+
         $('#input').on('input', function (e) {
             if (e.target.value.length >= 1) {
                 Telegram.WebApp.enableClosingConfirmation();
@@ -1163,11 +1293,11 @@
                     var parentOffset = $(this).parent().offset();
                     var relX = event.pageX - parentOffset.left;
 
-                    var newNotification = $('#save-notification').clone(true);
+                    if (relX >= $(window).width() - $(window).width()/5) 
+                    {
+                        var newNotification = $('#save-notification').clone(true);
+                        $('#complete-page').append(newNotification);
 
-                    $('#complete-page').append(newNotification);
-
-                    if (relX >= $(window).width() - $(window).width()/5) {
                         setTimeout(function() {
                             newNotification.addClass('show');
                         }, 300);
@@ -1180,8 +1310,27 @@
                             }, 300);
                         }, 3000);
                     }
-                    else if (relX <= $(window).width()/5) {
-                        console.log('Dropped!')
+                    
+                    else if (relX <= $(window).width()/5) 
+                    {
+                        var newNotification = $('#download-notification').clone(true);
+                        $('#complete-page').append(newNotification);
+
+                        var fileName = $('#file_id').text();
+                        var fileUrl = document.getElementById('#result-image').attr('src');
+                        downloadFile(fileUrl, fileName);
+
+                        setTimeout(function() {
+                            newNotification.addClass('show');
+                        }, 300);
+
+                        setTimeout(function() {
+                            newNotification.removeClass('show');
+
+                            setTimeout(function() {
+                                newNotification.remove();
+                            }, 300);
+                        }, 3000);
                     }
 
                     $('#shadow-left').removeClass('visible');
