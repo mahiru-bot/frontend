@@ -1151,7 +1151,7 @@
 
 
         $('#download-button').click(function() {
-            downloadFile(document.getElementById('#result-image').attr('src'), $('#file_id').text());
+            downloadFile($('#result-image').attr('src'), $('#file_id').text());
 
             var newNotification = $('#download-notification').clone(true);
             
@@ -1310,14 +1310,14 @@
                             }, 300);
                         }, 3000);
                     }
-                    
+
                     else if (relX <= $(window).width()/5) 
                     {
                         var newNotification = $('#download-notification').clone(true);
                         $('#complete-page').append(newNotification);
 
                         var fileName = $('#file_id').text();
-                        var fileUrl = document.getElementById('#result-image').attr('src');
+                        var fileUrl = $('#result-image').attr('src');
                         downloadFile(fileUrl, fileName);
 
                         setTimeout(function() {
