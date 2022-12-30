@@ -651,28 +651,27 @@
             bottom: 5px;
         }
         body .complete-page .download-notification .d-container {
-            height: 100%;
             margin-right: 10px;
-            aspect-ratio: 16/9;
         }
         body .complete-page .download-notification .d-container .downloading {
-            width: 15px;
+            width: 13px;
             height: 16px;
             margin: 0 auto;
-            overflow: hidden;
             position: relative;
         }
         body .complete-page .download-notification .d-container .downloading .custom-arrow {
             top: 0;
             left: 50%;
-            width: 7px;
+            width: 5px;
             height: 8px;
             position: absolute;
-            margin-left: -3.5px;
+            margin-left: -2.5px;
             animation-duration: 1.2s;
             animation-name: downloading;
+            border-top-left-radius: 0.5px;
+            border-top-right-radius: 0.5px;
             animation-iteration-count: infinite;
-
+            
             background-color: var(--tg-theme-text-color);
         }
         body .complete-page .download-notification .d-container .downloading .custom-arrow:after {
@@ -681,15 +680,17 @@
             left: -4.5px;
             display: block;
             position: absolute;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-
-            border-top: 7.5px solid var(--tg-theme-text-color);
+            border-radius: 1px;
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            
+            border-top: 6px solid var(--tg-theme-text-color);
         }
         body .complete-page .download-notification .d-container .bar {
             width: 15px;
             height: 2px;
             margin: 0 auto;
+            border-radius: 1px;
 
             background-color: var(--tg-theme-text-color);
         }
