@@ -138,14 +138,13 @@
             width: 100vw;
             height: 28vh;
             position: absolute;
+            filter: blur(60px);
             background-size: 100% 100%;
-            filter: blur(35px) saturate(2);
             background-image: url('https://cdn.discordapp.com/avatars/491588676074078218/a_345c77efb0785630e82f168e7f34e1ec.webp?size=1024');
         }
-        body .profile-page .color-container .blur {
+        body .profile-page .color-container .shadow {
             width: 100%;
             height: 100%;
-            backdrop-filter: blur(30px);
             background-color: rgba(0, 0, 0, 0.7);
         }
         body .profile-page .info-top-container {
@@ -310,7 +309,7 @@
         </header>
         <div id="profile-page" class="profile-page">
             <div class="color-container">
-                <div class="blur"></div>
+                <div class="shadow"></div>
             </div>
             <div class="padder"></div>
             <div id="info-top-container" class="info-top-container">
