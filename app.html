@@ -71,15 +71,6 @@
             font-size: 1.8em;
             font-weight: 500;
             font-family: 'Poppins', sans-serif;
-
-            /* background: -webkit-linear-gradient(
-                -45deg, 
-                #8973bb, 
-                #e382a3
-            );
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; */
         }
         body header .search-button {
             width: 3.4em;
@@ -220,7 +211,7 @@
             justify-content: space-between;
 
             background-color: #191919;
-            /* background-color: var(--tg-theme-secondary-bg-color); */
+            /* background-color: var(--tg-theme-bg-color); */
         }
         body .footer button {
             border: none;
@@ -243,15 +234,25 @@
             background-color: rgba(255, 255, 255, 0.3);
         }
         body .footer button i {
-            color: white;
+            color: #7d7d7d;
             font-size: 1.3em;
+
+            /* color: var(--tg-theme-hint-color); */
+        }
+        body .footer button.selected i {
+            color: white;
 
             /* color: var(--tg-theme-text-color); */
         }
         body .footer button .text {
-            color: white;
+            color: #7d7d7d;
             margin-top: 5px;
             font-size: 0.8em;
+
+            /* color: var(--tg-theme-hint-color); */
+        }
+        body .footer button.selected .text {
+            color: white;
 
             /* color: var(--tg-theme-text-color); */
         }
@@ -317,7 +318,7 @@
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <p class="text">Search</p>
             </button>
-            <button id="profile" class="ripple-button">
+            <button id="profile" class="ripple-button selected">
                 <i class="fa-solid fa-user"></i>
                 <p class="text">Profile</p>
             </button>
