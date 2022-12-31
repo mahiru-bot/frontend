@@ -122,14 +122,31 @@
         }
 
         
-        body .padder {
-            width: 100vw;
-            height: calc(3.4em + 10px);
-        }
 
         body .profile-page {
             flex: 1;
             text-align: center;
+        }
+        body .profile-page .padder {
+            width: 100vw;
+            height: calc(3.4em + 10px);
+        }
+        body .profile-page .color-container {
+            top: 0;
+            left: 0;
+            z-index: -1;
+            width: 100vw;
+            height: 28vh;
+            position: absolute;
+            background-size: 100% 100%;
+            filter: blur(35px) saturate(2);
+            background-image: url('https://cdn.discordapp.com/avatars/491588676074078218/a_345c77efb0785630e82f168e7f34e1ec.webp?size=1024');
+        }
+        body .profile-page .color-container .blur {
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(30px);
+            background-color: rgba(0, 0, 0, 0.7);
         }
         body .profile-page .info-top-container {
             width: 100%;
@@ -151,7 +168,7 @@
             height: 20vw;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-around;
         }
         body .profile-page .info-top-container .stats-container button {
             border: none;
@@ -159,7 +176,6 @@
             cursor: pointer;
             background: none;
             overflow: hidden;
-            margin-right: 5px;
             position: relative;
             border-radius: 10px;
             padding: 15px 20px 15px 20px;
@@ -292,9 +308,12 @@
                 <img class="avatar-img" src="https://cdn.discordapp.com/avatars/491588676074078218/a_345c77efb0785630e82f168e7f34e1ec.webp?size=1024" alt="Avatar">
             </button>
         </header>
-        <div class="padder"></div>
         <div id="profile-page" class="profile-page">
-            <div class="info-top-container">
+            <div class="color-container">
+                <div class="blur"></div>
+            </div>
+            <div class="padder"></div>
+            <div id="info-top-container" class="info-top-container">
                 <div class="avatar-container">
                     <img class="avatar" src="https://cdn.discordapp.com/avatars/491588676074078218/a_345c77efb0785630e82f168e7f34e1ec.webp?size=1024" alt="Avatar">
                 </div>
@@ -332,7 +351,7 @@
         const colorThief = new ColorThief();
 
         PullToRefresh.init({
-            mainElement: '#profile-page',
+            mainElement: '#info-top-container',
             onRefresh: function() {}
         });
 
