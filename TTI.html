@@ -106,6 +106,9 @@
             padding: 15px 25px 15px 25px;
             transition: background 400ms;
         }
+        body .prompt-page .diffusers-window .diffuser-selector .options-container .option:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+        }
         body .prompt-page .diffusers-window .diffuser-selector .options-container .option .circle {
             width: 20px;
             height: 20px;
@@ -153,6 +156,9 @@
             position: relative;
             border-radius: 5px;
             transition: background 400ms;
+        }
+        body .prompt-page .diffusers-window .diffuser-selector .footer .cancel-button:hover {
+            background-color: rgba(255, 255, 255, 0.25);
         }
         body .prompt-page .diffusers-window .diffuser-selector .footer .cancel-button p {
             font-size: 1em;
@@ -288,7 +294,7 @@
             position: absolute;
             border-radius: 50%;
             transform: scale(0);
-            animation: ripple 600ms linear;
+            animation: ripple 500ms linear;
             background-color: rgba(255, 255, 255, 0.1);
         }
         @keyframes ripple {
@@ -789,6 +795,16 @@
 
             color: var(--tg-theme-text-color);
         }
+
+        @media (pointer:none), (pointer:coarse) {
+            body .prompt-page .diffusers-window .diffuser-selector .options-container .option:hover {
+                background-color: unset;
+            }
+            body .prompt-page .diffusers-window .diffuser-selector .footer .cancel-button:hover {
+                background-color: unset;
+            }
+        }
+
     </style>
     <body>
         <div id="progress-notification" class="progress-notification">
@@ -1130,6 +1146,10 @@
                     newNotification.children('div.inner').children(`p.${type}`).css({'display': 'none'})
                 }, 300);
             }, 3000);
+
+            if (type === 'complete') {
+                Telegram.WebApp.HapticFeedback.notificationOccurred('success');
+            }
         }
 
 
@@ -1215,11 +1235,9 @@
             circle.style.top = `${event.clientY - button.offsetTop - radius}px`;
             circle.classList.add('ripple');
 
-            const ripple = $('.ripple');
-
-            if (ripple) {
-                ripple.remove();
-            }
+            setTimeout(function() {
+                circle.remove()
+            }, 500);
 
             button.appendChild(circle);
         });
@@ -1310,6 +1328,8 @@
                                 newNotification.remove();
                             }, 300);
                         }, 3000);
+
+                        Telegram.WebApp.HapticFeedback.impactOccurred('medium');
                     }
 
                     else if (relX <= $(window).width()/5) 
@@ -1332,6 +1352,8 @@
                                 newNotification.remove();
                             }, 300);
                         }, 3000);
+
+                        Telegram.WebApp.HapticFeedback.impactOccurred('medium');
                     }
 
                     $('#shadow-left').removeClass('visible');

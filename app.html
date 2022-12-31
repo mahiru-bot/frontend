@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Cecilia - API Key configuration</title>
+        <script src="https://telegram.org/js/telegram-web-app.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script src="https://kit.fontawesome.com/a1fc251edc.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pulltorefreshjs/0.1.22/index.umd.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.2/color-thief.min.js"></script>
+        <link rel="icon" href="https://github.com/RealSosiso4ka/realsosiso4ka.github.io/blob/master/cecilia-avatar-tab.png?raw=true" type="image/png">
+    </head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+        @import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900&display=swap');
+
+        * {
+            margin: 0;
+            text-decoration: none;
+            box-sizing: border-box;
+            font-family: Roboto, sans-serif;
+
+            -webkit-tap-highlight-color: transparent;
+
+            -webkit-touch-callout: none;
+                -webkit-user-select: none;    
+                    -moz-user-select: none;
+                        -ms-user-select: none;
+                            user-select: none;
+        }
+
+        span.ripple {
+            z-index: 0;
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            pointer-events: none;
+            animation: ripple 500ms linear;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            flex-direction: column;
+
+            background-color: rgb(0, 0, 0);
+            /* background-color: var(--tg-theme-secondary-bg-color); */
+        }
+        body header {
+            width: 100%;
+            z-index: 3;
+            display: flex;
+            position: fixed;
+            padding: 10px 10px 10px 15px;
+
+            background-color: black;
+            /* background-color: var(--tg-theme-secondary-bg-color); */
+        }
+        body header .logo {
+            color: white;
+            font-size: 2em;
+            font-weight: 500;
+            font-family: 'Poppins', sans-serif;
+
+            /* background: -webkit-linear-gradient(
+                -45deg, 
+                #8973bb, 
+                #e382a3
+            );
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; */
+        }
+        body header .search-button {
+            width: 4em;
+            border: none;
+            outline: none;
+            display: flex;
+            cursor: pointer;
+            background: none;
+            overflow: hidden;
+            margin-left: auto;
+            margin-right: 5px;
+            position: relative;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease-in-out;
+        }
+        body header .search-button:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+        }
+        body header .search-button i {
+            color: white;
+            font-size: 20px;
+
+            /* color: var(--tg-theme-text-color); */
+        }
+        body header .profile-button {
+            width: 4em;
+            height: 4em;
+            border: none;
+            outline: none;
+            display: flex;
+            cursor: pointer;
+            background: none;
+            overflow: hidden;
+            position: relative;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.25s ease-in-out;
+        }
+        body header .profile-button:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+        }
+        body header .profile-button .avatar-img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+
+        
+        body .padder {
+            width: 100vw;
+            height: calc(4em + 20px);
+        }
+
+        body .profile-page {
+            flex: 1;
+            text-align: center;
+        }
+        body .profile-page .info-top-container {
+            width: 100%;
+            display: flex;
+            padding: 25px;
+        }
+        body .profile-page .info-top-container .avatar-container {
+            width: 20vw;
+            height: 20vw;
+            min-width: 20vw;
+        }
+        body .profile-page .info-top-container .avatar-container .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+        body .profile-page .info-top-container .stats-container {
+            width: 80vw;
+            height: 20vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        body .profile-page .info-top-container .stats-container button {
+            border: none;
+            outline: none;
+            cursor: pointer;
+            background: none;
+            overflow: hidden;
+            margin-right: 5px;
+            position: relative;
+            align-items: center;
+            border-radius: 10px;
+            justify-content: center;
+            padding: 15px 20px 15px 20px;
+            transition: all 0.25s ease-in-out;
+        }
+        body .profile-page .info-top-container .stats-container button:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+        }
+        body .profile-page .info-top-container .stats-container button h5 {
+            color: white;
+            font-size: 1.5em;
+
+            /* color: var(--tg-theme-text-color); */
+        }
+        body .profile-page .info-top-container .stats-container button p {
+            color: white;
+            font-size: 1.25em;
+            margin-top: 5px;
+            font-weight: 500;
+        }
+        body .profile-page .info-bottom-container {
+            width: 100%;
+            padding: 0 25px 25px 25px;
+        }
+        body .profile-page .info-bottom-container .name {
+            color: white;
+            text-align: left;
+            font-size: 1.3em;
+            
+            /* color: var(--tg-theme-text-color); */
+        }
+        body .profile-page .info-bottom-container .bio {
+            color: white;
+            font-size: 1em;
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        body .ptr--ptr {
+            background: #1e1e1e !important;
+        }
+        body .ptr--ptr {
+            box-shadow: none !important;
+        }
+        body .ptr--ptr .ptr--icon, body .ptr--ptr .ptr--text {
+            color: white !important;
+        }
+
+        @media (pointer:none), (pointer:coarse) {
+            body header .search-button:hover {
+                background-color: unset;
+            }
+            body header .profile-button:hover {
+                background-color: unset;
+            }
+        }
+    </style>
+    <body>
+        <header class="header">
+            <p class="logo">Cecilia</p>
+            <button id="nav-search-btn" class="search-button ripple-button">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+            <button id="nav-profile-btn" class="profile-button ripple-button">
+                <img class="avatar-img" src="https://cdn.discordapp.com/avatars/491588676074078218/a_345c77efb0785630e82f168e7f34e1ec.webp?size=1024" alt="Avatar">
+            </button>
+        </header>
+        <div class="padder"></div>
+        <div id="profile-page" class="profile-page">
+            <div class="info-top-container">
+                <div class="avatar-container">
+                    <img class="avatar" src="https://cdn.discordapp.com/avatars/491588676074078218/a_345c77efb0785630e82f168e7f34e1ec.webp?size=1024" alt="Avatar">
+                </div>
+                <div class="stats-container">
+                    <button id="posts-button" class="ripple-button"><h5>34</h5><p>Posts</p></button>
+                    <button id="followers-button" class="ripple-button"><h5>1098</h5><p>Followers</p></button>
+                    <button id="likes-button" class="ripple-button" style="margin-right: 0;"><h5>4532</h5><p>Likes</p></button>
+                </div>
+            </div>
+            <div class="info-bottom-container">
+                <h5 class="name">Jokel Baf</h5>
+                <p class="bio">Such a lazy person that love sleeping more for everything.</p>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+
+        Telegram.WebApp.ready();
+        Telegram.WebApp.MainButton.setText('null').hide()
+
+        const colorThief = new ColorThief();
+
+        PullToRefresh.init({
+            mainElement: '#profile-page',
+            onRefresh: function() {}
+        });
+
+        function getUrlParameter(sParam) {
+            var sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
+            return '';
+        };
+
+
+        $('button.ripple-button').click(function (event) {
+
+            const button = event.currentTarget;
+
+            const circle = document.createElement('span');
+            const diameter = Math.max(button.clientWidth, button.clientHeight);
+            const radius = diameter / 2;
+
+            circle.style.width = circle.style.height = `${diameter}px`;
+            circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
+            circle.style.top = `${event.clientY - button.offsetTop - radius}px`;
+            circle.classList.add('ripple');
+
+            setTimeout(function() {
+                circle.remove()
+            }, 500);
+
+            button.appendChild(circle);
+        });
+    </script>
+</html>
