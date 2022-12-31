@@ -866,8 +866,8 @@
                             </div>
                         </div>
                         <div class="footer">
-                            <button id="download-button" class="left"><i class="fa-solid fa-download"></i> Download</button>
-                            <button id="save-to-pf-button" class="right">Save to profile</button>
+                            <button id="download-button" class="left ripple-button"><i class="fa-solid fa-download"></i> Download</button>
+                            <button id="save-to-pf-button" class="right ripple-button">Save to profile</button>
                         </div>
                     </div>
                 </div>
@@ -881,19 +881,19 @@
                             <h2>Diffuser model</h2>
                         </div>
                         <div class="options-container">
-                            <div id="diffuser-option" class="option selected" data-id="0">
+                            <div id="diffuser-option" class="option ripple-button selected" data-id="0">
                                 <div class="circle">
                                     <div class="inner-circle"></div>
                                 </div>
                                 <p>Stable Diffusion</p>
                             </div>
-                            <div id="diffuser-option" class="option" data-id="2">
+                            <div id="diffuser-option" class="option  ripple-button" data-id="2">
                                 <div class="circle">
                                     <div class="inner-circle"></div>
                                 </div>
                                 <p>Eimis Anime Diffusion</p>
                             </div>
-                            <div id="diffuser-option" class="option" data-id="1">
+                            <div id="diffuser-option" class="option  ripple-button" data-id="1">
                                 <div class="circle">
                                     <div class="inner-circle"></div>
                                 </div>
@@ -901,7 +901,7 @@
                             </div>
                         </div>
                         <div class="footer">
-                            <div id="diffusers-cancel-button" class="cancel-button">
+                            <div id="diffusers-cancel-button" class="cancel-button ripple-button">
                                 <p>Cancel</p>
                             </div>
                         </div>
@@ -938,7 +938,7 @@
                 </div>
 
                 <div class="diffuser-container">
-                    <div id="diffuser-button" class="diffuser-button">
+                    <div id="diffuser-button" class="diffuser-button ripple-button">
                         <p class="title">Diffuser</p><p class="diffuser">Stable Diffusion</p>
                     </div>
                 </div>
@@ -1223,23 +1223,21 @@
         };
 
 
-        $('#diffuser-button, #diffuser-option, #diffusers-cancel-button, #save-to-pf-button, #download-button').click(function (event) {
-            const button = event.currentTarget;
-
+        $('button.ripple-button').click(function (event)
+        {
             const circle = document.createElement('span');
-            const diameter = Math.max(button.clientWidth, button.clientHeight);
-            const radius = diameter / 2;
+            const diameter = Math.max(event.currentTarget.clientWidth, event.currentTarget.clientHeight);
 
             circle.style.width = circle.style.height = `${diameter}px`;
-            circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
-            circle.style.top = `${event.clientY - button.offsetTop - radius}px`;
+            circle.style.left = `${event.clientX - $(this).offset().left - diameter/2}px`;
+            circle.style.top = `${event.clientY - $(this).offset().top - diameter/2}px`;
             circle.classList.add('ripple');
 
             setTimeout(function() {
                 circle.remove()
             }, 500);
 
-            button.appendChild(circle);
+            $(this).append(circle);
         });
 
 
