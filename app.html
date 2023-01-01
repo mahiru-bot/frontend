@@ -40,7 +40,7 @@
             border-radius: 50%;
             transform: scale(0);
             pointer-events: none;
-            animation: ripple 400ms linear forwards;
+            animation: ripple 300ms linear forwards;
             background-color: rgba(255, 255, 255, 0.3);
         }
         @keyframes ripple {
@@ -591,7 +591,7 @@
                         }))
                     ]).then(rsv);
                 }),
-                new Promise(rsv => setTimeout(rsv, 300))
+                new Promise(rsv => setTimeout(rsv, 250))
             ])
             .then(function() 
             {
