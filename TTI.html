@@ -34,33 +34,6 @@
                         -ms-user-select: none;
                             user-select: none;
         }
-
-        span.ripple {
-            z-index: 0;
-            position: absolute;
-            border-radius: 50%;
-            transform: scale(0);
-            pointer-events: none;
-            animation: ripple 500ms linear forwards;
-            background-color: rgba(255, 255, 255, 0.4);
-        }
-        @keyframes ripple {
-            to {
-                transform: scale(4);
-                opacity: 1;
-            }
-        }
-        @keyframes remove-ripple {
-            from {
-                transform: scale(4);
-                opacity: 1;
-            }
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
-        }
-
         body {
             max-width: 100%;
             overflow-x: hidden;
@@ -134,9 +107,6 @@
             transition: background 400ms;
         }
         body .prompt-page .diffusers-window .diffuser-selector .options-container .option:hover {
-            background-color: rgba(255, 255, 255, 0.15);
-        }
-        body .prompt-page .diffusers-window .diffuser-selector .options-container .option:hover > .circle {
             background-color: rgba(255, 255, 255, 0.15);
         }
         body .prompt-page .diffusers-window .diffuser-selector .options-container .option .circle {
@@ -318,6 +288,20 @@
             align-items: center;
             border-radius: 12px;
             transition: background 400ms;
+        }
+        span.ripple {
+            z-index: 0;
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 500ms linear;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
         }
         body .prompt-page .display-setter .diffuser-container .diffuser-button .title {
             font-size: 1em;
@@ -819,8 +803,8 @@
             body .prompt-page .diffusers-window .diffuser-selector .footer .cancel-button:hover {
                 background-color: unset;
             }
-            body .prompt-page .diffusers-window .diffuser-selector .options-container .option:hover > .circle {
-                background-color: unset;
+            body .prompt-page .diffusers-window .diffuser-selector .options-container .option:hover {
+                background-color: rgba(255, 255, 255, 0.15);
             }
         }
 
@@ -1266,10 +1250,10 @@
             ])
             .then(function() 
             {
-                $(circle).css({'animation': 'remove-ripple 150ms linear'});
+                $(circle).css({'animation': 'remove-ripple 100ms linear'});
                 setTimeout(function() {
                     circle.remove();
-                }, 150)
+                }, 100)
             });
 
             $(this).append(circle);
