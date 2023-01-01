@@ -1223,19 +1223,35 @@
         };
 
 
-        $('button.ripple-button').click(function (event)
+        $('button.ripple-button').on('mousedown touchstart', function (event) 
         {
             const circle = document.createElement('span');
             const diameter = Math.max(event.currentTarget.clientWidth, event.currentTarget.clientHeight);
 
+            const curX = event.clientX ?? event.touches[0].clientX;
+            const curY = event.clientY ?? event.touches[0].clientY;
+
             circle.style.width = circle.style.height = `${diameter}px`;
-            circle.style.left = `${event.clientX - $(this).offset().left - diameter/2}px`;
-            circle.style.top = `${event.clientY - $(this).offset().top - diameter/2}px`;
+            circle.style.left = `${curX - $(this).offset().left - diameter/2}px`;
+            circle.style.top = `${curY - $(this).offset().top - diameter/2}px`;
+
             circle.classList.add('ripple');
 
-            setTimeout(function() {
-                circle.remove()
-            }, 500);
+            Promise.all([
+                new Promise(rsv => 'mouseup touchend'.split(' ').forEach(function(e) {
+                    event.currentTarget.addEventListener(e, (ev) => {
+                        ev.preventDefault(); rsv()
+                    }, {once: true})
+                })),
+                new Promise(rsv => setTimeout(rsv, 300))
+            ])
+            .then(function() 
+            {
+                $(circle).css({'animation': 'remove-ripple 100ms linear'});
+                setTimeout(function() {
+                    circle.remove();
+                }, 100)
+            });
 
             $(this).append(circle);
         });
