@@ -1229,7 +1229,7 @@
         };
 
 
-        $('button.ripple-button').on('mousedown touchstart', function (event) 
+        $('button.ripple-button, div.ripple-button').on('mousedown touchstart', function (event) 
         {
             const circle = document.createElement('span');
             const diameter = Math.max(event.currentTarget.clientWidth, event.currentTarget.clientHeight);
