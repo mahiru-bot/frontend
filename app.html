@@ -45,17 +45,17 @@
         }
         @keyframes ripple {
             to {
-                transform: scale(4);
+                transform: scale(3);
                 opacity: 1;
             }
         }
         @keyframes remove-ripple {
             from {
-                transform: scale(4);
+                transform: scale(3);
                 opacity: 1;
             }
             to {
-                transform: scale(4);
+                transform: scale(3);
                 opacity: 0;
             }
         }
@@ -352,6 +352,15 @@
         body .profile-page .my-stand-container .my-images img {
             height: auto;
             width: 100%;
+            cursor: pointer;
+            background-color: black;
+            transition: all 0.1s ease-in-out;
+        }
+        body .profile-page .my-stand-container .my-images img:hover {
+            opacity: 0.7;
+        }
+        body .profile-page .my-stand-container .my-images img:active {
+            opacity: 0.5;
         }
 
 
@@ -436,8 +445,14 @@
                 background-color: unset;
             }
             body .profile-page .profile-navigation button:hover {
-            background-color: unset;
-        }
+                background-color: unset;
+            }
+            body .profile-page .my-stand-container .my-images img:hover {
+                opacity: 0.5;
+            }
+            body .profile-page .my-stand-container .my-images img:active {
+                opacity: 0.5;
+            }
             body .footer button:hover {
                 background-color: unset;
             }
@@ -500,6 +515,9 @@
                     <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059210248470143037/result_8.png" alt="Post">
                     <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059210248117825698/result_7.png" alt="Post">
                     <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059210247694209145/result_6.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059210247295741982/result_4.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059210246981177344/result_3.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059210246683369512/result_2.png" alt="Post">
                 </div>
             </div>
         </div>
@@ -530,6 +548,7 @@
             onRefresh: function() {}
         });
 
+
         function getUrlParameter(sParam) {
             var sPageURL = window.location.search.substring(1),
                 sURLVariables = sPageURL.split('&'),
@@ -557,16 +576,21 @@
 
             circle.style.width = circle.style.height = `${diameter}px`;
             circle.style.left = `${curX - $(this).offset().left - diameter/2}px`;
-            circle.style.top = `${curY - $(this).offset().top - diameter/2}px`;
+            circle.style.top = `${curY - $(this).offset().top - diameter/2 + $(window).scrollTop()}px`;
 
             circle.classList.add('ripple');
 
             Promise.all([
-                new Promise(rsv => 'mouseup touchend'.split(' ').forEach(function(e) {
-                    event.currentTarget.addEventListener(e, (ev) => {
-                        ev.preventDefault(); rsv()
-                    }, {once: true})
-                })),
+                new Promise(rsv => {
+                    Promise.any([
+                        new Promise(rsv => window.addEventListener('blur', rsv, { once: true })),
+                        new Promise(rsv => 'mouseup touchend'.split(' ').forEach(function(e) {
+                            window.addEventListener(e, (ev) => {
+                                ev.preventDefault(); rsv();
+                            }, {once: true})
+                        }))
+                    ]).then(rsv);
+                }),
                 new Promise(rsv => setTimeout(rsv, 300))
             ])
             .then(function() 
