@@ -308,23 +308,65 @@
         }
         body .profile-page .p-n-wrapper .profile-navigation .buttons-container {
             display: flex;
+            transition: all 0.2s ease-in-out;
         }
         body .profile-page .p-n-wrapper .profile-navigation .buttons-container button {
             width: 50%;
             border: none;
             outline: none;
-            padding: 8px 0;
+            padding: 10px 0;
             color: #7d7d7d;
             font-size: 0.9em;
             cursor: pointer;
             overflow: hidden;
             background: none;
             max-height: 50px;
+            margin-left: auto;
             position: relative;
             border-radius: 5px;
-            transition: all 0.2s ease-in-out;
+            transition: all 0.3s ease-in-out, background 0.2s ease-in-out;
 
             /* color: var(--tg-theme-hint-color); */
+        }
+        body .profile-page .p-n-wrapper .profile-navigation .buttons-container button:last-of-type {
+            margin-left: 0;
+        }
+        body .profile-page .p-n-wrapper .profile-navigation.fixed > .buttons-container button {
+            width: 30vw;
+        }
+        body .profile-page .p-n-wrapper .profile-navigation .buttons-container button.user-container {
+            /* transition: all 1s ease-in-out, background 0.2s ease-in-out; */
+            justify-content: space-around;
+            height: calc(1.5em + 21px);
+            align-items: center;
+            position: absolute;
+            overflow: hidden;
+            outline: none;
+            display: flex;
+            border: none;
+            left: -40vw;
+            width: 40vw;
+            padding: 0;
+        }
+        body .profile-page .p-n-wrapper .profile-navigation .buttons-container .user-container .wrapper {
+            width: auto;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        body .profile-page .p-n-wrapper .profile-navigation .buttons-container .user-container .wrapper img {
+            width: auto;
+            height: 70%;
+            margin-right: 5px;
+            border-radius: 50%;
+        }
+        body .profile-page .p-n-wrapper .profile-navigation .buttons-container .user-container .wrapper p {
+            color: white;
+            font-size: 1em;
+            margin: 4px 10px 0 5px;
+
+            /* color: var(--tg-theme-text-color); */
         }
         body .profile-page .p-n-wrapper .profile-navigation .buttons-container button:hover {
             background-color: rgba(255, 255, 255, 0.2);
@@ -341,6 +383,10 @@
         body .profile-page .p-n-wrapper .profile-navigation.fixed > .buttons-container button {
             border-radius: 0;
         }
+        body .profile-page .p-n-wrapper .profile-navigation.fixed > .buttons-container button.user-container {
+            left: 0;
+            position: relative;
+        }
         body .profile-page .p-n-wrapper .profile-navigation .buttons-container button i {
             font-size: 1.5em;
         }
@@ -351,20 +397,28 @@
         body .profile-page .p-n-wrapper .profile-navigation .indicator-container .indicator {
             width: 50%;
             height: 100%;
+            border-radius: 2px;
             background-color: white;
+            transition: all 0.3s ease-in-out;
 
             /* background-color: var(--tg-theme-text-color); */
+        }
+        body .profile-page .p-n-wrapper .profile-navigation.fixed .indicator-container .indicator {
+            width: 30%;
         }
         body .profile-page .p-n-wrapper .profile-navigation .indicator-container .indicator.my-images {
             margin-left: 0%;
         }
+        body .profile-page .p-n-wrapper .profile-navigation.fixed .indicator-container .indicator.my-images {
+            margin-left: 40%;
+        }
         body .profile-page .p-n-wrapper .profile-navigation .indicator-container .indicator.my-liked {
-            margin-left: 50%;
+            margin-left: 70%;
         }
         body .profile-page .my-stand-container {
             width: 100%;
             height: auto;
-            padding-top: 3px;
+            padding-top: 6px;
         }
         body .profile-page .my-stand-container .my-images {
             width: 100%;
@@ -526,6 +580,12 @@
             <div class="p-n-wrapper">
                 <div id="profile-navigation" class="profile-navigation">
                     <div class="buttons-container">
+                        <button class="user-container ripple-button">
+                            <div class="wrapper">
+                                <img class="avatar-img" src="https://cdn.discordapp.com/avatars/491588676074078218/a_345c77efb0785630e82f168e7f34e1ec.webp?size=1024" alt="Avatar">
+                                <p>Jokel Baf</p>
+                            </div>
+                        </button>
                         <button id="my-images" class="images ripple-button selected">
                             <i class="fa-solid fa-image"></i>
                         </button>
