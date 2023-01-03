@@ -804,7 +804,7 @@
                         new Promise(rsv => window.addEventListener('blur', rsv, {once: true})),
                         new Promise(rsv => 'mouseup touchend'.split(' ').forEach(function(e) {
                             window.addEventListener(e, (ev) => {
-                                ev.preventDefault(); rsv();
+                                if (ev.cancelable) {ev.preventDefault()}; rsv();
                             }, {once: true})
                         }))
                     ]).then(rsv);
