@@ -687,13 +687,8 @@
         };
 
 
-        function scrollToTop(behavior) {
-            window.scrollTo({top: 0, behavior: behavior});
-        }
-
-
         $('button.scroll-to-top').click(function() {
-            scrollToTop('smooth')
+            $('html').animate({scrollTop: 0}, 500);
         });
 
 
