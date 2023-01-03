@@ -287,14 +287,29 @@
             font-size: 0.9em;
             text-align: center;
         }
-        body .profile-page .profile-navigation {
+        body .profile-page .p-n-wrapper {
+            width: 100%;
+            height: calc(8px + 15px + 1.5em + 2px);
+        }
+        body .profile-page .p-n-wrapper .profile-navigation {
+            z-index: 3;
             width: 100%;
             height: auto;
-            display: flex;
             padding-top: 8px;
             justify-content: space-around;
+
+            background-color: black;
+            /* background-color: var(--tg-theme-secondary-bg-color); */
         }
-        body .profile-page .profile-navigation button {
+        body .profile-page .p-n-wrapper .profile-navigation.fixed {
+            padding-top: 0;
+            position: fixed;
+            padding-bottom: 3px;
+        }
+        body .profile-page .p-n-wrapper .profile-navigation .buttons-container {
+            display: flex;
+        }
+        body .profile-page .p-n-wrapper .profile-navigation .buttons-container button {
             width: 50%;
             border: none;
             outline: none;
@@ -311,36 +326,39 @@
 
             /* color: var(--tg-theme-hint-color); */
         }
-        body .profile-page .profile-navigation button:hover {
+        body .profile-page .p-n-wrapper .profile-navigation .buttons-container button:hover {
             background-color: rgba(255, 255, 255, 0.2);
         }
-        body .profile-page .profile-navigation button.selected {
+        body .profile-page .p-n-wrapper .profile-navigation .buttons-container button.selected {
             color: white;
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
             border-top-left-radius: 5px;
             border-top-right-radius: 5px;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
 
             /* color: var(--tg-theme-text-color); */
         }
-        body .profile-page .profile-navigation button i {
+        body .profile-page .p-n-wrapper .profile-navigation.fixed > .buttons-container button {
+            border-radius: 0;
+        }
+        body .profile-page .p-n-wrapper .profile-navigation .buttons-container button i {
             font-size: 1.5em;
         }
-        body .profile-page .indicator-container {
+        body .profile-page .p-n-wrapper .profile-navigation .indicator-container {
             width: 100%;
             height: 2px;
         }
-        body .profile-page .indicator-container .indicator {
+        body .profile-page .p-n-wrapper .profile-navigation .indicator-container .indicator {
             width: 50%;
             height: 100%;
             background-color: white;
 
             /* background-color: var(--tg-theme-text-color); */
         }
-        body .profile-page .indicator-container .indicator.my-images {
+        body .profile-page .p-n-wrapper .profile-navigation .indicator-container .indicator.my-images {
             margin-left: 0%;
         }
-        body .profile-page .indicator-container .indicator.my-liked {
+        body .profile-page .p-n-wrapper .profile-navigation .indicator-container .indicator.my-liked {
             margin-left: 50%;
         }
         body .profile-page .my-stand-container {
@@ -451,7 +469,7 @@
             body .profile-page .info-top-container .stats-container button:hover {
                 background-color: unset;
             }
-            body .profile-page .profile-navigation button:hover {
+            body .profile-page .p-n-wrapper .profile-navigation button:hover {
                 background-color: unset;
             }
             body .profile-page .my-stand-container .my-images img {
@@ -505,16 +523,20 @@
             <div class="info-bottom-container">
                 <p class="bio">Such a lazy person that love sleeping more for everything.</p>
             </div>
-            <div class="profile-navigation">
-                <button id="my-images" class="images ripple-button selected">
-                    <i class="fa-solid fa-image"></i>
-                </button>
-                <button id="my-liked" class="liked ripple-button">
-                    <i class="fa-solid fa-heart"></i>
-                </button>
-            </div>
-            <div class="indicator-container">
-                <div id="my-indicator" class="indicator my-images"></div>
+            <div class="p-n-wrapper">
+                <div id="profile-navigation" class="profile-navigation">
+                    <div class="buttons-container">
+                        <button id="my-images" class="images ripple-button selected">
+                            <i class="fa-solid fa-image"></i>
+                        </button>
+                        <button id="my-liked" class="liked ripple-button">
+                            <i class="fa-solid fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="indicator-container">
+                        <div id="my-indicator" class="indicator my-images"></div>
+                    </div>
+                </div>
             </div>
             <div id="my-stand-container" class="my-stand-container">
                 <div class="my-images">
@@ -534,6 +556,28 @@
                     <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804732983607377/result_14.png" alt="Post">
                     <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804733411446864/result_16.png" alt="Post">
                     <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804733876994048/result_17.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804734392913991/result_20.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804734392913991/result_20.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804734392913991/result_20.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804734392913991/result_20.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804734392913991/result_20.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804734392913991/result_20.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804734392913991/result_20.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804734392913991/result_20.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804734392913991/result_20.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804734392913991/result_20.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804734392913991/result_20.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804734392913991/result_20.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804734392913991/result_20.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804734392913991/result_20.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804734392913991/result_20.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804734392913991/result_20.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804734392913991/result_20.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804734392913991/result_20.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804734392913991/result_20.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804734392913991/result_20.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804734392913991/result_20.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804734392913991/result_20.png" alt="Post">
                     <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804734392913991/result_20.png" alt="Post">
                 </div>
             </div>
@@ -584,11 +628,12 @@
 
 
         var lastScrollTop = 0;
+        var profNavigationOffset = $('#profile-navigation').offset().top;
 
         $(window).on('scroll', function() 
         {
             const header = $('#header');
-            const windowScrollTop = $(this).scrollTop()
+            const windowScrollTop = $(this).scrollTop();
             const headerTop = parseFloat(header.css('top'), 10);
 
             const difference = Math.abs(windowScrollTop - lastScrollTop);
@@ -618,7 +663,6 @@
                     }
                 }
             }
-            lastScrollTop = windowScrollTop;
 
             const offsetTop = $('#my-images-stats').offset().top;
             const darkenScroll = offsetTop - header.outerHeight();
@@ -639,6 +683,33 @@
             
             if ($(this).scrollTop() < 300) {
                 $('#scroll-shadow').css({'opacity': `${$(this).scrollTop()/3}%`});
+            }
+
+            lastScrollTop = windowScrollTop;
+        });
+
+        $(window).on('scroll', function() {
+            const profileNavigation = $('#profile-navigation');
+            const windowScrollTop = $(this).scrollTop();
+            const header = $('#header');
+
+            if (windowScrollTop > profNavigationOffset) 
+            {
+                if (!(profileNavigation.hasClass('fixed'))) {
+                    profileNavigation.addClass('fixed');
+                }
+
+                if (parseFloat(header.css('top'), 10) === 0 - header.outerHeight()) 
+                {
+                    profileNavigation.css({'top': `0px`});
+                } 
+                else {
+                    profileNavigation.css({'top': `${header.outerHeight() + parseFloat(header.css('top'), 10)}px`});
+                }
+            } else if (profileNavigation.offset().top <= profNavigationOffset) {
+                if (profileNavigation.hasClass('fixed')) {
+                    profileNavigation.removeClass('fixed');
+                }
             }
         });
 
