@@ -580,7 +580,7 @@
             <div class="p-n-wrapper">
                 <div id="profile-navigation" class="profile-navigation">
                     <div class="buttons-container">
-                        <button class="user-container ripple-button" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+                        <button class="user-container scroll-to-top ripple-button">
                             <div class="wrapper">
                                 <img class="avatar-img" src="https://cdn.discordapp.com/avatars/491588676074078218/a_345c77efb0785630e82f168e7f34e1ec.webp?size=1024" alt="Avatar">
                                 <p>Jokel Baf</p>
@@ -685,6 +685,16 @@
             }
             return '';
         };
+
+
+        function scrollToTop(behavior) {
+            window.scrollTo({top: 0, behavior: behavior});
+        }
+
+
+        $('button.scroll-to-top').click(function() {
+            scrollToTop('smooth')
+        });
 
 
         var lastScrollTop = 0;
