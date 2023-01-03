@@ -3,6 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <title>Cecilia - API Key configuration</title>
+        <script>
+            window.passiveSupport = {events: ['touchstart']};
+        </script>
+        <script src="scripts/passive-events-support.js"></script>
         <script src="https://telegram.org/js/telegram-web-app.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
         <script src="https://kit.fontawesome.com/a1fc251edc.js" crossorigin="anonymous"></script>
@@ -77,9 +81,6 @@
             position: fixed;
             align-items: center;
             padding: 10px 10px 10px 15px;
-
-            /* background-color: black; */
-            /* background-color: var(--tg-theme-secondary-bg-color); */
         }
         body header .logo {
             color: white;
@@ -136,7 +137,6 @@
             border-radius: 50%;
         }
 
-        
 
         body .profile-page {
             flex: 1;
@@ -161,6 +161,14 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.7);
+        }
+        body .profile-page .color-container .shadow .scroll-shadow {
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+
+            /* background-color: var(--tg-theme-secondary-bg-color); */
         }
         body .profile-page .info-top-container {
             width: 100%;
@@ -461,7 +469,7 @@
         }
     </style>
     <body>
-        <header class="header">
+        <header id="header" class="header">
             <p class="logo">Cecilia</p>
             <button id="nav-search-btn" class="search-button ripple-button">
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -471,8 +479,10 @@
             </button>
         </header>
         <div id="profile-page" class="profile-page">
-            <div class="color-container">
-                <div class="shadow"></div>
+            <div id="color-container" class="color-container">
+                <div class="shadow">
+                    <div id="scroll-shadow" class="scroll-shadow"></div>
+                </div>
             </div>
             <div class="padder"></div>
             <div id="info-top-container" class="info-top-container">
@@ -520,6 +530,11 @@
                     <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059210247295741982/result_4.png" alt="Post">
                     <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059210246981177344/result_3.png" alt="Post">
                     <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059210246683369512/result_2.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804732585152522/result_12.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804732983607377/result_14.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804733411446864/result_16.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804733876994048/result_17.png" alt="Post">
+                    <img class="my-image" src="https://media.discordapp.net/attachments/922054608208154644/1059804734392913991/result_20.png" alt="Post">
                 </div>
             </div>
         </div>
@@ -568,6 +583,66 @@
         };
 
 
+        var lastScrollTop = 0;
+
+        $(window).on('scroll', function() 
+        {
+            const header = $('#header');
+            const windowScrollTop = $(this).scrollTop()
+            const headerTop = parseFloat(header.css('top'), 10);
+
+            const difference = Math.abs(windowScrollTop - lastScrollTop);
+            
+            if (lastScrollTop > windowScrollTop) {
+                // Scrolled up
+
+                if (headerTop + difference > 0) {
+                    // Prevent top > 0
+                    header.css({'top': '0px'});
+                }  
+                else {
+                    if (headerTop < 0) {
+                        header.css({'top': `${headerTop + difference}px`});
+                    }
+                }
+            } else {
+                // Scroll down
+                
+                if (0 - (headerTop - difference) > header.outerHeight()) {
+                    // Prevent top being too low
+                    header.css({'top': `-${header.outerHeight()}px`});
+                } 
+                else {
+                    if (headerTop > 0 - header.outerHeight()) {
+                        header.css({'top': `${headerTop - difference}px`});
+                    }
+                }
+            }
+            lastScrollTop = windowScrollTop;
+
+            const offsetTop = $('#my-images-stats').offset().top;
+            const darkenScroll = offsetTop - header.outerHeight();
+
+            if (darkenScroll + 60 > windowScrollTop && windowScrollTop > darkenScroll) {
+                $('#header').css({
+                    'background-color': `rgba(0 0 0 / ${100 - (darkenScroll + 60 - windowScrollTop) * 100 / 60}%)`
+                });
+            } else if (windowScrollTop > darkenScroll + 60) {
+                $('#header').css({
+                    'background-color': 'rgba(0, 0, 0, 1)'
+                });
+            } else {
+                $('#header').css({
+                    'background-color': 'rgba(0, 0, 0, 0)'
+                });
+            }
+            
+            if ($(this).scrollTop() < 300) {
+                $('#scroll-shadow').css({'opacity': `${$(this).scrollTop()/3}%`});
+            }
+        });
+
+
         $('button.ripple-button').on('mousedown touchstart', function (event) 
         {
             const circle = document.createElement('span');
@@ -585,7 +660,7 @@
             Promise.all([
                 new Promise(rsv => {
                     Promise.any([
-                        new Promise(rsv => window.addEventListener('blur', rsv, { once: true })),
+                        new Promise(rsv => window.addEventListener('blur', rsv, {once: true})),
                         new Promise(rsv => 'mouseup touchend'.split(' ').forEach(function(e) {
                             window.addEventListener(e, (ev) => {
                                 ev.preventDefault(); rsv();
