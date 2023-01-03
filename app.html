@@ -687,7 +687,7 @@
         };
 
 
-        $('button.scroll-to-top').click(function() {
+        $('button.scroll-to-top').on('click touchstart tap', function() {
             $('html').animate({scrollTop: 0}, 500);
         });
 
