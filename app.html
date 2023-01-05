@@ -730,6 +730,12 @@
 
         var currentPage = 'profile';
 
+        scrollData = {
+            'home': 0,
+            'search': 0,
+            'profile': 0
+        }
+
         Telegram.WebApp.ready();
         Telegram.WebApp.MainButton.setText('null').hide()
 
@@ -835,6 +841,7 @@
             if (currentPage === clickedID) {
                 return;
             }
+            scrollData[currentPage] = $(window).scrollTop();
 
             clickedButton.addClass('selected');
             $(`#${currentPage}`).removeClass('selected');
@@ -843,6 +850,7 @@
 
             setTimeout(function() {
                 $(`#${clickedID}-page`).removeClass('invisible').fadeIn(50);
+                $('html').animate({scrollTop: scrollData[clickedID]}, 0);
             }, 50)
 
             currentPage = clickedID;
