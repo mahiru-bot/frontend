@@ -8,8 +8,9 @@
         </script>
         <script src="scripts/passive-events-support.js"></script>
         <script src="https://telegram.org/js/telegram-web-app.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
         <script src="https://kit.fontawesome.com/a1fc251edc.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pulltorefreshjs/0.1.22/index.umd.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.2/color-thief.min.js"></script>
@@ -838,15 +839,16 @@
         });
 
 
+        var header = $('#header');
+        var profileNavigation = $('#profile-navigation');
+
         var lastScrollTop = 0;
         var profNavigationOffset = $('#profile-navigation').offset().top;
 
-        $(window).on('scroll', function() 
+        function headerScroll(that) 
         {
-            const header = $('#header');
-            const windowScrollTop = $(this).scrollTop();
+            const windowScrollTop = that.scrollTop();
             const headerTop = parseFloat(header.css('top'), 10);
-            const profileNavigation = $('#profile-navigation');
 
             const difference = Math.abs(windowScrollTop - lastScrollTop);
             
@@ -893,9 +895,14 @@
                 });
             }
             
-            if ($(this).scrollTop() < 300) {
-                $('#scroll-shadow').css({'opacity': `${$(this).scrollTop()/3}%`});
+            if (that.scrollTop() < 300) {
+                $('#scroll-shadow').css({'opacity': `${that.scrollTop()/3}%`});
             }
+        }
+
+        function profileNavScroll(that) 
+        {
+            const windowScrollTop = that.scrollTop();
 
             if (windowScrollTop > profNavigationOffset) 
             {
@@ -925,8 +932,13 @@
                     profileNavigation.css({'top': `${header.outerHeight() + parseFloat(header.css('top'), 10)}px`});
                 }
             }
-
+            
             lastScrollTop = windowScrollTop;
+        }
+
+        $(window).on('scroll', function() {
+            headerScroll($(this));
+            profileNavScroll($(this));
         });
 
 
