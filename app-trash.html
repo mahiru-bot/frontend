@@ -34,10 +34,10 @@
                             user-select: none;
         }
 
-        ::-webkit-scrollbar {
+        /* ::-webkit-scrollbar {
             width: 0px;
             background: transparent;
-        }
+        } */
 
         span.ripple {
             z-index: 0;
@@ -281,7 +281,7 @@
             width: 100%;
             height: auto;
             text-align: center;
-            padding: 0 25px 5px 25px;
+            padding: 0 25px 13px 25px;
         }
         body .profile-page .info-bottom-container .bio {
             color: white;
@@ -290,14 +290,12 @@
         }
         body .profile-page .p-n-wrapper {
             width: 100%;
-            padding-top: 8px;
-            height: calc(8px + 15px + 1.5em + 2px);
+            height: calc(25px + 1.5em);
         }
         body .profile-page .p-n-wrapper .profile-navigation {
             z-index: 3;
             width: 100%;
             height: auto;
-            justify-content: space-around;
 
             background-color: black;
             /* background-color: var(--tg-theme-secondary-bg-color); */
@@ -305,7 +303,6 @@
         body .profile-page .p-n-wrapper .profile-navigation.fixed {
             padding-top: 0;
             position: fixed;
-            padding-bottom: 3px;
         }
         body .profile-page .p-n-wrapper .profile-navigation .buttons-container {
             display: flex;
@@ -421,18 +418,19 @@
         }
         body .profile-page .my-stand-container {
             width: 100%;
-            height: auto;
-            padding-top: 6px;
+            height: calc(100vh - 25px - 1.5em);
+            overflow: hidden;
         }
         body .profile-page .my-stand-container .my-images,
         body .profile-page .my-stand-container .my-liked
         {
             width: 100%;
-            height: auto;
             display: grid;
             grid-gap: 3px;
+            height: calc(100vh - 25px - 1.5em);
             padding-bottom: calc(1.7em + 35px);
             grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: repeat(auto-fill, 1fr);
         }
         body .profile-page .my-stand-container .my-images img,
         body .profile-page .my-stand-container .my-liked img
@@ -443,7 +441,7 @@
             background-color: black;
             transition: all 0.1s ease-in-out;
         }
-        body .profile-page .my-stand-container .my-images img:hover
+        body .profile-page .my-stand-container .my-images img:hover,
         body .profile-page .my-stand-container .my-liked img:hover
         {
             opacity: 0.7;
@@ -545,13 +543,19 @@
             body .profile-page .p-n-wrapper .profile-navigation .buttons-container button:hover {
             background-color: unset;
         }
-            body .profile-page .my-stand-container .my-images img {
+            body .profile-page .my-stand-container .my-images img,
+            body .profile-page .my-stand-container .my-liked img
+            {
                 transition: all 0.05s ease-in-out;
             }
-            body .profile-page .my-stand-container .my-images img:hover {
+            body .profile-page .my-stand-container .my-images img:hover,
+            body .profile-page .my-stand-container .my-liked img:hover
+            {
                 opacity: inherit;
             }
-            body .profile-page .my-stand-container .my-images img:active {
+            body .profile-page .my-stand-container .my-images img:active,
+            body .profile-page .my-stand-container .my-liked img:active
+            {
                 opacity: 0.5;
             }
             body .footer button:hover {
@@ -705,37 +709,10 @@
             onRefresh: function() {}
         });
 
-
-        function getMaxStandScroll(containerSelector, additionalSelectors = null) 
-        {
-            var additional = 0;
-
-            if (additionalSelectors) {
-                for (const additionalSelector of additionalSelectors){
-                    additional += $(additionalSelector).outerHeight();
-                }
-            }
-
-            const container = $(containerSelector);
-
-            const containerOffset = container.offset().top;
-            const containerHeight = container.outerHeight();
-            const windowHeight = $(window).height();
-
-            let containerAddition = 0;
-
-            if (windowHeight < containerHeight) {
-                containerAddition = containerHeight - windowHeight;
-            }
-
-            return Math.round(containerOffset + containerAddition - additional);
-        }
-
-
         var myProfileSwiper = new Swiper("#my-stand-container", {});
 
-        myProfileSwiper.on('slideChange', function() 
-        {
+        myProfileSwiper.on('slideChange', function() {
+
             const myImages = $('#my-images');
             const myLiked = $('#my-liked');
 
@@ -747,15 +724,7 @@
                 $('#my-indicator')
                     .removeClass('my-images')
                         .addClass('my-liked');
-
-                if ($(window).scrollTop() > getMaxStandScroll('#my-liked-container')) {
-                    $('html').animate(
-                        {
-                            scrollTop: getMaxStandScroll('#my-liked-container', ['#profile-navigation', 'header'])
-                        }, 
-                    500);
-                }
-            } else
+            } else 
             {
                 myImages.addClass('selected');
                 myLiked.removeClass('selected');
@@ -763,14 +732,6 @@
                 $('#my-indicator')
                     .removeClass('my-liked')
                         .addClass('my-images');
-
-                if ($(window).scrollTop() > getMaxStandScroll('#my-images-container')) {
-                    $('html').animate(
-                        {
-                            scrollTop: getMaxStandScroll('#my-images-container', ['#profile-navigation', 'header'])
-                        }, 
-                    500);
-                }
             }
         });
 
@@ -797,125 +758,160 @@
         });
 
 
-        $('#my-liked').on('click touchstart tap', function() 
-        {
-            $('#my-images').removeClass('selected');
-            $(this).addClass('selected');
-
-            $('#my-indicator')
-                .removeClass('my-images')
-                    .addClass('my-liked');
-
-            if ($(window).scrollTop() > getMaxStandScroll('#my-liked-container')) {
-                $('html').animate(
-                    {
-                        scrollTop: getMaxStandScroll('#my-liked-container', ['#profile-navigation', 'header'])
-                    }, 
-                500);
-            }
-            myProfileSwiper.slideNext();
-        });
-
-
-        $('#my-images').on('click touchstart tap', function() 
-        {
-            $('#my-liked').removeClass('selected');
-            $(this).addClass('selected');
-
-            $('#my-indicator')
-                .removeClass('my-liked')
-                    .addClass('my-images');
-
-            if ($(window).scrollTop() > getMaxStandScroll('#my-images-container')) {
-                $('html').animate(
-                    {
-                        scrollTop: getMaxStandScroll('#my-images-container', ['#profile-navigation', 'header'])
-                    }, 
-                500);
-            }
-            myProfileSwiper.slidePrev();
-        });
-
-
         var lastScrollTop = 0;
-        var profNavigationOffset = $('#profile-navigation').offset().top;
+        var lastScrollStand = 0;
+
+        function headerScroll(that, type)
+        {
+            const header = $('#header');
+            const headerTop = parseFloat(header.css('top'), 10);
+
+            if (type === 'window') 
+            {
+                const windowScrollTop = that.scrollTop();
+                const difference = Math.abs(windowScrollTop - lastScrollTop);
+                
+                if (lastScrollTop > windowScrollTop) {
+                    // Scrolled up
+
+                    if (headerTop + difference > 0) {
+                        // Prevent top > 0
+                        header.css({'top': '0px'});
+                    }  
+                    else {
+                        if (headerTop < 0) {
+                            header.css({'top': `${headerTop + difference}px`});
+                        }
+                    }
+                } else {
+                    // Scroll down
+                    
+                    if (0 - (headerTop - difference) > header.outerHeight()) {
+                        // Prevent top being too low
+                        header.css({'top': `-${header.outerHeight()}px`});
+                    } 
+                    else {
+                        if (headerTop > 0 - header.outerHeight()) {
+                            header.css({'top': `${headerTop - difference}px`});
+                        }
+                    }
+                }
+
+                const offsetTop = $('#my-images-stats').offset().top;
+                const darkenScroll = offsetTop - header.outerHeight();
+
+                if (darkenScroll + 60 > windowScrollTop && windowScrollTop > darkenScroll) {
+                    $('#header').css({
+                        'background-color': `rgba(0 0 0 / ${100 - (darkenScroll + 60 - windowScrollTop) * 100 / 60}%)`
+                    });
+                } else if (windowScrollTop > darkenScroll + 60) {
+                    $('#header').css({
+                        'background-color': 'rgba(0, 0, 0, 1)'
+                    });
+                } else {
+                    $('#header').css({
+                        'background-color': 'rgba(0, 0, 0, 0)'
+                    });
+                }
+                
+                if (that.scrollTop() < 300) {
+                    $('#scroll-shadow').css({'opacity': `${that.scrollTop()/3}%`});
+                }
+
+                lastScrollTop = windowScrollTop;
+            } 
+            else {
+                const standScrollTop = that.scrollTop();
+                const difference = Math.abs(standScrollTop - lastScrollStand);
+                
+                if (lastScrollStand > standScrollTop) {
+                    // Scrolled up
+
+                    if (headerTop + difference > 0) {
+                        // Prevent top > 0
+                        header.css({'top': '0px'});
+                    }  
+                    else {
+                        if (headerTop < 0) {
+                            header.css({'top': `${headerTop + difference}px`});
+                        }
+                    }
+                } else {
+                    // Scroll down
+                    
+                    if (0 - (headerTop - difference) > header.outerHeight()) {
+                        // Prevent top being too low
+                        header.css({'top': `-${header.outerHeight()}px`});
+                    } 
+                    else {
+                        if (headerTop > 0 - header.outerHeight()) {
+                            header.css({'top': `${headerTop - difference}px`});
+                        }
+                    }
+                }
+
+                lastScrollStand = standScrollTop;
+            }
+        }
+
 
         $(window).on('scroll', function() 
         {
-            const header = $('#header');
+            headerScroll($(this), 'window');
+        });
+
+        $('#my-stand-container').on('scroll', function() 
+        {
+            headerScroll($(this), 'stand');
+        });
+
+
+        nLastScrollTop = 0;
+
+        $(window).on('scroll', function() {
+            const profileNavigation = $('#my-images-container');
             const windowScrollTop = $(this).scrollTop();
-            const headerTop = parseFloat(header.css('top'), 10);
+            const header = $('#header');
+
+            if (nLastScrollTop > windowScrollTop) 
+            {
+                nLastScrollTop = windowScrollTop;
+                return;
+            }
+
+            if (Math.round(windowScrollTop) + $(this).height() === $(document).height()) 
+            {
+                console.log(Math.round(windowScrollTop) + $(this).height(), $(document).height())
+                profileNavigation.addClass('fixed');
+
+                if (parseFloat(header.css('top'), 10) === 0 - header.outerHeight()) 
+                {
+                    profileNavigation.css({'top': `0px`});
+                } 
+                else {
+                    profileNavigation.css({'top': `${header.outerHeight() + parseFloat(header.css('top'), 10)}px`});
+                }
+
+                $('body').css({'overflow': 'hidden'});
+                $('#my-images-container').css({'overflow': 'auto'});
+            }
+            nLastScrollTop = windowScrollTop;
+        });
+
+        $('#my-images-container').on('scroll', function()
+        {
             const profileNavigation = $('#profile-navigation');
+            const standScrollTop = $(this).scrollTop();
+            const header = $('#header');
 
-            const difference = Math.abs(windowScrollTop - lastScrollTop);
-            
-            if (lastScrollTop > windowScrollTop) {
-                // Scrolled up
+            if (standScrollTop <= 0) 
+            {
+                profileNavigation.removeClass('fixed');
 
-                if (headerTop + difference > 0) {
-                    // Prevent top > 0
-                    header.css({'top': '0px'});
-                }  
-                else {
-                    if (headerTop < 0) {
-                        header.css({'top': `${headerTop + difference}px`});
-                    }
-                }
+                $('body').css({'overflow': ''})
+                $(this).css({'overflow': 'hidden'});
+
             } else {
-                // Scroll down
-                
-                if (0 - (headerTop - difference) > header.outerHeight()) {
-                    // Prevent top being too low
-                    header.css({'top': `-${header.outerHeight()}px`});
-                } 
-                else {
-                    if (headerTop > 0 - header.outerHeight()) {
-                        header.css({'top': `${headerTop - difference}px`});
-                    }
-                }
-            }
-
-            const offsetTop = $('#my-images-stats').offset().top;
-            const darkenScroll = offsetTop - header.outerHeight();
-
-            if (darkenScroll + 60 > windowScrollTop && windowScrollTop > darkenScroll) {
-                $('#header').css({
-                    'background-color': `rgba(0 0 0 / ${100 - (darkenScroll + 60 - windowScrollTop) * 100 / 60}%)`
-                });
-            } else if (windowScrollTop > darkenScroll + 60) {
-                $('#header').css({
-                    'background-color': 'rgba(0, 0, 0, 1)'
-                });
-            } else {
-                $('#header').css({
-                    'background-color': 'rgba(0, 0, 0, 0)'
-                });
-            }
-            
-            if ($(this).scrollTop() < 300) {
-                $('#scroll-shadow').css({'opacity': `${$(this).scrollTop()/3}%`});
-            }
-
-            if (windowScrollTop > profNavigationOffset) 
-            {
-                if (!(profileNavigation.hasClass('fixed'))) {
-                    profileNavigation.addClass('fixed');
-                }
-
-                if (parseFloat(header.css('top'), 10) === 0 - header.outerHeight()) 
-                {
-                    profileNavigation.css({'top': `0px`});
-                } 
-                else {
-                    profileNavigation.css({'top': `${header.outerHeight() + parseFloat(header.css('top'), 10)}px`});
-                }
-            } else if (profileNavigation.offset().top <= profNavigationOffset) 
-            {
-                if (profileNavigation.hasClass('fixed')) {
-                    profileNavigation.removeClass('fixed');
-                }
-            } else if (profileNavigation.hasClass('fixed')) 
-            {
                 if (parseFloat(header.css('top'), 10) === 0 - header.outerHeight()) 
                 {
                     profileNavigation.css({'top': `0px`});
@@ -924,8 +920,6 @@
                     profileNavigation.css({'top': `${header.outerHeight() + parseFloat(header.css('top'), 10)}px`});
                 }
             }
-
-            lastScrollTop = windowScrollTop;
         });
 
 
