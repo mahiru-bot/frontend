@@ -139,6 +139,25 @@
             border-radius: 50%;
         }
 
+        body .home-page.invisible {
+            display: none;
+        }
+        body .search-page.invisible {
+            display: none;
+        }
+        body .profile-page.invisible {
+            display: none;
+        }
+
+        body .home-page {
+            flex: 1;
+            text-align: center;
+        }
+        body .home-page .padder {
+            width: 100vw;
+            height: calc(3.4em + 10px);
+        }
+
 
         body .profile-page {
             flex: 1;
@@ -577,6 +596,12 @@
                 <img class="avatar-img" src="https://cdn.discordapp.com/avatars/491588676074078218/a_345c77efb0785630e82f168e7f34e1ec.webp?size=1024" alt="Avatar">
             </button>
         </header>
+        <div id="home-page" class="home-page invisible">
+            <div class="padder"></div>
+        </div>
+        <div id="search-page" class="search-page invisible">
+            
+        </div>
         <div id="profile-page" class="profile-page">
             <div id="color-container" class="color-container">
                 <div class="shadow">
@@ -703,6 +728,8 @@
     </body>
     <script type="text/javascript">
 
+        var currentPage = 'profile';
+
         Telegram.WebApp.ready();
         Telegram.WebApp.MainButton.setText('null').hide()
 
@@ -800,6 +827,28 @@
         };
 
 
+        $('#home, #search, #profile').on('click touchstart tap', function() 
+        {
+            const clickedButton = $(this);
+            const clickedID = clickedButton.attr('id');
+
+            if (currentPage === clickedID) {
+                return;
+            }
+
+            clickedButton.addClass('selected');
+            $(`#${currentPage}`).removeClass('selected');
+
+            $(`#${currentPage}-page`).fadeOut(50, () => $(this).addClass('invisible'))
+
+            setTimeout(function() {
+                $(`#${clickedID}-page`).removeClass('invisible').fadeIn(50);
+            }, 50)
+
+            currentPage = clickedID;
+        });
+
+
         $('button.scroll-to-top').on('click touchstart tap', function() {
             $('html').animate({scrollTop: 0}, 500);
         });
@@ -883,7 +932,11 @@
                     }
                 }
             }
+        }
 
+        function colorScroll(that) 
+        {
+            const windowScrollTop = that.scrollTop();
             const offsetTop = $('#my-images-stats').offset().top;
             const darkenScroll = offsetTop - header.outerHeight();
 
@@ -942,9 +995,13 @@
             lastScrollTop = windowScrollTop;
         }
 
-        $(window).on('scroll', function() {
-            headerScroll($(this));
-            profileNavScroll($(this));
+        $(window).on('scroll', function() 
+        {
+            const This = $(this)
+
+            headerScroll(This);
+            colorScroll(This);
+            profileNavScroll(This);
         });
 
 
