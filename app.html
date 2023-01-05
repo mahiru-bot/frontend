@@ -445,7 +445,7 @@
             background-color: black;
             transition: all 0.1s ease-in-out;
         }
-        body .profile-page .my-stand-container .my-images img:hover
+        body .profile-page .my-stand-container .my-images img:hover,
         body .profile-page .my-stand-container .my-liked img:hover
         {
             opacity: 0.7;
@@ -547,13 +547,19 @@
             body .profile-page .p-n-wrapper .profile-navigation .buttons-container button:hover {
             background-color: unset;
         }
-            body .profile-page .my-stand-container .my-images img {
+            body .profile-page .my-stand-container .my-images img,
+            body .profile-page .my-stand-container .my-liked img
+            {
                 transition: all 0.05s ease-in-out;
             }
-            body .profile-page .my-stand-container .my-images img:hover {
+            body .profile-page .my-stand-container .my-images img:hover,
+            body .profile-page .my-stand-container .my-liked img:hover
+            {
                 opacity: inherit;
             }
-            body .profile-page .my-stand-container .my-images img:active {
+            body .profile-page .my-stand-container .my-images img:active,
+            body .profile-page .my-stand-container .my-liked img:active
+            {
                 opacity: 0.5;
             }
             body .footer button:hover {
@@ -776,7 +782,7 @@
             }
         });
 
-
+        
         function getUrlParameter(sParam) {
             var sPageURL = window.location.search.substring(1),
                 sURLVariables = sPageURL.split('&'),
