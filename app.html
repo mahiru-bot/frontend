@@ -6,9 +6,10 @@
         <script>
             window.passiveSupport = {events: ['touchstart']};
         </script>
+        <link href="font-awesome/all.css" rel="stylesheet">
         <script src="scripts/passive-events-support.js"></script>
         <script src="https://telegram.org/js/telegram-web-app.js"></script>
-        <script src="https://kit.fontawesome.com/a1fc251edc.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.js"></script>
@@ -56,6 +57,32 @@
             }
         }
         @keyframes remove-ripple {
+            from {
+                transform: scale(3);
+                opacity: 1;
+            }
+            to {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+
+        span.block-ripple {
+            z-index: 0;
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            pointer-events: none;
+            animation: block-ripple 300ms linear forwards;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        @keyframes block-ripple {
+            to {
+                transform: scale(3);
+                opacity: 1;
+            }
+        }
+        @keyframes remove-block-ripple {
             from {
                 transform: scale(3);
                 opacity: 1;
@@ -157,6 +184,251 @@
             width: 100vw;
             height: calc(3.4em + 10px);
         }
+        body .home-page .post + .post {
+            margin-top: 25px;
+        }
+        body .home-page .post:last-of-type {
+            margin-bottom: calc(1.7em + 45px);
+        }
+        body .home-page .post {
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            position: relative;
+            border-radius: 10px;
+            background-color: #191919;
+        }
+        body .home-page .post .top-container {
+            width: 100%;
+            display: flex;
+            overflow: hidden;
+            position: relative;
+            padding: 12px 12px 6px 12px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        body .home-page .post .top-container .image-container {
+            width: 10vw;
+            height: auto;
+            display: flex;
+            align-items: center;
+            pointer-events: none;
+            justify-content: center;
+        }
+        body .home-page .post .top-container .image-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 50%;
+        }
+        body .home-page .post .top-container .title-container {
+            width: 80vw;
+            height: auto;
+            display: flex;
+            padding-left: 10px;
+            align-items: center;
+            pointer-events: none;
+        }
+        body .home-page .post .top-container .title-container .wrapper .name {
+            width: 100%;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: left;
+        }
+        body .home-page .post .top-container .title-container .wrapper .name p {
+            color: white;
+            font-size: 0.8em;
+            font-weight: bold;
+            line-height: 135%;
+
+            /* color: var(--tg-theme-text-color); */
+        }
+        body .home-page .post .top-container .title-container .wrapper .timestamp {
+            width: 100%;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: left;
+        }
+        body .home-page .post .top-container .title-container .wrapper .timestamp p {
+            color: #7d7d7d;
+            font-size: 0.7em;
+            line-height: 135%;
+
+            /* color: var(--tg-theme-hint-color); */
+        }
+        body .home-page .post .top-container .menu-container {
+            width: 10vw;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        body .home-page .post .top-container .menu-container button {
+            width: 100%;
+            height: 100%;
+            border: none;
+            outline: none;
+            display: flex;
+            cursor: pointer;
+            background: none;
+            overflow: hidden;
+            position: relative;
+            border-radius: 10px;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s ease-in-out;
+        }
+        body .home-page .post .top-container .menu-container button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        body .home-page .post .top-container .menu-container button i {
+            font-size: 1.25em;
+            color: #7d7d7d;
+
+            /* color: var(--tg-theme-hint-color); */
+        }
+        body .home-page .post .caption {
+            width: 100%;
+            height: auto;
+            text-align: left;
+            padding: 6px 12px 12px 12px;
+        }
+        body .home-page .post .caption p {
+            color: white;
+            font-size: 0.8em;
+
+            /* color: var(--tg-theme-text-color); */
+        }
+        body .home-page .post .caption p a {
+            color: #8360dd;
+            text-decoration: none;
+        }
+        body .home-page .post .image-container {
+            width: 100%;
+            height: auto;
+            display: flex;
+        }
+        body .home-page .post .image-container img {
+            width: 100%;
+            height: auto;
+        }
+        body .home-page .post .buttons-container {
+            width: 100%;
+            height: auto;
+            display: flex;
+            padding: 8px;
+            align-items: center;
+            pointer-events: none;
+            justify-content: left;
+        }
+        body .home-page .post .buttons-container button + button {
+            margin-left: 8px;
+        }
+        body .home-page .post .buttons-container button {
+            height: auto;
+            border: none;
+            outline: none;
+            display: flex;
+            cursor: pointer;
+            background: none;
+            padding: 6px 12px;
+            border-radius: 15px;
+            pointer-events: auto;
+            background-color: rgba(125, 125, 125, 0.15);
+            transition: background 0.1s ease-in-out, scale 0.1 ease-in-out;
+        }
+        body .home-page .post .buttons-container button:active {
+            transform: scale(0.95);
+            background-color: rgb(125, 125, 125, 0.25);
+        }
+        body .home-page .post .buttons-container button.like.active:active {
+            background-color: rgba(123, 68, 212, 0.25);
+        }
+        body .home-page .post .buttons-container button i,
+        body .home-page .post .buttons-container button span
+        {
+            font-size: 17.5px;
+            color: #7d7d7d;
+            pointer-events: none;
+        
+            /* color: var(--tg-theme-hint-color); */
+        }
+        body .home-page .post .buttons-container button p {
+            color: #7d7d7d;
+            margin-left: 4px;
+            font-weight: bold;
+            transition: color 0.1s ease-in-out;
+        }
+        body .home-page .post .buttons-container button.like.active {
+            background-color: rgba(123, 68, 212, 0.3);
+        }
+        body .home-page .post .buttons-container button.like .fa {
+            position: relative;
+            z-index: 1;
+        }
+        body .home-page .post .buttons-container button.like .small-ornament {
+            top: 50%;
+            left: 50%;
+            width: 47.25px;
+            height: 47.25px;
+            position: absolute;
+            transform: scale(0);
+            margin-top: -23.63px;
+            margin-left: -23.63px;
+            
+        }
+        body .home-page .post .buttons-container button.like .small-ornament .ornament {
+            top: 50%;
+            left: 50%;
+            opacity: 0.6;
+            width: 5.6px;
+            height: 5.6px;
+            position: absolute;
+            margin-top: -2.8px;
+            margin-left: -2.8px;
+            border-radius: 2.8px;
+            transform-origin: 50% 50% 0px;
+        }
+        body .home-page .post .buttons-container button.like .small-ornament .ornament.o-1 {
+            background: #988ADE;
+            transform: translate(-31.5px, -17.5px);
+        }
+        body .home-page .post .buttons-container button.like .small-ornament .ornament.o-2 {
+            background: #DE8AA0;
+            transform: translate(0px, -35px);
+        }
+        body .home-page .post .buttons-container button.like .small-ornament .ornament.o-3 {
+            background: #8AAEDE;
+            transform: translate(31.5px, -17.5px);
+        }
+        body .home-page .post .buttons-container button.like .small-ornament .ornament.o-4 {
+            background: #8ADEAD;
+            transform: translate(31.5px, 17.5px);
+        }
+        body .home-page .post .buttons-container button.like .small-ornament .ornament.o-5 {
+            background: #DEC58A;
+            transform: translate(0px, 35px);
+        }
+        body .home-page .post .buttons-container button.like .small-ornament .ornament.o-6 {
+            background: #8AD1DE;
+            transform: translate(-31.5px, 17.5px);
+        }
+        body .home-page .post .buttons-container button.like .circle {
+            top: 50%;
+            left: 50%;
+            opacity: 0;
+            width: 47.25px;
+            height: 47.25px;
+            position: absolute;
+            border-radius: 50%;
+            margin-top: -23.63px;
+            margin-left: -23.63px;
+            transform-origin: 50% 50% 0px;
+            transform: translate(0px, 0px) rotate(0deg) scale(0);
+        }
+
+
 
 
         body .profile-page {
@@ -590,7 +862,7 @@
         <header id="header" class="header">
             <p class="logo">Cecilia</p>
             <button id="nav-search-btn" class="search-button ripple-button">
-                <i class="fa-solid fa-magnifying-glass"></i>
+                <i class="fa-regular fa-magnifying-glass"></i>
             </button>
             <button id="nav-profile-btn" class="profile-button ripple-button">
                 <img class="avatar-img" src="https://cdn.discordapp.com/avatars/491588676074078218/a_345c77efb0785630e82f168e7f34e1ec.webp?size=1024" alt="Avatar">
@@ -598,6 +870,116 @@
         </header>
         <div id="home-page" class="home-page invisible">
             <div class="padder"></div>
+            <div class="post ripple-block">
+                <div class="top-container ripple-block">
+                    <div class="image-container">
+                        <img class="author-avatar" src="https://cdn.discordapp.com/avatars/491588676074078218/a_345c77efb0785630e82f168e7f34e1ec.webp?size=1024" alt="Avatar">
+                    </div>
+                    <div class="title-container">
+                        <div class="wrapper">
+                            <div class="name">
+                                <p class="name">Jokel Baf</p>
+                            </div>
+                            <div class="timestamp">
+                                <p class="timestamp">yesterday at 18:36</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="menu-container">
+                        <button class="ripple-button">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="caption">
+                    <p>Cool <a href="tag/anime_girl">#anime_girl</a> art generated with <a href="tag/StableDiffusion">#StableDiffusion</a></p>
+                </div>
+                <div class="image-container">
+                    <img class="post-image" src="https://media.discordapp.net/attachments/922054608208154644/1059210285853986897/result_1.png" alt="Post">
+                </div>
+                <div class="buttons-container">
+                    <button id="post-like" class="like">
+                        <span class="fa-regular fa-heart"></span>
+                        <p class="counter">1.3k</p>
+                        <div class="small-ornament">
+                            <div class="ornament o-1"></div>
+                            <div class="ornament o-2"></div>
+                            <div class="ornament o-3"></div>
+                            <div class="ornament o-4"></div>
+                            <div class="ornament o-5"></div>
+                            <div class="ornament o-6"></div>
+                        </div>
+                        <div class="circle">
+                            <svg style="pointer-events: none;">
+                                <ellipse class="eclipse" rx="17.5" ry="17.5" cx="23.63" cy="23.63" fill-opacity="1" stroke-linecap="" stroke-dashoffset="" fill="transparent" stroke-dasharray="" stroke-opacity="1" stroke-width="0" stroke="#988ADE"></ellipse>
+                            </svg>
+                        </div>
+                    </button>
+                    <button id="post-comment">
+                        <i class="fa-regular fa-comment"></i>
+                        <p class="counter">254</p>
+                    </button>
+                    <button id="post-share">
+                        <i class="fa-regular fa-share"></i>
+                        <p class="counter">16</p>
+                    </button>
+                </div>
+            </div>
+            <div class="post ripple-block">
+                <div class="top-container ripple-block">
+                    <div class="image-container">
+                        <img class="author-avatar" src="https://cdn.discordapp.com/avatars/491588676074078218/a_345c77efb0785630e82f168e7f34e1ec.webp?size=1024" alt="Avatar">
+                    </div>
+                    <div class="title-container">
+                        <div class="wrapper">
+                            <div class="name">
+                                <p class="name">Jokel Baf</p>
+                            </div>
+                            <div class="timestamp">
+                                <p class="timestamp">yesterday at 18:56</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="menu-container">
+                        <button class="ripple-button">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="caption">
+                    <p>One more <a href="tag/anime_girl">#anime_girl</a> art generated with <a href="tag/StableDiffusion">#AnythingV3</a></p>
+                </div>
+                <div class="image-container">
+                    <img class="post-image" src="https://media.discordapp.net/attachments/922054608208154644/1059210285853986897/result_1.png" alt="Post">
+                </div>
+                <div class="buttons-container">
+                    <button id="post-like" class="like">
+                        <span class="fa-regular fa-heart"></span>
+                        <p class="counter">3.5k</p>
+                        <div class="small-ornament">
+                            <div class="ornament o-1"></div>
+                            <div class="ornament o-2"></div>
+                            <div class="ornament o-3"></div>
+                            <div class="ornament o-4"></div>
+                            <div class="ornament o-5"></div>
+                            <div class="ornament o-6"></div>
+                        </div>
+                        <div class="circle">
+                            <svg style="pointer-events: none;">
+                                <ellipse class="eclipse" id="eclipse" rx="17.5" ry="17.5" cx="23.63" cy="23.63" fill-opacity="1" stroke-linecap="" stroke-dashoffset="" fill="transparent" stroke-dasharray="" stroke-opacity="1" stroke-width="0" stroke="#988ADE"></ellipse>
+                            </svg>
+                        </div>
+                    </button>
+                    <button id="post-comment">
+                        <i class="fa-regular fa-comment"></i>
+                        <p class="counter">356</p>
+                    </button>
+                    <button id="post-share">
+                        <i class="fa-regular fa-share"></i>
+                        <p class="counter">43</p>
+                    </button>
+                </div>
+            </div>
         </div>
         <div id="search-page" class="search-page invisible">
             
@@ -1050,5 +1432,173 @@
 
             $(this).append(circle);
         });
+
+
+        $('div.ripple-block').on('mousedown touchstart', function (event) 
+        {
+            if (!(event.target === $(this)[0])) {
+                return;
+            }
+
+            const circle = document.createElement('span');
+            const diameter = Math.max(event.currentTarget.clientWidth, event.currentTarget.clientHeight);
+
+            const curX = event.clientX ?? event.touches[0].clientX;
+            const curY = event.clientY ?? event.touches[0].clientY;
+
+            circle.style.width = circle.style.height = `${diameter}px`;
+            circle.style.left = `${curX - $(this).offset().left - diameter/2}px`;
+            circle.style.top = `${curY - $(this).offset().top - diameter/2 + $(window).scrollTop()}px`;
+
+            circle.classList.add('block-ripple');
+
+            Promise.all([
+                new Promise(rsv => {
+                    Promise.any([
+                        new Promise(rsv => window.addEventListener('blur', rsv, {once: true})),
+                        new Promise(rsv => 'mouseup touchend'.split(' ').forEach(function(e) {
+                            window.addEventListener(e, (ev) => {
+                                if (ev.cancelable) {ev.preventDefault()}; rsv();
+                            }, {once: true})
+                        }))
+                    ]).then(rsv);
+                }),
+                new Promise(rsv => setTimeout(rsv, 200))
+            ])
+            .then(function() 
+            {
+                $(circle).css({'animation': 'remove-block-ripple 150ms linear'});
+                setTimeout(function() {
+                    circle.remove();
+                }, 150)
+            });
+
+            $(this).append(circle);
+        });
+
+
+        function likeAnimation() 
+        {
+            const $this = $(this);
+            const counter = $this.find('p.counter');
+            const heart = $this.find('span.fa-heart');
+
+            if(!$this.hasClass('active')) {
+                $this.addClass('active');
+
+                const top = heart.position().top + heart.outerHeight()/2;
+                const left = heart.position().left + heart.outerWidth()/2;
+
+                const smallOrnament = $this.find('div.small-ornament');
+                const eclipse = $this.find('ellipse.eclipse');
+                const ornament = $this.find('div.ornament');
+                const circle = $this.find('div.circle');
+               
+                smallOrnament.css(
+                    {'top': `${top}px`, 'left': `${left}px`}
+                );
+                circle.css(
+                    {'top': `${top}px`, 'left': `${left}px`}
+                );
+                gsap.set([circle, smallOrnament],{
+                    rotation:0,
+                    scale:0,
+                });
+                gsap.set(ornament,{
+                    opacity:0,
+                    scale:0.5
+                });
+                let Tl = gsap.timeline({});
+
+                Tl.to(heart,0.1,{
+                    scale:0,
+                    ease:'back.none',
+                    onComplete: () => {
+                        heart.removeClass('fa-regular').addClass('fa-solid');
+                    }
+                });
+        
+                Tl.to(circle,0.2,{
+            
+                    scale:0.6,
+                    opacity:1,
+                    ease:'back.none'
+                });
+        
+                Tl.to(heart,0.2,{
+                    delay:0.1,
+                    scale:1.3,
+                    color:'#7b44d4',
+                    ease:'ease.out'
+                });
+                Tl.to(heart,0.2,{
+                    scale:1,
+                    ease:'ease.out'
+                });
+        
+                Tl = gsap.timeline({
+                    delay:0.1
+                });
+        
+        
+                Tl.to(eclipse,0.2,{
+                    strokeWidth:5,
+                    ease:'back.none'
+                });
+                Tl.to(eclipse,0.2,{
+                    strokeWidth:0,
+                    ease:'back.none'
+                });
+                Tl = gsap.timeline({
+                    delay:0.1
+                });
+                Tl.to(smallOrnament,0.3,{
+                    scale:0.4,
+                    opacity:1,
+                    ease:'linear.out'
+                });
+                Tl.to(smallOrnament,0.2,{
+                    scale:0.6,
+                    opacity:1,
+                    rotation:15,
+                    ease:'ease.out'
+                });
+                
+                
+                Tl = gsap.timeline({
+                    delay:0.3
+                });
+                Tl.to(ornament,0.2,{
+                    opacity:1,
+                    ease:'ease.none'
+                });
+                Tl.to(ornament,0.1,{
+                    scale:0,
+                    ease:'ease.out'
+                });
+
+                counter.css({'color': '#7b44d4'});
+            } else {
+                $this.removeClass('active');
+                heart.removeClass('fa-solid').addClass('fa-regular');
+                
+                let Tl = gsap.timeline({});
+
+                Tl.to(heart,0.1,{
+                    delay:0,
+                    scale:0.8,
+                    ease:'ease.out'
+                });
+                Tl.to(heart,0.1,{
+                    scale:1,
+                    ease:'ease.out'
+                });
+                gsap.set(heart,{
+                    color:'#7d7d7d'
+                });
+                counter.css({'color': '#7d7d7d'});
+            }
+        }
+        $('button.like').click(_.throttle(likeAnimation, 500))
     </script>
 </html>
