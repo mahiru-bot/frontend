@@ -1151,13 +1151,11 @@
         function getMaxStandScroll(containerSelector, additionalSelectors = null) 
         {
             var additional = 0;
-
             if (additionalSelectors) {
                 for (const additionalSelector of additionalSelectors){
                     additional += $(additionalSelector).outerHeight();
                 }
             }
-
             const container = $(containerSelector);
 
             const containerOffset = container.offset().top;
@@ -1169,7 +1167,6 @@
             if (windowHeight < containerHeight) {
                 containerAddition = containerHeight - windowHeight;
             }
-
             return Math.round(containerOffset + containerAddition - additional);
         }
 
@@ -1252,6 +1249,14 @@
             setTimeout(function() {
                 $(`#${clickedID}-page`).removeClass('invisible').fadeIn(50);
                 $('html').animate({scrollTop: scrollData[clickedID]}, 0);
+                
+                if (clickedID === 'profile') {
+                    headerScroll($(window));
+                } else {
+                    $('#header').css({
+                        'background-color': 'rgba(0, 0, 0, 1)'
+                    });
+                }
             }, 50)
 
             currentPage = clickedID;
@@ -1400,17 +1405,18 @@
                     profileNavigation.css({'top': `${header.outerHeight() + parseFloat(header.css('top'), 10)}px`});
                 }
             }
-
-            lastScrollTop = windowScrollTop;
         }
 
         $(window).on('scroll', function() 
         {
-            const This = $(this)
+            headerScroll($(this));
 
-            headerScroll(This);
-            colorScroll(This);
-            profileNavScroll(This);
+            if (currentPage === 'profile') {
+                colorScroll($(this));
+                profileNavScroll($(this));
+            }
+
+            lastScrollTop = $(this).scrollTop();
         });
 
 
