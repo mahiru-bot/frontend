@@ -1251,9 +1251,9 @@
                 $('html').animate({scrollTop: scrollData[clickedID]}, 0);
                 
                 if (clickedID === 'profile') {
-                    headerScroll($(window));
+                    colorScroll($(window), $(window).scrollTop());
                 } else {
-                    $('#header').css({
+                    header.css({
                         'background-color': 'rgba(0, 0, 0, 1)'
                     });
                 }
