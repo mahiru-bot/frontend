@@ -197,6 +197,19 @@
             position: relative;
             border-radius: 20px;
             background-color: #191919;
+            animation: postSlideLeft 0.25s linear;
+        }
+        @keyframes postSlideLeft {
+            0% {
+                opacity: 0;
+                transform: scale(0.9) translateY(-25px);
+            }
+            70% {
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1) translateY(0);
+            }
         }
         body .home-page .post .top-container {
             width: 100%;
@@ -495,6 +508,19 @@
             height: 100%;
             width: auto;
             border-radius: 50%;
+            animation: myAvatarAnimation 0.25s linear;
+        }
+        @keyframes myAvatarAnimation {
+            0% {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            70% {
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+            }
         }
         body .profile-page .info-top-container .name-container {
             width: 100%;
@@ -1244,10 +1270,10 @@
             clickedButton.addClass('selected');
             $(`#${currentPage}`).removeClass('selected');
 
-            $(`#${currentPage}-page`).fadeOut(50, () => $(this).addClass('invisible'));
+            $(`#${currentPage}-page`).fadeOut(75, () => $(this).addClass('invisible'));
 
             setTimeout(function() {
-                $(`#${clickedID}-page`).removeClass('invisible').fadeIn(50);
+                $(`#${clickedID}-page`).removeClass('invisible').fadeIn(75);
                 $('html').animate({scrollTop: scrollData[clickedID]}, 0);
                 
                 if (clickedID === 'profile') {
@@ -1257,7 +1283,7 @@
                         'background-color': 'rgba(0, 0, 0, 1)'
                     });
                 }
-            }, 50);
+            }, 75);
 
             currentPage = clickedID;
         });
