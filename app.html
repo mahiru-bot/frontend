@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
+        <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
         <title>Cecilia - API Key configuration</title>
         <script>
             window.passiveSupport = {events: ['touchstart']};
@@ -106,21 +106,24 @@
         body header {
             z-index: 3;
             width: 100%;
-            display: flex;
             position: fixed;
+        }
+        body header .main-header {
+            width: 100%;
+            display: flex;
             align-items: center;
             padding: 10px 10px 10px 15px;
 
             background-color: rgb(0, 0, 0);
             /* background-color: var(--tg-theme-secondary-bg-color); */
         }
-        body header .logo {
+        body header .main-header .logo {
             color: white;
             font-size: 1.8em;
             font-weight: 500;
             font-family: 'Poppins', sans-serif;
         }
-        body header .search-button {
+        body header .main-header .search-button {
             width: 3.4em;
             height: 3.4em;
             border: none;
@@ -136,16 +139,16 @@
             justify-content: center;
             transition: all 0.25s ease-in-out;
         }
-        body header .search-button:hover {
+        body header .main-header .search-button:hover {
             background-color: rgba(255, 255, 255, 0.25);
         }
-        body header .search-button i {
+        body header .main-header .search-button i {
             color: white;
             font-size: 19px;
 
             /* color: var(--tg-theme-text-color); */
         }
-        body header .profile-button {
+        body header .main-header .profile-button {
             width: 3.4em;
             height: 3.4em;
             border: none;
@@ -160,10 +163,10 @@
             justify-content: center;
             transition: all 0.25s ease-in-out;
         }
-        body header .profile-button:hover {
+        body header .main-header .profile-button:hover {
             background-color: rgba(255, 255, 255, 0.25);
         }
-        body header .profile-button .avatar-img {
+        body header .main-header .profile-button .avatar-img {
             width: 28px;
             height: 28px;
             border-radius: 50%;
@@ -313,6 +316,7 @@
         body .home-page .post .caption p {
             display: flex;
             color: white;
+            flex-flow: wrap;
             font-size: 0.9em;
 
             /* color: var(--tg-theme-text-color); */
@@ -906,13 +910,15 @@
     </style>
     <body>
         <header id="header" class="header">
-            <p class="logo">Cecilia</p>
-            <button id="nav-search-btn" class="search-button ripple-button">
-                <i class="fa-regular fa-magnifying-glass"></i>
-            </button>
-            <button id="nav-profile-btn" class="profile-button ripple-button">
-                <img class="avatar-img" src="https://cdn.discordapp.com/avatars/491588676074078218/a_345c77efb0785630e82f168e7f34e1ec.webp?size=1024" alt="Avatar">
-            </button>
+            <div id="main-header" class="main-header">
+                <p class="logo">Cecilia</p>
+                <button id="nav-search-btn" class="search-button ripple-button">
+                    <i class="fa-regular fa-magnifying-glass"></i>
+                </button>
+                <button id="nav-profile-btn" class="profile-button ripple-button">
+                    <img class="avatar-img" src="https://cdn.discordapp.com/avatars/491588676074078218/a_345c77efb0785630e82f168e7f34e1ec.webp?size=1024" alt="Avatar">
+                </button>
+            </div>
         </header>
         <div id="home-page" class="home-page">
             <div class="padder"></div>
@@ -1302,7 +1308,7 @@
                     }
                     colorScroll($(window), scrollData[clickedID]);
                 } else {
-                    header.css({
+                    mainHeader.css({
                         'background-color': 'rgba(0, 0, 0, 1)'
                     });
                 }
@@ -1358,6 +1364,7 @@
 
 
         var header = $('#header');
+        var mainHeader = $('#main-header')
         var profileNavigation = $('#profile-navigation');
 
         var lastScrollTop = 0;
@@ -1406,15 +1413,15 @@
         function colorScroll(that, windowScrollTop) 
         {
             if (darkenScroll + 60 > windowScrollTop && windowScrollTop > darkenScroll) {
-                header.css({
+                mainHeader.css({
                     'background-color': `rgba(0 0 0 / ${100 - (darkenScroll + 60 - windowScrollTop) * 100 / 60}%)`
                 });
             } else if (windowScrollTop > darkenScroll + 60) {
-                header.css({
+                mainHeader.css({
                     'background-color': 'rgba(0, 0, 0, 1)'
                 });
             } else {
-                header.css({
+                mainHeader.css({
                     'background-color': 'rgba(0, 0, 0, 0)'
                 });
             }
