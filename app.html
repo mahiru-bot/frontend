@@ -110,6 +110,9 @@
             position: fixed;
             align-items: center;
             padding: 10px 10px 10px 15px;
+
+            background-color: rgb(0, 0, 0);
+            /* background-color: var(--tg-theme-secondary-bg-color); */
         }
         body header .logo {
             color: white;
@@ -911,7 +914,7 @@
                 <img class="avatar-img" src="https://cdn.discordapp.com/avatars/491588676074078218/a_345c77efb0785630e82f168e7f34e1ec.webp?size=1024" alt="Avatar">
             </button>
         </header>
-        <div id="home-page" class="home-page invisible">
+        <div id="home-page" class="home-page">
             <div class="padder"></div>
             <div class="post ripple-block">
                 <div class="top-container ripple-block">
@@ -1029,7 +1032,7 @@
         <div id="search-page" class="search-page invisible">
             
         </div>
-        <div id="profile-page" class="profile-page">
+        <div id="profile-page" class="profile-page invisible">
             <div id="color-container" class="color-container">
                 <div class="shadow">
                     <div id="scroll-shadow" class="scroll-shadow"></div>
@@ -1041,7 +1044,7 @@
                     <img class="avatar" src="https://cdn.discordapp.com/avatars/491588676074078218/a_345c77efb0785630e82f168e7f34e1ec.webp?size=1024" alt="Avatar">
                 </div>
                 <div class="name-container">
-                    <h5 class="name">Jokel Baf</h5>
+                    <h5 class="name" id="my-name">J</h5>
                 </div>
                 <div class="stats-container">
                     <button id="my-images-stats" class="ripple-button"><h5>34</h5><p>Images</p></button>
@@ -1139,7 +1142,7 @@
             </div>
         </div>
         <div class="footer">
-            <button id="home" class="ripple-button">
+            <button id="home" class="ripple-button selected">
                 <i class="fa-solid fa-house"></i>
                 <p class="text">Home</p>
             </button>
@@ -1147,7 +1150,7 @@
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <p class="text">Search</p>
             </button>
-            <button id="profile" class="ripple-button selected">
+            <button id="profile" class="ripple-button">
                 <i class="fa-solid fa-user"></i>
                 <p class="text">Profile</p>
             </button>
@@ -1155,7 +1158,7 @@
     </body>
     <script type="text/javascript">
 
-        var currentPage = 'profile';
+        var currentPage = 'home';
 
         scrollData = {
             'home': 0,
@@ -1172,6 +1175,18 @@
             mainElement: '#info-top-container',
             onRefresh: function() {}
         });
+
+
+        var nameI= 0;
+        var name = 'okel Baf';
+
+        function nameWriter() {
+            if (nameI < name.length) {
+                document.getElementById('my-name').innerHTML += name.charAt(nameI);
+                nameI++;
+                setTimeout(nameWriter, 100);
+            }
+        }
 
 
         function getMaxStandScroll(containerSelector, additionalSelectors = null) 
@@ -1272,16 +1287,24 @@
 
             $(`#${currentPage}-page`).fadeOut(75, () => $(this).addClass('invisible'));
 
-            setTimeout(function() {
+            setTimeout(function() 
+            {
                 $(`#${clickedID}-page`).removeClass('invisible').fadeIn(75);
                 $('html').animate({scrollTop: scrollData[clickedID]}, 0);
                 
                 if (clickedID === 'profile') {
+                    if (offsetTop === 0) {
+                        updateScrollVars();
+                    }
                     colorScroll($(window), $(window).scrollTop());
                 } else {
                     header.css({
                         'background-color': 'rgba(0, 0, 0, 1)'
                     });
+                }
+
+                if (!(nameI === name.length)) {
+                    setTimeout(nameWriter, 100);
                 }
             }, 75);
 
@@ -1373,6 +1396,11 @@
         var scrollShadow = $('#scroll-shadow');
         var offsetTop = $('#my-images-stats').offset().top;
         var darkenScroll = offsetTop - header.outerHeight();
+
+        function updateScrollVars() {
+            offsetTop = $('#my-images-stats').offset().top;
+            darkenScroll = offsetTop - header.outerHeight();
+        }
 
         function colorScroll(that, windowScrollTop) 
         {
