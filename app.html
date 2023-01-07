@@ -1401,8 +1401,6 @@
             offsetTop = $('#my-images-stats').offset().top;
             darkenScroll = offsetTop - header.outerHeight();
             profNavigationOffset = $('#profile-navigation').offset().top;
-
-            console.log(offsetTop)
         }
 
         function colorScroll(that, windowScrollTop) 
@@ -1458,7 +1456,7 @@
             }
         }
 
-        $(window).on('scroll', function() 
+        window.addEventListener('scroll', function() 
         {
             const thisWindow = $(this);
             const windowScrollTop = thisWindow.scrollTop();
@@ -1470,7 +1468,7 @@
                 profileNavScroll(thisWindow, windowScrollTop);
             }
             lastScrollTop = $(this).scrollTop();
-        });
+        }, {passive: true});
 
 
         $('button.ripple-button, a.ripple-button').on('mousedown touchstart', function (event) 
