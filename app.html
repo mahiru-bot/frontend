@@ -313,10 +313,21 @@
             width: 100%;
             height: auto;
             display: flex;
+            position: relative;
         }
         body .home-page .post .image-container img {
             width: 100%;
             height: auto;
+        }
+        body .home-page .post .image-container i {
+            top: 50%;
+            left: 50%;
+            height: auto;
+            color: white;
+            font-size: 20vw;
+            position: absolute;
+            transform: scale(0);
+            pointer-events: none;
         }
         body .home-page .post .buttons-container {
             width: 100%;
@@ -902,6 +913,7 @@
                 </div>
                 <div class="image-container">
                     <img class="post-image" src="https://media.discordapp.net/attachments/922054608208154644/1059210285853986897/result_1.png" alt="Post">
+                    <i class="fa-solid fa-heart"></i>
                 </div>
                 <div class="buttons-container">
                     <button id="post-like" class="like">
@@ -957,6 +969,7 @@
                 </div>
                 <div class="image-container">
                     <img class="post-image" src="https://media.discordapp.net/attachments/922054608208154644/1059210285853986897/result_1.png" alt="Post">
+                    <i class="fa-solid fa-heart"></i>
                 </div>
                 <div class="buttons-container">
                     <button id="post-like" class="like">
@@ -1485,7 +1498,7 @@
 
         function likeAnimation() 
         {
-            Telegram.WebApp.HapticFeedback.impactOccurred('medium');
+            Telegram.WebApp.HapticFeedback.impactOccurred('rigid');
 
             const $this = $(this);
             const counter = $this.find('p.counter');
@@ -1607,6 +1620,58 @@
                 counter.css({'color': '#7d7d7d'});
             }
         }
-        $('button.like').click(_.throttle(likeAnimation, 500))
+        $('button.like').click(_.throttle(likeAnimation, 500));
+
+        function dbLikeAnimation() {
+            Telegram.WebApp.HapticFeedback.impactOccurred('rigid');
+
+            const $this = $(this);
+            const buttonHeart = $this.parent().parent().find('span.fa-heart');
+
+            if (buttonHeart.parent().hasClass('active')) {
+                let Tl = gsap.timeline({});
+
+                Tl.to(buttonHeart,0.2,{
+                    delay:0,
+                    scale:1.2,
+                    ease:'ease.out'
+                });
+                Tl.to(buttonHeart,0.2,{
+                    scale:1,
+                    ease:'ease.out'
+                });
+            } else {
+                buttonHeart.parent().click();
+            }
+
+            const heart = $this.siblings('i.fa-heart');
+
+            const top = $this.outerHeight()/2 - heart.outerHeight()/2;
+            const left = $this.outerWidth()/2 - heart.outerWidth()/2;
+
+            heart.css({'top': `${top}px`, 'left': `${left}px`});
+
+            let Tl = gsap.timeline({});
+
+            gsap.set(heart,{
+                rotation:0,
+                scale:0,
+            });
+            Tl.to(heart,0.2,{
+                scale:1.2,
+                ease:'ease.out'
+            });
+            Tl.to(heart,0.2,{
+                scale:1,
+                ease:'ease.out'
+            });
+            Tl.to(heart,0.2,{
+                scale:0,
+                delay: 0.35,
+                ease:'ease.out'
+            });
+        }
+
+        $('img.post-image').dblclick(_.throttle(dbLikeAnimation, 500));
     </script>
 </html>
