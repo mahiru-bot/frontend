@@ -1294,17 +1294,16 @@
                 
                 if (clickedID === 'profile') {
                     if (offsetTop === 0) {
-                        updateScrollVars();
+                        setTimeout(updateScrollVars(), 1);
                     }
-                    colorScroll($(window), $(window).scrollTop());
+                    if (!(nameI === name.length)) {
+                        setTimeout(nameWriter, 100);
+                    }
+                    colorScroll($(window), scrollData[clickedID]);
                 } else {
                     header.css({
                         'background-color': 'rgba(0, 0, 0, 1)'
                     });
-                }
-
-                if (!(nameI === name.length)) {
-                    setTimeout(nameWriter, 100);
                 }
             }, 75);
 
@@ -1400,6 +1399,7 @@
         function updateScrollVars() {
             offsetTop = $('#my-images-stats').offset().top;
             darkenScroll = offsetTop - header.outerHeight();
+            profNavigationOffset = $('#profile-navigation').offset().top;
         }
 
         function colorScroll(that, windowScrollTop) 
@@ -1727,7 +1727,6 @@
                 ease:'ease.out'
             });
         }
-
         $('img.post-image').dblclick(_.throttle(dbLikeAnimation, 500));
     </script>
 </html>
