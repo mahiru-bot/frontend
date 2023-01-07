@@ -1161,7 +1161,7 @@
         }
 
 
-        var myProfileSwiper = new Swiper("#my-stand-container", {});
+        var myProfileSwiper = new Swiper('#my-stand-container', {});
 
         myProfileSwiper.on('slideChange', function() 
         {
@@ -1485,6 +1485,8 @@
 
         function likeAnimation() 
         {
+            Telegram.WebApp.HapticFeedback.impactOccurred('soft');
+
             const $this = $(this);
             const counter = $this.find('p.counter');
             const heart = $this.find('span.fa-heart');
