@@ -295,13 +295,18 @@
             padding: 6px 12px 12px 12px;
         }
         body .home-page .post .caption p {
+            display: flex;
             color: white;
             font-size: 0.9em;
 
             /* color: var(--tg-theme-text-color); */
         }
         body .home-page .post .caption p a {
+            display: block;
+            margin: 0 0.25em;
             color: #8360dd;
+            overflow: hidden;
+            position: relative;
             text-decoration: none;
         }
         body .home-page .post .image-container {
@@ -893,7 +898,7 @@
                     </div>
                 </div>
                 <div class="caption">
-                    <p>Cool <a href="tag/anime_girl">#anime_girl</a> art generated with <a href="tag/StableDiffusion">#StableDiffusion</a></p>
+                    <p>Cool <a class="ripple-button" href="tag/anime_girl">#anime_girl</a> art generated with <a class="ripple-button" href="tag/StableDiffusion">#StableDiffusion</a></p>
                 </div>
                 <div class="image-container">
                     <img class="post-image" src="https://media.discordapp.net/attachments/922054608208154644/1059210285853986897/result_1.png" alt="Post">
@@ -948,7 +953,7 @@
                     </div>
                 </div>
                 <div class="caption">
-                    <p>One more <a href="tag/anime_girl">#anime_girl</a> art generated with <a href="tag/StableDiffusion">#AnythingV3</a></p>
+                    <p>One more <a class="ripple-button" href="tag/anime_girl">#anime_girl</a> art generated with <a class="ripple-button" href="tag/StableDiffusion">#AnythingV3</a></p>
                 </div>
                 <div class="image-container">
                     <img class="post-image" src="https://media.discordapp.net/attachments/922054608208154644/1059210285853986897/result_1.png" alt="Post">
@@ -1396,7 +1401,7 @@
         });
 
 
-        $('button.ripple-button').on('mousedown touchstart', function (event) 
+        $('button.ripple-button, a.ripple-button').on('mousedown touchstart', function (event) 
         {
             const circle = document.createElement('span');
             const diameter = Math.max(event.currentTarget.clientWidth, event.currentTarget.clientHeight);
