@@ -1138,9 +1138,9 @@
         }
 
         Telegram.WebApp.ready();
-        Telegram.WebApp.MainButton.setText('null').hide()
+        Telegram.WebApp.MainButton.setText('null').hide();
 
-        const colorThief = new ColorThief();
+        var colorThief = new ColorThief();
 
         PullToRefresh.init({
             mainElement: '#info-top-container',
@@ -1244,7 +1244,7 @@
             clickedButton.addClass('selected');
             $(`#${currentPage}`).removeClass('selected');
 
-            $(`#${currentPage}-page`).fadeOut(50, () => $(this).addClass('invisible'))
+            $(`#${currentPage}-page`).fadeOut(50, () => $(this).addClass('invisible'));
 
             setTimeout(function() {
                 $(`#${clickedID}-page`).removeClass('invisible').fadeIn(50);
@@ -1257,7 +1257,7 @@
                         'background-color': 'rgba(0, 0, 0, 1)'
                     });
                 }
-            }, 50)
+            }, 50);
 
             currentPage = clickedID;
         });
@@ -1314,16 +1314,13 @@
         var lastScrollTop = 0;
         var profNavigationOffset = $('#profile-navigation').offset().top;
 
-        function headerScroll(that) 
+        function headerScroll(that, windowScrollTop) 
         {
-            const windowScrollTop = that.scrollTop();
             const headerTop = parseFloat(header.css('top'), 10);
-
             const difference = Math.abs(windowScrollTop - lastScrollTop);
             
             if (lastScrollTop > windowScrollTop) {
                 // Scrolled up
-
                 if (headerTop + difference > 0) {
                     // Prevent top > 0
                     header.css({'top': '0px'});
@@ -1335,7 +1332,6 @@
                 }
             } else {
                 // Scroll down
-                
                 if (0 - (headerTop - difference) > header.outerHeight()) {
                     // Prevent top being too low
                     header.css({'top': `-${header.outerHeight()}px`});
@@ -1348,35 +1344,33 @@
             }
         }
 
-        function colorScroll(that) 
-        {
-            const windowScrollTop = that.scrollTop();
-            const offsetTop = $('#my-images-stats').offset().top;
-            const darkenScroll = offsetTop - header.outerHeight();
+        var scrollShadow = $('#scroll-shadow');
+        var offsetTop = $('#my-images-stats').offset().top;
+        var darkenScroll = offsetTop - header.outerHeight();
 
+        function colorScroll(that, windowScrollTop) 
+        {
             if (darkenScroll + 60 > windowScrollTop && windowScrollTop > darkenScroll) {
-                $('#header').css({
+                header.css({
                     'background-color': `rgba(0 0 0 / ${100 - (darkenScroll + 60 - windowScrollTop) * 100 / 60}%)`
                 });
             } else if (windowScrollTop > darkenScroll + 60) {
-                $('#header').css({
+                header.css({
                     'background-color': 'rgba(0, 0, 0, 1)'
                 });
             } else {
-                $('#header').css({
+                header.css({
                     'background-color': 'rgba(0, 0, 0, 0)'
                 });
             }
             
             if (that.scrollTop() < 300) {
-                $('#scroll-shadow').css({'opacity': `${that.scrollTop()/3}%`});
+                scrollShadow.css({'opacity': `${that.scrollTop()/3}%`});
             }
         }
 
-        function profileNavScroll(that) 
+        function profileNavScroll(that, windowScrollTop) 
         {
-            const windowScrollTop = that.scrollTop();
-
             if (windowScrollTop > profNavigationOffset) 
             {
                 if (!(profileNavigation.hasClass('fixed'))) {
@@ -1409,13 +1403,15 @@
 
         $(window).on('scroll', function() 
         {
-            headerScroll($(this));
+            const thisWindow = $(this);
+            const windowScrollTop = thisWindow.scrollTop();
+
+            headerScroll(thisWindow, windowScrollTop);
 
             if (currentPage === 'profile') {
-                colorScroll($(this));
-                profileNavScroll($(this));
+                colorScroll(thisWindow, windowScrollTop);
+                profileNavScroll(thisWindow, windowScrollTop);
             }
-
             lastScrollTop = $(this).scrollTop();
         });
 
