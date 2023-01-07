@@ -1281,20 +1281,21 @@
                 return;
             }
             scrollData[currentPage] = $(window).scrollTop();
+            const previousPage = $(`#${currentPage}-page`);
 
             clickedButton.addClass('selected');
             $(`#${currentPage}`).removeClass('selected');
 
-            $(`#${currentPage}-page`).fadeOut(75, () => $(this).addClass('invisible'));
-
-            setTimeout(function() 
+            previousPage.fadeOut(75, function() 
             {
+                previousPage.addClass('invisible');
+
                 $(`#${clickedID}-page`).removeClass('invisible').fadeIn(75);
                 $('html').animate({scrollTop: scrollData[clickedID]}, 0);
                 
                 if (clickedID === 'profile') {
                     if (offsetTop === 0) {
-                        setTimeout(updateScrollVars(), 1);
+                        updateScrollVars();
                     }
                     if (!(nameI === name.length)) {
                         setTimeout(nameWriter, 100);
@@ -1305,7 +1306,7 @@
                         'background-color': 'rgba(0, 0, 0, 1)'
                     });
                 }
-            }, 75);
+            });
 
             currentPage = clickedID;
         });
@@ -1400,6 +1401,8 @@
             offsetTop = $('#my-images-stats').offset().top;
             darkenScroll = offsetTop - header.outerHeight();
             profNavigationOffset = $('#profile-navigation').offset().top;
+
+            console.log(offsetTop)
         }
 
         function colorScroll(that, windowScrollTop) 
