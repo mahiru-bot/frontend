@@ -18,7 +18,7 @@
         <link rel="icon" href="https://github.com/RealSosiso4ka/realsosiso4ka.github.io/blob/master/cecilia-avatar-tab.png?raw=true" type="image/png">
     </head>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
         @import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900&display=swap');
 
         * {
@@ -117,6 +117,12 @@
             background-color: rgb(0, 0, 0);
             /* background-color: var(--tg-theme-secondary-bg-color); */
         }
+        body header.home-page > .main-header {
+            padding: 10px 10px 0 15px;
+        }
+        body header.home-page > .home-header {
+            display: flex;
+        }
         body header .main-header .logo {
             color: white;
             font-size: 1.8em;
@@ -171,6 +177,45 @@
             height: 28px;
             border-radius: 50%;
         }
+        body header .home-header {
+            width: 100%;
+            display: none;
+            align-items: center;
+            padding: 8px 10px 12px 15px;
+
+            background-color: rgb(0, 0, 0);
+            /* background-color: var(--tg-theme-secondary-bg-color); */
+        }
+        body header .home-header button {
+            border: none;
+            outline: none;
+            display: flex;
+            color: white;
+            cursor: pointer;
+            font-size: 1em;
+            background: none;
+            overflow: hidden;
+            position: relative;
+            border-radius: 25px;
+            align-items: center;
+            justify-content: center;
+            padding: 9px 17px 9px 17px;
+            transition: all 0.15s ease-in-out;
+
+            /* color: var(--tg-theme-text-color); */
+        }
+        body header .home-header button + button {
+            margin-left: 7px;
+        }
+        body header .home-header button.selected {
+            background-color: rgba(125, 125, 125, 0.45);
+        }
+        body header .home-header button:hover {
+            background-color: rgba(125, 125, 125, 0.3);
+        }
+        body header .home-header button.selected:hover {
+            background-color: rgba(125, 125, 125, 0.45);
+        }
 
         body .home-page.invisible {
             display: none;
@@ -188,7 +233,7 @@
         }
         body .home-page .padder {
             width: 100vw;
-            height: calc(3.4em + 10px);
+            height: calc(4.3em + 44px);
         }
         body .home-page .post + .post {
             margin-top: 25px;
@@ -257,7 +302,7 @@
         body .home-page .post .top-container .title-container .wrapper .name p {
             color: white;
             font-size: 0.9em;
-            font-weight: 500;
+            font-weight: 400;
             line-height: 115%;
 
             /* color: var(--tg-theme-text-color); */
@@ -536,7 +581,7 @@
         }
         body .profile-page .info-top-container .name-container .name {
             color: white;
-            font-weight: 500;
+            font-weight: 400;
             font-size: 1.05em;
             text-align: center;
             
@@ -566,6 +611,7 @@
         }
         body .profile-page .info-top-container .stats-container button h5 {
             color: white;
+            font-weight: 500;
             font-size: 1.25em;
 
             /* color: var(--tg-theme-text-color); */
@@ -574,7 +620,7 @@
             color: white;
             font-size: 1.1em;
             margin-top: 5px;
-            font-weight: 500;
+            font-weight: 400;
         }
         body .profile-page .info-middle-container {
             width: 100%;
@@ -903,13 +949,19 @@
             {
                 opacity: 0.5;
             }
+            body header .home-header button:hover {
+                background-color: inherit;
+            }
+            body header .home-header button:active {
+                background-color: rgba(125, 125, 125, 0.25);
+            }
             body .footer button:hover {
                 background-color: unset;
             }
         }
     </style>
     <body>
-        <header id="header" class="header">
+        <header id="header" class="header home-page">
             <div id="main-header" class="main-header">
                 <p class="logo">Cecilia</p>
                 <button id="nav-search-btn" class="search-button ripple-button">
@@ -918,6 +970,11 @@
                 <button id="nav-profile-btn" class="profile-button ripple-button">
                     <img class="avatar-img" width="28px" height="28px" src="https://cdn.discordapp.com/avatars/491588676074078218/a_345c77efb0785630e82f168e7f34e1ec.webp?size=1024" alt="Avatar">
                 </button>
+            </div>
+            <div class="home-header" style="display: flex;">
+                <button class="selected">Popular</button>
+                <button>Following</button>
+                <button>Just posted</button>
             </div>
         </header>
         <div id="home-page" class="home-page">
@@ -1291,6 +1348,12 @@
 
             clickedButton.addClass('selected');
             $(`#${currentPage}`).removeClass('selected');
+
+            if (clickedID === 'home') {
+                header.addClass('home-page').find('div.home-header').fadeIn(75);
+            } else {
+                header.find('div.home-header').fadeOut(75, () => header.removeClass('home-page'));
+            }
 
             previousPage.fadeOut(75, function() 
             {
