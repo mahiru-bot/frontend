@@ -1350,7 +1350,8 @@
             $(`#${currentPage}`).removeClass('selected');
 
             if (clickedID === 'home') {
-                header.addClass('home-page').find('div.home-header').fadeIn(75);
+                header.addClass('home-page');
+                setTimeout(() => header.find('div.home-header').fadeIn(75), 75);
             } else {
                 header.find('div.home-header').fadeOut(75, () => header.removeClass('home-page'));
             }
