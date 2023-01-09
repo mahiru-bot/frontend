@@ -233,7 +233,7 @@
         }
         body .home-page .padder {
             width: 100vw;
-            height: calc(4.3em + 44px);
+            height: calc(4.3em + 50px);
         }
         body .home-page .post + .post {
             margin-top: 25px;
@@ -247,6 +247,7 @@
             overflow: hidden;
             position: relative;
             border-radius: 20px;
+            transform: scale(1);
             background-color: #191919;
             animation: postSlideLeft 0.25s linear;
         }
@@ -343,12 +344,10 @@
             justify-content: center;
             transition: background 0.15s ease-in-out;
         }
-        body .home-page .post .top-container .menu-container button:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
         body .home-page .post .top-container .menu-container button i {
-            font-size: 1.25em;
+            font-size: 1.4em;
             color: #7d7d7d;
+            pointer-events: none;
 
             /* color: var(--tg-theme-hint-color); */
         }
@@ -960,6 +959,178 @@
             }
         }
     </style>
+    <style id="default-styles">
+        body .home-page .post .menu {
+            z-index: 2;
+            right: 12px;
+            width: 190px;
+            padding: 10px 0;
+            overflow: hidden;
+            transform: scale(0);
+            position: absolute;
+            border-radius: 8px;
+            top: calc(10vw + 12px);
+            height: calc(116px + 4.8em);
+            transform-origin: center top;
+            background-color: rgb(37, 37, 37);
+        }
+        body .home-page .post .menu.show {
+            transform: scale(1);
+            animation: showPostMenu 0.2s linear;
+        }
+        body .home-page .post .menu.hide {
+            transform: scale(1);
+            animation: showPostMenu 0.2s reverse;
+        }
+        @keyframes showPostMenu {
+            0% {
+                opacity: 0;
+                height: 0;
+            }
+            70% {
+                opacity: 1;
+            }
+            100% {
+                height: calc(116px + 4.8em);
+            }
+        }
+        body .home-page .post .menu button {
+            width: 100%;
+            height: auto;
+            border: none;
+            outline: none;
+            display: flex;
+            cursor: pointer;
+            overflow: hidden;
+            text-align: left;
+            background: none;
+            padding: 12px 16px;
+            position: relative;
+            transition: 0.1s ease-in-out;
+        }
+        body .home-page .post .menu button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        body .home-page .post .menu button p
+        {
+            color: white;
+            font-size: 1.2em;
+
+            /* color: var(--tg-theme-text-color); */
+        }
+        body .home-page .post .menu button i {
+            display: none;
+        }
+
+        body .home-page .post .top-container .menu-container button.active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        body .home-page .post .top-container .menu-container button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        @media (pointer:none), (pointer:coarse) {
+            body .home-page .post .menu button:hover {
+                background: none;
+            }
+        }
+    </style>
+    <style id="ios-styles">
+        body .home-page .post .menu {
+            z-index: 2;
+            right: 12px;
+            width: 210px;
+            height: auto;
+            transform: scale(0);
+            position: absolute;
+            border-radius: 10px;
+            top: calc(10vw + 12px);
+            backdrop-filter: blur(20px);
+            transform-origin: right top;
+            background-color: rgb(58 58 58 / 65%);
+        }
+        body .home-page .post .menu.show {
+            transform: scale(1);
+            animation: showPostMenu 0.2s linear;
+        }
+        body .home-page .post .menu.hide {
+            animation: showPostMenu 0.2s reverse;
+        }
+        @keyframes showPostMenu {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            70% {
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        body .home-page .post .menu button {
+            width: 100%;
+            height: auto;
+            border: none;
+            outline: none;
+            display: flex;
+            cursor: pointer;
+            overflow: hidden;
+            text-align: left;
+            background: none;
+            padding: 13px 17px;
+            position: relative;
+            transition: 0.1s ease-in-out;
+        }
+        body .home-page .post .menu button + button {
+            border-top: solid 1px rgb(255 255 255 / 15%);
+        }
+        body .home-page .post .menu button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        body .home-page .post .menu button p,
+        body .home-page .post .menu button i
+        {
+            color: white;
+            font-size: 1.3em;
+
+            /* color: var(--tg-theme-text-color); */
+        }
+        body .home-page .post .menu button i {
+            margin-left: auto;
+        }
+        body .home-page .post .menu button:first-of-type {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        body .home-page .post .menu button:last-of-type p,
+        body .home-page .post .menu button:last-of-type i
+        {
+            color: rgb(247 84 84);
+        }
+        body .home-page .post .menu button:last-of-type i {
+            font-size: 1.4em;
+        }
+        body .home-page .post .menu button:last-of-type {
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        body .home-page .post .top-container .menu-container button i {
+            transform: rotate(90deg);
+
+            /* color: var(--tg-theme-hint-color); */
+        }
+
+        @media (pointer:none), (pointer:coarse) {
+            body .home-page .post .menu button:hover {
+                background: none;
+            }
+            body .home-page .post .menu button:active {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+        }
+    </style>
     <body>
         <header id="header" class="header home-page">
             <div id="main-header" class="main-header">
@@ -980,6 +1151,12 @@
         <div id="home-page" class="home-page">
             <div class="padder"></div>
             <div class="post ripple-block">
+                <div class="menu">
+                    <button><p>Download image</p><i class="fa-light fa-download"></i></button>
+                    <button><p>Not interesting</p><i class="fa-light fa-ban"></i></button>
+                    <button><p>Ignore author</p><i class="fa-light fa-bell-slash"></i></button>
+                    <button><p>Report</p><i class="fa-light fa-octagon-exclamation"></i></button>
+                </div>
                 <div class="top-container ripple-block">
                     <div class="image-container">
                         <img class="author-avatar" width="100%" height="auto" src="https://cdn.discordapp.com/avatars/491588676074078218/a_345c77efb0785630e82f168e7f34e1ec.webp?size=1024" alt="Avatar">
@@ -995,7 +1172,7 @@
                         </div>
                     </div>
                     <div class="menu-container">
-                        <button class="ripple-button">
+                        <button class="ripple-button post-menu">
                             <i class="fa-solid fa-ellipsis-vertical"></i>
                         </button>
                     </div>
@@ -1036,6 +1213,12 @@
                 </div>
             </div>
             <div class="post ripple-block">
+                <div class="menu">
+                    <button><p>Download image</p><i class="fa-light fa-download"></i></button>
+                    <button><p>Not interesting</p><i class="fa-light fa-ban"></i></button>
+                    <button><p>Ignore author</p><i class="fa-light fa-bell-slash"></i></button>
+                    <button><p>Report</p><i class="fa-light fa-octagon-exclamation"></i></button>
+                </div>
                 <div class="top-container ripple-block">
                     <div class="image-container">
                         <img class="author-avatar" width="100%" height="auto" src="https://cdn.discordapp.com/avatars/491588676074078218/a_345c77efb0785630e82f168e7f34e1ec.webp?size=1024" alt="Avatar">
@@ -1051,7 +1234,7 @@
                         </div>
                     </div>
                     <div class="menu-container">
-                        <button class="ripple-button">
+                        <button class="ripple-button post-menu">
                             <i class="fa-solid fa-ellipsis-vertical"></i>
                         </button>
                     </div>
@@ -1060,7 +1243,7 @@
                     <p>One more <a class="ripple-button" href="tag/anime_girl">#anime_girl</a> art generated with <a class="ripple-button" href="tag/StableDiffusion">#AnythingV3</a></p>
                 </div>
                 <div class="image-container">
-                    <img class="post-image" width="100%" height="auto" src="https://media.discordapp.net/attachments/922054608208154644/1059210285853986897/result_1.png" alt="Post">
+                    <img class="post-image" width="100%" height="auto" src="https://media.discordapp.net/attachments/922054608208154644/1059210248470143037/result_8.png" alt="Post">
                     <i class="fa-solid fa-heart"></i>
                 </div>
                 <div class="buttons-container">
@@ -1250,6 +1433,28 @@
                 setTimeout(nameWriter, 100);
             }
         }
+
+
+        function detectIOS() {
+            return [
+                'iPad Simulator',
+                'iPhone Simulator',
+                'iPod Simulator',
+                'iPad',
+                'iPhone',
+                'iPod'
+            ].includes(navigator.platform)
+            // iPad on iOS 13 detection
+            || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+            }
+
+        $(function () {
+            if (detectIOS()) {
+                $('#default-styles').remove();
+            } else {
+                $('#ios-styles').remove();
+            }
+        });
 
 
         function getMaxStandScroll(containerSelector, additionalSelectors = null) 
@@ -1800,5 +2005,45 @@
             });
         }
         $('img.post-image').dblclick(_.throttle(dbLikeAnimation, 500));
+
+
+        $('button.post-menu').on('click tap touchstart', function() {
+            if ($(this).hasClass('active')) 
+            {
+                $(this).removeClass('active');
+                const postMenu = $(this).parents(':eq(2)').find('div.menu');
+
+                postMenu.removeClass('show');
+                postMenu.css('transform', 'scale(1)');
+
+                setTimeout(() => {postMenu.addClass('hide'); postMenu.css('transform', '')}, 5);
+                setTimeout(() => postMenu.removeClass('hide'), 205);
+            } 
+            else {
+                $(this).addClass('active');
+                const postMenu = $(this).parents(':eq(2)').find('div.menu');
+                postMenu.addClass('show');
+            }
+        });
+
+
+        $('html').on('click tap touchstart', function(event) {
+            $('button.post-menu').each((i, t) => {
+                var t = $(t);
+                if (t.hasClass('active')) {
+                    if (!(event.target === t[0])) {
+                        var tMenu = t.parents(':eq(2)').find('div.menu');
+                        if (!(event.target === tMenu[0] || $(event.target).closest(tMenu).length > 0)) {
+                            t.removeClass('active');
+
+                            tMenu.removeClass('show');
+                            tMenu.css('transform', 'scale(1)');
+                            setTimeout(() => {tMenu.addClass('hide'); tMenu.css('transform', '')}, 5);
+                            setTimeout(() => tMenu.removeClass('hide'), 205);
+                        }
+                    }
+                }
+            })
+        })
     </script>
 </html>
