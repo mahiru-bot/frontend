@@ -1590,7 +1590,7 @@
         });
 
 
-        $('button.scroll-to-top').on('click touchstart tap', function() {
+        $('body').on('click touchstart tap', 'button.scroll-to-top', function() {
             $('html').animate({scrollTop: 0}, 500);
         });
 
@@ -1750,7 +1750,7 @@
         }, {passive: true});
 
 
-        $('button.ripple-button, a.ripple-button').on('mousedown touchstart', function (event) 
+        $('body').on('mousedown touchstart', 'button.ripple-button, a.ripple-button', function (event) 
         {
             const circle = document.createElement('span');
             const diameter = Math.max(event.currentTarget.clientWidth, event.currentTarget.clientHeight);
@@ -1789,7 +1789,7 @@
         });
 
 
-        $('div.ripple-block').on('mousedown touchstart', function (event) 
+        $('body').on('mousedown touchstart', 'div.ripple-block, button.ripple-block', function (event) 
         {
             if (!(event.target === $(this)[0])) {
                 return;
@@ -1956,7 +1956,7 @@
                 counter.css({'color': '#7d7d7d'});
             }
         }
-        $('button.like').click(_.throttle(likeAnimation, 500));
+        $('body').on('click', 'button.like', _.throttle(likeAnimation, 500));
 
         function dbLikeAnimation() {
             Telegram.WebApp.HapticFeedback.impactOccurred('rigid');
@@ -2007,10 +2007,10 @@
                 ease:'ease.out'
             });
         }
-        $('img.post-image').dblclick(_.throttle(dbLikeAnimation, 500));
+        $('body').on('dblclick', 'img.post-image', _.throttle(dbLikeAnimation, 500));
 
 
-        $('button.post-menu').on('click tap touchstart', function() {
+        $('body').on('click tap touchstart', 'button.post-menu', function() {
             if ($(this).hasClass('active')) 
             {
                 $(this).removeClass('active');
