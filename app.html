@@ -970,7 +970,7 @@
             position: absolute;
             border-radius: 8px;
             top: calc(10vw + 12px);
-            height: calc(116px + 4.8em);
+            height: calc(132px + 4.8em);
             transform-origin: center top;
             background-color: rgb(37, 37, 37);
         }
@@ -991,7 +991,7 @@
                 opacity: 1;
             }
             100% {
-                height: calc(116px + 4.8em);
+                height: calc(132px + 4.8em);
             }
         }
         body .home-page .post .menu button {
@@ -1004,7 +1004,7 @@
             overflow: hidden;
             text-align: left;
             background: none;
-            padding: 12px 16px;
+            padding: 14px 17px;
             position: relative;
             transition: 0.1s ease-in-out;
         }
@@ -1031,7 +1031,10 @@
 
         @media (pointer:none), (pointer:coarse) {
             body .home-page .post .menu button:hover {
-                background: none;
+                background-color: rgba(255, 255, 255, 0.1);;
+            }
+            body .home-page .post .menu button:active {
+                background-color: rgba(255, 255, 255, 0.1);
             }
         }
     </style>
