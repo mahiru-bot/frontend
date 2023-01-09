@@ -1015,6 +1015,7 @@
         {
             color: white;
             font-size: 1.2em;
+            pointer-events: none;
 
             /* color: var(--tg-theme-text-color); */
         }
@@ -1096,6 +1097,7 @@
         {
             color: white;
             font-size: 1.3em;
+            pointer-events: none;
 
             /* color: var(--tg-theme-text-color); */
         }
@@ -1155,10 +1157,22 @@
             <div class="padder"></div>
             <div class="post ripple-block">
                 <div class="menu">
-                    <button><p>Download image</p><i class="fa-light fa-download"></i></button>
-                    <button><p>Not interesting</p><i class="fa-light fa-ban"></i></button>
-                    <button><p>Ignore author</p><i class="fa-light fa-bell-slash"></i></button>
-                    <button><p>Report</p><i class="fa-light fa-octagon-exclamation"></i></button>
+                    <button class="default-ripple">
+                        <p>Download image</p>
+                        <i class="fa-light fa-download"></i>
+                    </button>
+                    <button class="default-ripple">
+                        <p>Not interesting</p>
+                        <i class="fa-light fa-ban"></i>
+                    </button>
+                    <button class="default-ripple">
+                        <p>Ignore author</p>
+                        <i class="fa-light fa-bell-slash"></i>
+                    </button>
+                    <button class="default-ripple">
+                        <p>Report</p>
+                        <i class="fa-light fa-octagon-exclamation"></i>
+                    </button>
                 </div>
                 <div class="top-container ripple-block">
                     <div class="image-container">
@@ -1217,10 +1231,22 @@
             </div>
             <div class="post ripple-block">
                 <div class="menu">
-                    <button><p>Download image</p><i class="fa-light fa-download"></i></button>
-                    <button><p>Not interesting</p><i class="fa-light fa-ban"></i></button>
-                    <button><p>Ignore author</p><i class="fa-light fa-bell-slash"></i></button>
-                    <button><p>Report</p><i class="fa-light fa-octagon-exclamation"></i></button>
+                    <button class="default-ripple">
+                        <p>Download image</p>
+                        <i class="fa-light fa-download"></i>
+                    </button>
+                    <button class="default-ripple">
+                        <p>Not interesting</p>
+                        <i class="fa-light fa-ban"></i>
+                    </button>
+                    <button class="default-ripple">
+                        <p>Ignore author</p>
+                        <i class="fa-light fa-bell-slash"></i>
+                    </button>
+                    <button class="default-ripple">
+                        <p>Report</p>
+                        <i class="fa-light fa-octagon-exclamation"></i>
+                    </button>
                 </div>
                 <div class="top-container ripple-block">
                     <div class="image-container">
@@ -1296,7 +1322,7 @@
                     <h5 class="name" id="my-name">J</h5>
                 </div>
                 <div class="stats-container">
-                    <button id="my-images-stats" class="ripple-button"><h5>34</h5><p>Images</p></button>
+                    <button id="my-images-stats" class="ripple-button"><h5>34</h5><p>Posts</p></button>
                     <button id="my-followers-stats" class="ripple-button"><h5>1098</h5><p>Followers</p></button>
                     <button id="my-likes-stats" class="ripple-button"><h5>4532</h5><p>Likes</p></button>
                 </div>
@@ -1415,29 +1441,6 @@
             'profile': 0
         }
 
-        Telegram.WebApp.ready();
-        Telegram.WebApp.MainButton.setText('null').hide();
-
-        var colorThief = new ColorThief();
-
-        PullToRefresh.init({
-            mainElement: '#info-top-container',
-            onRefresh: function() {}
-        });
-
-
-        var nameI= 0;
-        var name = 'okel Baf';
-
-        function nameWriter() {
-            if (nameI < name.length) {
-                document.getElementById('my-name').innerHTML += name.charAt(nameI);
-                nameI++;
-                setTimeout(nameWriter, 100);
-            }
-        }
-
-
         function detectIOS() {
             return [
                 'iPad Simulator',
@@ -1459,6 +1462,29 @@
             }
         });
 
+        var isIOS = detectIOS();
+
+        Telegram.WebApp.ready();
+        Telegram.WebApp.MainButton.setText('null').hide();
+
+        var colorThief = new ColorThief();
+
+        PullToRefresh.init({
+            mainElement: '#info-top-container',
+            onRefresh: function() {}
+        });
+
+
+        var nameI= 0;
+        var name = 'okel Baf';
+
+        function nameWriter() {
+            if (nameI < name.length) {
+                document.getElementById('my-name').innerHTML += name.charAt(nameI);
+                nameI++;
+                setTimeout(nameWriter, 100);
+            }
+        }
 
         function getMaxStandScroll(containerSelector, additionalSelectors = null) 
         {
@@ -1789,7 +1815,12 @@
         });
 
 
-        $('body').on('mousedown touchstart', 'div.ripple-block, button.ripple-block', function (event) 
+        var rBlockElements = 'div.ripple-block'
+        if (!isIOS) {
+            rBlockElements += ', button.default-ripple'
+        }
+
+        $('body').on('mousedown touchstart', rBlockElements, function (event) 
         {
             if (!(event.target === $(this)[0])) {
                 return;
