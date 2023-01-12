@@ -1383,7 +1383,7 @@
         <div id="home-page" class="home-page">
             <div class="padder"></div>
             <section class="home">
-                <section class="recommended-posts">
+                <section id="recommended-section" class="recommended-posts">
                     <div class="top-container">
                         <h1>Recommended for you</h1>
                         <button class="arrangement ripple-element" data-ripple-opacity="0.15" data-ripple-duration="0.3s">
@@ -2318,10 +2318,12 @@
         });
 
 
-        var recData = {
-            'posts': []
+        var sectionsData = {
+            'recommended-section': {
+                'posts': [],
+                'swiper': recommendedSwiper
+            }
         }
-
 
         $('body').on('click tap touchstart', 'button.arrangement', _.throttle(function() 
         {
@@ -2331,29 +2333,37 @@
             const wrapper = postsContainer.children('div.swiper-wrapper');
             const posts = wrapper.children('div.small-post');
 
+            var thisSwiper = sectionsData[container[0].id]['swiper'];
+            var sectionID = container[0].id;
+
             if (thisButton.hasClass('active')) {
                 var oneHeight = 0;
                 posts.each((i, e) => {
                     const post = $(e);
-                    const attrWidth = post.attr('data-width');
-                    const attrHeight = post.attr('data-height');
+                    const attrWidth = sectionsData[sectionID].posts[i].width;
+                    const attrHeight = sectionsData[sectionID].posts[i].height;
+                    const attrLeft = sectionsData[sectionID].posts[i].left;
 
                     post.find('img.author-avatar').animate({'opacity': '1'}, 150);
 
                     post.animate({
-                        'left': `${post.attr('data-left')}px`, 
+                        'left': `${attrLeft}px`, 
                         'top': '0', 
                         'width': `${attrWidth}px`
                     }, 200);
                 
                     const image = post.find('img.image');
-                    if (image.attr('data-width') && !(image.attr('data-width')/image.attr('data-height') === 1))
+                    const imgWidth = sectionsData[sectionID].posts[i].img.width;
+                    const imgHeight = sectionsData[sectionID].posts[i].img.height;
+                    const imgContainerWidth = sectionsData[sectionID].posts[i].img_container.width;
+
+                    if (imgHeight && !(imgWidth/imgHeight === 1))
                     {
                         const imgContainer = image.parent();
                         setTimeout(() => {
                             image.css({'object-fit': '', 'aspect-ratio': ''});
                             imgContainer.animate({
-                                'width': `${imgContainer.attr('data-width')}px`
+                                'width': `${imgContainerWidth}px`
                             }, 100);
                         }, 300);
                     }
@@ -2382,17 +2392,17 @@
                 });
                 wrapper.css({'display': 'flex'}).animate({'height': `${oneHeight}px`}, 200);
 
-                setTimeout(() => {recommendedSwiper.enable(); recommendedSwiper.update()}, 400);
+                setTimeout(() => {thisSwiper.enable(); thisSwiper.update()}, 400);
 
                 thisButton.removeClass('active');
-                thisButton.parents(':eq(1)').removeClass('active');
+                container.removeClass('active');
             } else {
                 const promises = [];
                 postsContainer[0].querySelectorAll('img.image').forEach((img, i) => {
                     if (img.src && img.complete) {
                         return;
                     } else {
-                        recommendedSwiper.lazy.loadInSlide(i);
+                        thisSwiper.lazy.loadInSlide(i);
                         promises.push(new Promise(rsv => img.addEventListener('load', (ev) => {
                             ev.preventDefault(); rsv();
                         }, {'once': true})));
@@ -2407,29 +2417,39 @@
                     }
                     thisButton.addClass('active');
 
-                    recommendedSwiper.setProgress(0, 200);
+                    thisSwiper.setProgress(0, 200);
                     setTimeout(() => {
-                        recommendedSwiper.disable();
+                        thisSwiper.disable();
                         var totalHeight = 0;
                         var oneHeight = 0;
 
                         posts.each((i, e) => {
                             const post = $(e);
                             const outerHeight = post.outerHeight();
-                            post.attr('data-left', post.offset().left - 15);
-                            post.attr('data-width', post.outerWidth());
-                            post.attr('data-height', outerHeight);
+
                             totalHeight += outerHeight - 20;
                             oneHeight = outerHeight;
+
+                            if (sectionsData[sectionID].posts.length === posts.length) {
+                                return;
+                            }
+                            sectionsData[sectionID].posts.push({
+                                'left': post.offset().left - 15,
+                                'width': post.outerWidth(),
+                                'height': outerHeight,
+                                'img_container': {},
+                                'img': {}
+                            })
                         });
                         posts.each((i, e) => {
                             const post = $(e);
-                            const attrWidth = post.attr('data-width');
-                            const attrHeight = post.attr('data-height');
+                            const attrWidth = sectionsData[sectionID].posts[i].width;
+                            const attrHeight = sectionsData[sectionID].posts[i].height;
+                            const attrLeft = sectionsData[sectionID].posts[i].left;
 
                             post.find('img.author-avatar').animate({'opacity': '0'}, 150);
 
-                            post.css({'left': `${post.attr('data-left')}px`, 'top': '0', 'position': 'absolute'});
+                            post.css({'left': `${attrLeft}px`, 'top': '0', 'position': 'absolute'});
                             post.animate({
                                 'left': '0', 
                                 'top': `${i * (post.outerHeight() - 20)}px`, 
@@ -2446,18 +2466,23 @@
                             }
                             
                             const image = post.find('img.image');
-                            if (!(image.outerWidth()/image.outerHeight() === 1))
+                            const imgHeight = image.outerHeight();
+
+                            if (!(imgHeight/image.outerWidth() === 1))
                             {
                                 const imgContainer = image.parent();
-                                imgContainer.attr('data-width', imgContainer.outerWidth());
-
-                                image.attr('data-width', image.outerWidth());
-                                image.attr('data-height', image.outerHeight());
-
+                                if (!sectionsData[sectionID].posts[i].img_container.width) {
+                                    sectionsData[sectionID].posts[i].img_container.width = imgContainer.outerWidth();
+                                }
+                                if (!sectionsData[sectionID].posts[i].img.width) {
+                                    sectionsData[sectionID].posts[i].img.width = image.outerWidth();
+                                }
+                                if (!sectionsData[sectionID].posts[i].img.height) {
+                                    sectionsData[sectionID].posts[i].img.height = imgHeight;
+                                }
                                 imgContainer.animate({
-                                    'width': `${image.outerHeight()}px`
+                                    'width': `${imgHeight}px`
                                 }, 100);
-
                                 setTimeout(() => image.css({'object-fit': 'cover', 'aspect-ratio': '1'}), 300);
                             }
 
@@ -2491,7 +2516,7 @@
                         });
                         wrapper.css({'display': 'block', 'height': `${oneHeight}px`}).animate({'height': `${totalHeight}px`}, 200);
 
-                        thisButton.parents(':eq(1)').addClass('active');
+                        container.addClass('active');
                     }, 200);
                 })
             }
