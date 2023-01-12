@@ -378,6 +378,13 @@
             height: auto;
             margin-top: 6px;
         }
+        body .home-page section.home .recommended-posts .posts .wrapper .small-post .info-container.absolute,
+        body .home-page section.home .recommended-posts .posts .wrapper .small-post .info-container.absolute > .author-avatar-img,
+        body .home-page section.home .recommended-posts .posts .wrapper .small-post .info-container.absolute > .author,
+        body .home-page section.home .recommended-posts .posts .wrapper .small-post .info-container.absolute > .stats
+        {
+            position: absolute;
+        }
         body .home-page section.home .recommended-posts .posts .wrapper .small-post .info-container .author-avatar-img {
             opacity: 0;
             width: 60px;
@@ -2311,31 +2318,38 @@
         });
 
 
+        var recData = {
+            'posts': []
+        }
+
+
         $('body').on('click tap touchstart', 'button.arrangement', _.throttle(function() 
         {
             const thisButton = $(this);
             const container = thisButton.parents(':eq(1)');
             const postsContainer = container.find('div.posts');
-            const wrapper = container.find('div.swiper-wrapper');
+            const wrapper = postsContainer.children('div.swiper-wrapper');
+            const posts = wrapper.children('div.small-post');
 
             if (thisButton.hasClass('active')) {
                 var oneHeight = 0;
-                container.find('div.small-post').each((i, e) => {
-                    const attrWidth = $(e).attr('data-width');
-                    const attrHeight = $(e).attr('data-height');
+                posts.each((i, e) => {
+                    const post = $(e);
+                    const attrWidth = post.attr('data-width');
+                    const attrHeight = post.attr('data-height');
 
-                    $(e).find('img.author-avatar').animate({'opacity': '1'}, 150);
+                    post.find('img.author-avatar').animate({'opacity': '1'}, 150);
 
-                    $(e).animate({
-                        'left': `${$(e).attr('data-left')}px`, 
+                    post.animate({
+                        'left': `${post.attr('data-left')}px`, 
                         'top': '0', 
-                        'width': `${$(e).attr('data-width')}px`
+                        'width': `${attrWidth}px`
                     }, 200);
                 
-                    const image = $(e).find('img.image');
+                    const image = post.find('img.image');
                     if (image.attr('data-width') && !(image.attr('data-width')/image.attr('data-height') === 1))
                     {
-                        const imgContainer = $(e).find('div.img-container');
+                        const imgContainer = image.parent();
                         setTimeout(() => {
                             image.css({'object-fit': '', 'aspect-ratio': ''});
                             imgContainer.animate({
@@ -2344,26 +2358,26 @@
                         }, 300);
                     }
 
-                    const authorText = $(e).find('p.author');
+                    const infoContainer = post.find('div.info-container');
+                    setTimeout(() => {
+                        infoContainer.removeClass('absolute');
+                    }, 400);
+
+                    const authorText = infoContainer.children('p.author');
                     authorText.animate({
                         'top': '0',
                         'left': '0'
-                    }, 200, () => authorText.css({'position': ''}));
+                    }, 200);
 
-                    const postStats = $(e).find('p.stats');
+                    const postStats = infoContainer.children('p.stats');
                     postStats.animate({
                         'top': '0',
                         'left': '0'
-                    }, 200, () => postStats.css({'position': ''}));
+                    }, 200);
 
+                    oneHeight = attrHeight;
                     setTimeout(() => {
-                        const infoContainer = authorText.parent();
-                        infoContainer.css({'position': ''});
-                    }, 400);
-
-                    oneHeight = $(e).attr('data-height');
-                    setTimeout(() => {
-                        $(e).css({'position': '', 'width': '', 'left': '', 'top': ''});
+                        post.css({'position': '', 'width': '', 'left': '', 'top': ''});
                     }, 400);
                 });
                 wrapper.css({'display': 'flex'}).animate({'height': `${oneHeight}px`}, 200);
@@ -2374,13 +2388,14 @@
                 thisButton.parents(':eq(1)').removeClass('active');
             } else {
                 const promises = [];
-                container.find('div.small-post').each((i, e) => {
-                    const img = $(e).find('img.image');
-                    if (img[0].src && img[0].complete) {
+                postsContainer[0].querySelectorAll('img.image').forEach((img, i) => {
+                    if (img.src && img.complete) {
                         return;
                     } else {
                         recommendedSwiper.lazy.loadInSlide(i);
-                        promises.push(new Promise(rsv => img.one('load', (ev) => {ev.preventDefault(); rsv()})));
+                        promises.push(new Promise(rsv => img.addEventListener('load', (ev) => {
+                            ev.preventDefault(); rsv();
+                        }, {'once': true})));
                     }
                 });
                 if (promises.length) {
@@ -2398,30 +2413,42 @@
                         var totalHeight = 0;
                         var oneHeight = 0;
 
-                        container.find('div.small-post').each((i, e) => {
-                            $(e).attr('data-left', $(e).offset().left - 15);
-                            $(e).attr('data-height', $(e).outerHeight());
-                            $(e).attr('data-width', $(e).outerWidth());
-                            totalHeight += $(e).outerHeight() - 20;
-                            oneHeight = $(e).outerHeight();
+                        posts.each((i, e) => {
+                            const post = $(e);
+                            const outerHeight = post.outerHeight();
+                            post.attr('data-left', post.offset().left - 15);
+                            post.attr('data-width', post.outerWidth());
+                            post.attr('data-height', outerHeight);
+                            totalHeight += outerHeight - 20;
+                            oneHeight = outerHeight;
                         });
-                        container.find('div.small-post').each((i, e) => {
-                            const attrWidth = $(e).attr('data-width');
-                            const attrHeight = $(e).attr('data-height');
+                        posts.each((i, e) => {
+                            const post = $(e);
+                            const attrWidth = post.attr('data-width');
+                            const attrHeight = post.attr('data-height');
 
-                            $(e).find('img.author-avatar').animate({'opacity': '0'}, 150);
+                            post.find('img.author-avatar').animate({'opacity': '0'}, 150);
 
-                            $(e).css({'left': `${$(e).attr('data-left')}px`, 'top': '0', 'position': 'absolute'});
-                            $(e).animate({
+                            post.css({'left': `${post.attr('data-left')}px`, 'top': '0', 'position': 'absolute'});
+                            post.animate({
                                 'left': '0', 
-                                'top': `${i * ($(e).outerHeight() - 20)}px`, 
+                                'top': `${i * (post.outerHeight() - 20)}px`, 
                                 'width': `${window.innerWidth - 30}px`
                             }, 200);
+
+                            var containerWidth = window.innerWidth - 30;
+                            if (containerWidth > 550) {
+                                containerWidth = 550;
+                            }
+                            var imageWidth = window.innerWidth * 0.4;
+                            if (imageWidth > 208) {
+                                imageWidth = 208;
+                            }
                             
-                            const image = $(e).find('img.image');
+                            const image = post.find('img.image');
                             if (!(image.outerWidth()/image.outerHeight() === 1))
                             {
-                                const imgContainer = $(e).find('div.img-container');
+                                const imgContainer = image.parent();
                                 imgContainer.attr('data-width', imgContainer.outerWidth());
 
                                 image.attr('data-width', image.outerWidth());
@@ -2434,17 +2461,13 @@
                                 setTimeout(() => image.css({'object-fit': 'cover', 'aspect-ratio': '1'}), 300);
                             }
 
-                            var containerWidth = window.innerWidth - 30;
-                            if (containerWidth > 550) {
-                                containerWidth = 550;
-                            }
-                            var imageWidth = window.innerWidth * 0.4;
-                            if (imageWidth > 208) {
-                                imageWidth = 208;
-                            }
+                            const rightShadow = post.find('div.right-shadow');
+                            rightShadow.css({'left': `${imageWidth}px`});
 
-                            const authorText = $(e).find('p.author');
-                            authorText.css({'position': 'absolute'});
+                            const infoContainer = post.find('div.info-container');
+                            infoContainer.addClass('absolute');
+
+                            const authorText = infoContainer.children('p.author');
                             setTimeout(() => {
                                 authorText.animate({
                                     'top': `-${attrHeight*0.34}px`,
@@ -2452,22 +2475,15 @@
                                 }, 200);
                             }, 1);
 
-                            const rightShadow = $(e).find('div.right-shadow');
-                            rightShadow.css({'left': `${imageWidth}px`})
-
-                            const postStats = $(e).find('p.stats');
-                            postStats.css({'position': 'absolute'});
+                            const postStats = infoContainer.children('p.stats');
                             setTimeout(() => {
                                 postStats.animate({
                                     'top': `-${attrHeight*0.25}px`,
                                     'left': `${imageWidth + (containerWidth - imageWidth)/2 - postStats.innerWidth()/2}px`
                                 }, 200);
                             }, 1);
-                            
-                            const infoContainer = authorText.parent();
-                            infoContainer.css({'position': 'absolute'});
 
-                            const authorImage = $(e).find('img.author-avatar-img');
+                            const authorImage = infoContainer.children('img.author-avatar-img');
                             authorImage.delay(200).animate({
                                 'top': `-${attrHeight*0.68}px`, 
                                 'left': `${imageWidth + (containerWidth - imageWidth)/2 - 30}px`
