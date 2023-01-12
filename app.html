@@ -2467,7 +2467,7 @@
                         post.css({'position': '', 'width': '', 'left': '', 'top': ''});
                     }, 400);
                 });
-                wrapper.css({'display': 'flex'}).animate({'height': `${oneHeight}px`}, 200);
+                wrapper.css({'display': 'flex'}).animate({'height': `${oneHeight}px`}, 400);
 
                 setTimeout(() => {thisSwiper.enable(); thisSwiper.update()}, 400);
 
@@ -2552,7 +2552,6 @@
                                     sectionsData[sectionID].posts[i].img_container.width = imgContainer.outerWidth();
                                 }
                                 if (!sectionsData[sectionID].posts[i].img.width) {
-                                    console.log(image.outerWidth())
                                     sectionsData[sectionID].posts[i].img.width = image.outerWidth();
                                 }
                                 if (!sectionsData[sectionID].posts[i].img.height) {
