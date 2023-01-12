@@ -228,6 +228,74 @@
         body .profile-page.invisible {
             display: none;
         }
+        body .loading-page.invisible {
+            display: none;
+        }
+
+        body .loading-page .display-setter {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            position: relative;
+            align-items: center;
+            justify-content: center;
+        }
+        body .loading-page .display-setter .loader {
+            -webkit-animation: rotate 2s linear infinite;
+                    animation: rotate 2s linear infinite;
+            z-index: 2;
+            position: absolute;
+            top: 46%;
+            left: 50%;
+            margin: -25px 0 0 -25px;
+            width: 50px;
+            height: 50px;
+        }
+        body .loading-page .display-setter .loader .path {
+            stroke: #8360dd;
+            stroke-linecap: round;
+            -webkit-animation: dash 1.5s ease-in-out infinite;
+                    animation: dash 1.5s ease-in-out infinite;
+        }
+        @-webkit-keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        @-webkit-keyframes dash {
+            0% {
+                stroke-dasharray: 1, 150;
+                stroke-dashoffset: 0;
+            }
+            50% {
+                stroke-dasharray: 90, 150;
+                stroke-dashoffset: -35;
+            }
+            100% {
+                stroke-dasharray: 90, 150;
+                stroke-dashoffset: -124;
+            }
+        }
+        @keyframes dash {
+            0% {
+                stroke-dasharray: 1, 150;
+                stroke-dashoffset: 0;
+            }
+            50% {
+                stroke-dasharray: 90, 150;
+                stroke-dashoffset: -35;
+            }
+            100% {
+                stroke-dasharray: 90, 150;
+                stroke-dashoffset: -124;
+            }
+        }
+
 
         body .home-page {
             flex: 1;
@@ -349,7 +417,7 @@
             position: absolute;
             border-radius: 50%;
             border: 1px solid white;
-            transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
+            transition: width 0.2s ease-in-out, height 0.2s ease-in-out, opacity 0.15s ease-in-out;
         }
         body .home-page section.home .recommended-posts .posts .wrapper .small-post:hover > .img-container .author-avatar {
             width: 28px;
@@ -422,6 +490,9 @@
         }
         body .home-page section.home .recommended-posts.active > .posts .wrapper .small-post .img-container .right-shadow {
             opacity: 1;
+        }
+        body .home-page section.home .recommended-posts.active > .posts .wrapper .small-post .img-container .author-avatar {
+            opacity: 0;
         }
         body .home-page section.home .recommended-posts.active .posts .wrapper .small-post:hover > .img-container .image {
             opacity: 1;
@@ -1373,17 +1444,24 @@
                     <img class="avatar-img" width="28px" height="28px" src="https://cdn.discordapp.com/avatars/491588676074078218/a_345c77efb0785630e82f168e7f34e1ec.webp?size=1024" alt="Avatar">
                 </button>
             </div>
-            <div class="home-header" style="display: flex;">
+            <div id="home-header" class="home-header" style="display: none;">
                 <button class="selected">Home</button>
                 <button>Popular</button>
                 <button>Following</button>
                 <button>New</button>
             </div>
         </header>
-        <div id="home-page" class="home-page">
+        <div id="loading-page" class="loading-page">
+            <div class="display-setter">
+                <svg class="loader" viewBox="0 0 50 50">
+                    <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+                </svg>
+            </div>
+        </div>
+        <div id="home-page" class="home-page invisible">
             <div class="padder"></div>
             <section class="home">
-                <section id="recommended-section" class="recommended-posts">
+                <section id="recommended-section" class="recommended-posts --components-preload">
                     <div class="top-container">
                         <h1>Recommended for you</h1>
                         <button class="arrangement ripple-element" data-ripple-opacity="0.15" data-ripple-duration="0.3s">
@@ -1756,14 +1834,6 @@
             || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
             }
 
-        $(function () {
-            if (detectIOS()) {
-                $('#default-styles').remove();
-            } else {
-                $('#ios-styles').remove();
-            }
-        });
-
         var recommendedSwiper = new Swiper('#recommended-swiper', {
             direction: 'horizontal',
             slidesPerView: 'auto',
@@ -1894,6 +1964,10 @@
 
         $('#home, #search, #profile').on('click touchstart tap', function() 
         {
+            if (!$('#loading-page').hasClass('invisible')) {
+                return;
+            }
+
             const clickedButton = $(this);
             const clickedID = clickedButton.attr('id');
 
@@ -1909,12 +1983,12 @@
             if (clickedID === 'home') {
                 header.addClass('home-page');
                 setTimeout(() => header.find('div.home-header').fadeIn(75), 75);
-            } else {
+            } 
+            else if (currentPage === 'home') {
                 header.find('div.home-header').fadeOut(75, () => header.removeClass('home-page'));
             }
 
-            previousPage.fadeOut(75, function() 
-            {
+            previousPage.fadeOut(75, function() {
                 previousPage.addClass('invisible');
 
                 $(`#${clickedID}-page`).removeClass('invisible').fadeIn(75);
@@ -1934,7 +2008,6 @@
                     });
                 }
             });
-
             currentPage = clickedID;
         });
 
@@ -2340,11 +2413,16 @@
                 var oneHeight = 0;
                 posts.each((i, e) => {
                     const post = $(e);
+                    const attrLeft = sectionsData[sectionID].posts[i].left;
                     const attrWidth = sectionsData[sectionID].posts[i].width;
                     const attrHeight = sectionsData[sectionID].posts[i].height;
-                    const attrLeft = sectionsData[sectionID].posts[i].left;
-
-                    post.find('img.author-avatar').animate({'opacity': '1'}, 150);
+                    
+                    const image = sectionsData[sectionID].posts[i].image;
+                    const postStats = sectionsData[sectionID].posts[i].postStats;
+                    const authorText = sectionsData[sectionID].posts[i].authorText;
+                    const rightShadow = sectionsData[sectionID].posts[i].rightShadow;
+                    const imgContainer = sectionsData[sectionID].posts[i].imgContainer;
+                    const infoContainer = sectionsData[sectionID].posts[i].infoContainer;
 
                     post.animate({
                         'left': `${attrLeft}px`, 
@@ -2352,14 +2430,12 @@
                         'width': `${attrWidth}px`
                     }, 200);
                 
-                    const image = post.find('img.image');
                     const imgWidth = sectionsData[sectionID].posts[i].img.width;
                     const imgHeight = sectionsData[sectionID].posts[i].img.height;
                     const imgContainerWidth = sectionsData[sectionID].posts[i].img_container.width;
 
                     if (imgHeight && !(imgWidth/imgHeight === 1))
                     {
-                        const imgContainer = image.parent();
                         setTimeout(() => {
                             image.css({'object-fit': '', 'aspect-ratio': ''});
                             imgContainer.animate({
@@ -2368,22 +2444,23 @@
                         }, 300);
                     }
 
-                    const infoContainer = post.find('div.info-container');
                     setTimeout(() => {
                         infoContainer.removeClass('absolute');
                     }, 400);
 
-                    const authorText = infoContainer.children('p.author');
-                    authorText.animate({
-                        'top': '0',
-                        'left': '0'
-                    }, 200);
+                    setTimeout(() => {
+                        authorText.animate({
+                            'top': '0',
+                            'left': '0'
+                        }, 200);
+                    }, 200)
 
-                    const postStats = infoContainer.children('p.stats');
-                    postStats.animate({
-                        'top': '0',
-                        'left': '0'
-                    }, 200);
+                    setTimeout(() => {
+                        postStats.animate({
+                            'top': '17px',
+                            'left': '0'
+                        }, 200);
+                    }, 200)
 
                     oneHeight = attrHeight;
                     setTimeout(() => {
@@ -2430,24 +2507,26 @@
                             totalHeight += outerHeight - 20;
                             oneHeight = outerHeight;
 
-                            if (sectionsData[sectionID].posts.length === posts.length) {
+                            if (sectionsData[sectionID].posts[i].left) {
                                 return;
                             }
-                            sectionsData[sectionID].posts.push({
-                                'left': post.offset().left - 15,
-                                'width': post.outerWidth(),
-                                'height': outerHeight,
-                                'img_container': {},
-                                'img': {}
-                            })
+                            sectionsData[sectionID].posts[i].left = post.offset().left - 15;
+                            sectionsData[sectionID].posts[i].width = post.outerWidth();
+                            sectionsData[sectionID].posts[i].height = outerHeight;
                         });
                         posts.each((i, e) => {
                             const post = $(e);
+                            const attrLeft = sectionsData[sectionID].posts[i].left;
                             const attrWidth = sectionsData[sectionID].posts[i].width;
                             const attrHeight = sectionsData[sectionID].posts[i].height;
-                            const attrLeft = sectionsData[sectionID].posts[i].left;
 
-                            post.find('img.author-avatar').animate({'opacity': '0'}, 150);
+                            const image = sectionsData[sectionID].posts[i].image;
+                            const postStats = sectionsData[sectionID].posts[i].postStats;
+                            const authorText = sectionsData[sectionID].posts[i].authorText;
+                            const rightShadow = sectionsData[sectionID].posts[i].rightShadow;
+                            const authorImage = sectionsData[sectionID].posts[i].authorImage;
+                            const imgContainer = sectionsData[sectionID].posts[i].imgContainer;
+                            const infoContainer = sectionsData[sectionID].posts[i].infoContainer;
 
                             post.css({'left': `${attrLeft}px`, 'top': '0', 'position': 'absolute'});
                             post.animate({
@@ -2464,10 +2543,8 @@
                             if (imageWidth > 208) {
                                 imageWidth = 208;
                             }
-                            
-                            const image = post.find('img.image');
-                            const imgHeight = image.outerHeight();
 
+                            const imgHeight = image.outerHeight();
                             if (!(imgHeight/image.outerWidth() === 1))
                             {
                                 const imgContainer = image.parent();
@@ -2475,6 +2552,7 @@
                                     sectionsData[sectionID].posts[i].img_container.width = imgContainer.outerWidth();
                                 }
                                 if (!sectionsData[sectionID].posts[i].img.width) {
+                                    console.log(image.outerWidth())
                                     sectionsData[sectionID].posts[i].img.width = image.outerWidth();
                                 }
                                 if (!sectionsData[sectionID].posts[i].img.height) {
@@ -2486,13 +2564,9 @@
                                 setTimeout(() => image.css({'object-fit': 'cover', 'aspect-ratio': '1'}), 300);
                             }
 
-                            const rightShadow = post.find('div.right-shadow');
                             rightShadow.css({'left': `${imageWidth}px`});
-
-                            const infoContainer = post.find('div.info-container');
                             infoContainer.addClass('absolute');
 
-                            const authorText = infoContainer.children('p.author');
                             setTimeout(() => {
                                 authorText.animate({
                                     'top': `-${attrHeight*0.34}px`,
@@ -2500,7 +2574,6 @@
                                 }, 200);
                             }, 1);
 
-                            const postStats = infoContainer.children('p.stats');
                             setTimeout(() => {
                                 postStats.animate({
                                     'top': `-${attrHeight*0.25}px`,
@@ -2508,7 +2581,6 @@
                                 }, 200);
                             }, 1);
 
-                            const authorImage = infoContainer.children('img.author-avatar-img');
                             authorImage.delay(200).animate({
                                 'top': `-${attrHeight*0.68}px`, 
                                 'left': `${imageWidth + (containerWidth - imageWidth)/2 - 30}px`
@@ -2578,6 +2650,51 @@
             });
 
             $(this).append(circle);
+        });
+
+        var varsInited = false;
+        function initVars() {
+            const sectionsToLoad = $('section.--components-preload');
+            sectionsToLoad.each((i, e) => {
+                const posts = $(e).find('div.small-post');
+                posts.each((i, post) => {
+                    const $post = $(post);
+                    sectionsData[e.id].posts.push({
+                        'image': $post.find('img.image'),
+                        'imgContainer': $post.parent('div.img-container'),
+                        'rightShadow': $post.find('div.right-shadow'),
+                        'infoContainer': $post.find('div.info-container'),
+                        'authorText': $post.find('p.author'),
+                        'postStats': $post.find('p.stats'),
+                        'authorImage': $post.find('img.author-avatar-img'),
+                        'img': '',
+                        'img_container': ''
+                    });
+                });
+            });
+            varsInited = true;
+        }
+
+        $(window).on('load', function () {
+            if (detectIOS()) {
+                $('#default-styles').remove();
+            } else {
+                $('#ios-styles').remove();
+            }
+
+            initVars();
+
+            const homePage = $('#home-page');
+            const loaderPage = $('#loading-page');
+            const homeHeader = $('#home-header');
+            
+            setTimeout(() => {
+                loaderPage.fadeOut(75, function() {
+                    loaderPage.addClass('invisible');
+                    homeHeader.css({'display': 'flex'}).fadeIn(75);
+                    homePage.removeClass('invisible').fadeIn(75);
+                });
+            }, 3000);
         });
     </script>
 </html>
