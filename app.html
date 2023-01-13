@@ -2660,14 +2660,14 @@
                     const $post = $(post);
                     sectionsData[e.id].posts.push({
                         'image': $post.find('img.image'),
-                        'imgContainer': $post.parent('div.img-container'),
+                        'imgContainer': $post.find('div.img-container'),
                         'rightShadow': $post.find('div.right-shadow'),
                         'infoContainer': $post.find('div.info-container'),
                         'authorText': $post.find('p.author'),
                         'postStats': $post.find('p.stats'),
                         'authorImage': $post.find('img.author-avatar-img'),
-                        'img': '',
-                        'img_container': ''
+                        'img': {},
+                        'img_container': {}
                     });
                 });
             });
