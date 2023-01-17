@@ -97,6 +97,9 @@
             width: 100%;
             position: fixed;
         }
+        body header.invisible {
+            display: none;
+        }
         body header .main-header {
             width: 100%;
             display: flex;
@@ -1023,6 +1026,72 @@
             margin-left: -23.63px;
             transform-origin: 50% 50% 0px;
             transform: translate(0px, 0px) rotate(0deg) scale(0);
+        }
+
+
+
+        body .search-page .search-container {
+            width: 100%;
+            height: auto;
+            display: flex;
+            padding: 15px 7px;
+            align-items: center;
+            justify-content: space-between;
+            animation: searchSlideIn 0.2s ease-in-out;
+        }
+        @keyframes searchSlideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        body .search-page .search-container.slideOut {
+            animation: searchSlideOut 0.75s ease-in-out;
+        }
+        @keyframes searchSlideOut {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+        }
+        body .search-page .search-container button {
+            width: 40px;
+            height: 40px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            overflow: hidden;
+            background: none;
+            position: relative;
+            border-radius: 50%;
+            transition: background 0.2s ease-in-out;
+        }
+        body .search-page .search-container button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        body .search-page .search-container button i {
+            color: white;
+            font-size: 1.5em;
+        }
+        body .search-page .search-container input {
+            width: 70vw;
+            border: none;
+            outline: none;
+            color: white;
+            background: none;
+            font-size: 1.2em;
+            height: 40px;
+        }
+        body .search-page .search-container input::-webkit-search-cancel-button {
+            -webkit-appearance: none;
         }
 
 
@@ -2023,7 +2092,15 @@
             <div class="bottom-padder"></div>
         </div>
         <div id="search-page" class="search-page invisible">
-            
+            <div id="search-container" class="search-container">
+                <button class="back">
+                    <i class="fa-light fa-arrow-left"></i>
+                </button>
+                <input type="search" placeholder="Search posts and users">
+                <button class="voice-search">
+                    <i class="fa-light fa-microphone"></i>
+                </button>
+            </div>
         </div>
         <div id="profile-page" class="profile-page invisible">
             <div id="color-container" class="color-container">
@@ -2333,7 +2410,6 @@
             if (!$('#loading-page').hasClass('invisible')) {
                 return;
             }
-
             const clickedButton = $(this);
             const clickedID = clickedButton.attr('id');
 
@@ -2352,6 +2428,15 @@
             } 
             else if (currentPage === 'home') {
                 header.find('div.home-header').fadeOut(75, () => header.removeClass('home-page'));
+            }
+
+            if (clickedID === 'search') {
+                $('#search-container').removeClass('slideOut');
+                header.fadeOut(75, () => header.addClass('invisible'));
+            } 
+            else if (currentPage === 'search') {
+                header.removeClass('invisible').fadeIn(150);
+                $('#search-container').addClass('slideOut');
             }
 
             previousPage.fadeOut(75, function() {
@@ -2377,10 +2462,6 @@
                     setTimeout(() => {
                         currentHImg.removeClass('fadeInLeft');
                     }, 600);
-                } else {
-                    mainHeader.css({
-                        'background-color': 'rgba(0, 0, 0, 1)'
-                    });
                 }
             });
             currentPage = clickedID;
