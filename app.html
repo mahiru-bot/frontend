@@ -8,7 +8,6 @@
         </script>
         <link href="font-awesome/all.css" rel="stylesheet">
         <script src="scripts/passive-events-support.js"></script>
-        <script src="https://telegram.org/js/telegram-web-app.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
@@ -90,7 +89,6 @@
             flex-direction: column;
 
             background-color: rgb(0, 0, 0);
-            /* background-color: var(--tg-theme-secondary-bg-color); */
         }
         body header {
             z-index: 3;
@@ -107,7 +105,6 @@
             padding: 10px 10px 10px 15px;
 
             background-color: rgb(0, 0, 0);
-            /* background-color: var(--tg-theme-secondary-bg-color); */
         }
         body header.home-page > .main-header {
             padding: 10px 10px 0 15px;
@@ -144,8 +141,6 @@
             color: white;
             font-size: 19px;
             pointer-events: none;
-
-            /* color: var(--tg-theme-text-color); */
         }
         body header .main-header .profile-button {
             width: 3.4em;
@@ -179,7 +174,6 @@
             padding: 8px 10px 12px 15px;
 
             background-color: rgb(0, 0, 0);
-            /* background-color: var(--tg-theme-secondary-bg-color); */
         }
         body header .home-header button {
             border: none;
@@ -196,8 +190,6 @@
             justify-content: center;
             padding: 9px 17px 9px 17px;
             transition: all 0.15s ease-in-out;
-
-            /* color: var(--tg-theme-text-color); */
         }
         body header .home-header button + button {
             margin-left: 10px;
@@ -222,6 +214,9 @@
             display: none;
         }
         body .loading-page.invisible {
+            display: none;
+        }
+        body .generate-page.invisible {
             display: none;
         }
 
@@ -329,14 +324,10 @@
             margin-top: auto;
             text-align: left;
             margin-left: 15px;
-
-            /* color: var(--tg-theme-text-color); */
         }
         body .home-page section.home .best-images-block .title i {
             color: white;
             font-size: 1em;
-
-            /* color: var(--tg-theme-text-color); */
         }
         body .home-page section.home .best-images-block .parallax-bg {
             top: 0;
@@ -417,16 +408,12 @@
             text-align: left;
             font-weight: 500;
             font-size: 0.9em;
-
-            /* color: var(--tg-theme-text-color); */
         }
         body .home-page section.home .best-images-block .wrapper .best-image .img-info .stats {
             color: #9b9b9b;
             text-align: left;
             font-weight: 400;
             font-size: 0.87em;
-
-            /* color: var(--tg-theme-hint-color); */
         }
         body .home-page section.home .best-images-block .wrapper .best-image .swiper-lazy-preloader {
             top: 44%;
@@ -467,8 +454,6 @@
         body .home-page section.home .users-section .top-container h1 {
             color: white;
             font-size: 1.3em;
-
-            /* color: var(--tg-theme-text-color); */
         }
         body .home-page section.home .users-section .users .wrapper .user {
             width: auto;
@@ -533,16 +518,12 @@
             color: white;
             text-align: center;
             font-size: 0.9em;
-
-            /* color: var(--tg-theme-text-color); */
         }
         body .home-page section.home .users-section .users .wrapper .user .info-container .subscribers {
             color: #7d7d7d;
             text-align: center;
             font-size: 0.85em;
             margin-top: 3px;
-
-            /* color: var(--tg-theme-hint-color); */
         }
 
 
@@ -562,8 +543,6 @@
         body .home-page section.home .posts-section .top-container h1 {
             color: white;
             font-size: 1.3em;
-
-            /* color: var(--tg-theme-text-color); */
         }
         body .home-page section.home .posts-section .top-container button {
             width: 30px;
@@ -585,23 +564,17 @@
             color: #7d7d7d;
             font-size: 1.4em;
             pointer-events: none;
-
-            /* color: var(--tg-theme-hint-color); */
         }
         body .home-page section.home .posts-section .top-container button .loader {
             display: none;
             color: #7d7d7d;
             font-size: 1.4em;
-
-            /* color: var(--tg-theme-hint-color); */
         }
         body .home-page section.home .posts-section .top-container button .loader {
             display: none;
         }
         body .home-page section.home .posts-section .top-container button.active > .icon {
             color: white;
-
-            /* color: var(--tg-theme-text-color); */
         }
         body .home-page section.home .posts-section .top-container button.loading > .icon {
             display: none;
@@ -712,16 +685,12 @@
             color: white;
             text-align: left;
             font-size: 0.9em;
-
-            /* color: var(--tg-theme-text-color); */
         }
         body .home-page section.home .posts-section .posts .wrapper .small-post .info-container .stats {
             color: #7d7d7d;
             text-align: left;
             font-size: 0.85em;
             margin-top: 3px;
-
-            /* color: var(--tg-theme-hint-color); */
         }
 
 
@@ -824,8 +793,6 @@
             font-size: 0.93em;
             font-weight: 400;
             line-height: 125%;
-
-            /* color: var(--tg-theme-text-color); */
         }
         body .home-page .post .top-container .title-container .wrapper .timestamp {
             width: 100%;
@@ -838,8 +805,6 @@
             color: #7d7d7d;
             font-size: 0.83em;
             line-height: 125%;
-
-            /* color: var(--tg-theme-hint-color); */
         }
         body .home-page .post .top-container .menu-container {
             width: 12vw;
@@ -867,8 +832,6 @@
             font-size: 1.4em;
             color: #7d7d7d;
             pointer-events: none;
-
-            /* color: var(--tg-theme-hint-color); */
         }
         body .home-page .post .caption {
             width: 100%;
@@ -881,8 +844,6 @@
             color: white;
             flex-flow: wrap;
             font-size: 0.95em;
-
-            /* color: var(--tg-theme-text-color); */
         }
         body .home-page .post .caption p a {
             display: block;
@@ -951,8 +912,6 @@
             font-size: 17.5px;
             color: #7d7d7d;
             pointer-events: none;
-        
-            /* color: var(--tg-theme-hint-color); */
         }
         body .home-page .post .buttons-container button p {
             color: #7d7d7d;
@@ -1080,6 +1039,7 @@
         body .search-page .search-container button i {
             color: white;
             font-size: 1.5em;
+            pointer-events: none;
         }
         body .search-page .search-container input {
             width: 70vw;
@@ -1126,8 +1086,6 @@
             width: 100%;
             height: 100%;
             background-color: black;
-
-            /* background-color: var(--tg-theme-secondary-bg-color); */
         }
         body .profile-page .info-top-container {
             width: 100%;
@@ -1168,8 +1126,6 @@
             font-weight: 400;
             font-size: 1.05em;
             text-align: center;
-            
-            /* color: var(--tg-theme-text-color); */
         }
         body .profile-page .info-top-container .stats-container {
             width: 100%;
@@ -1198,8 +1154,6 @@
             font-weight: 500;
             font-size: 1.25em;
             pointer-events: none;
-
-            /* color: var(--tg-theme-text-color); */
         }
         body .profile-page .info-top-container .stats-container button p {
             color: white;
@@ -1231,14 +1185,9 @@
             position: relative;
             border-radius: 5px;
             background-color: #3b3b3b;
-
-            /* color: var(--tg-theme-text-color); */
-            /* background-color: var(--tg-theme-bg-color); */
         }
         body .profile-page .info-middle-container button.edit-profile {
             background-color: #8360dd;
-
-            /* background-color: var(--tg-theme-button-color); */
         }
         body .profile-page .info-middle-container button div {
             width: 100%;
@@ -1274,7 +1223,6 @@
             justify-content: space-around;
 
             background-color: black;
-            /* background-color: var(--tg-theme-secondary-bg-color); */
         }
         body .profile-page .p-n-wrapper .profile-navigation.fixed {
             padding-top: 0;
@@ -1300,8 +1248,6 @@
             position: relative;
             border-radius: 5px;
             transition: all 0.3s ease-in-out, background 0.2s ease-in-out;
-
-            /* color: var(--tg-theme-hint-color); */
         }
         body .profile-page .p-n-wrapper .profile-navigation .buttons-container button:last-of-type {
             margin-left: 0;
@@ -1310,7 +1256,6 @@
             width: 30vw;
         }
         body .profile-page .p-n-wrapper .profile-navigation .buttons-container button.user-container {
-            /* transition: all 1s ease-in-out, background 0.2s ease-in-out; */
             justify-content: space-around;
             height: calc(1.5em + 21px);
             align-items: center;
@@ -1340,8 +1285,6 @@
             color: white;
             font-size: 1em;
             margin: 4px 10px 0 5px;
-
-            /* color: var(--tg-theme-text-color); */
         }
         body .profile-page .p-n-wrapper .profile-navigation .buttons-container button:hover {
             background-color: rgba(255, 255, 255, 0.2);
@@ -1352,8 +1295,6 @@
             border-top-right-radius: 5px;
             border-bottom-left-radius: 0;
             border-bottom-right-radius: 0;
-
-            /* color: var(--tg-theme-text-color); */
         }
         body .profile-page .p-n-wrapper .profile-navigation.fixed > .buttons-container button {
             border-radius: 0;
@@ -1376,8 +1317,6 @@
             border-radius: 2px;
             background-color: white;
             transition: all 0.3s ease-in-out;
-
-            /* background-color: var(--tg-theme-text-color); */
         }
         body .profile-page .p-n-wrapper .profile-navigation.fixed .indicator-container .indicator {
             width: 30%;
@@ -1447,7 +1386,6 @@
             justify-content: space-between;
 
             background-color: #191919;
-            /* background-color: var(--tg-theme-bg-color); */
         }
         body .footer button {
             border: none;
@@ -1473,26 +1411,18 @@
             color: #7d7d7d;
             font-size: 1.3em;
             pointer-events: none;
-
-            /* color: var(--tg-theme-hint-color); */
         }
         body .footer button.selected i {
             color: white;
-
-            /* color: var(--tg-theme-text-color); */
         }
         body .footer button .text {
             color: #7d7d7d;
             margin-top: 5px;
             font-size: 0.8em;
             pointer-events: none;
-
-            /* color: var(--tg-theme-hint-color); */
         }
         body .footer button.selected .text {
             color: white;
-
-            /* color: var(--tg-theme-text-color); */
         }
 
         body .ptr--ptr {
@@ -1543,6 +1473,12 @@
             body header .home-header button:active {
                 background-color: rgba(125, 125, 125, 0.25);
             }
+            body .home-page section.home .users-section .users .wrapper .user:hover > .avatar-container .avatar {
+                opacity: inherit;
+            }
+            body .home-page section.home .users-section .users .wrapper .user:active > .avatar-container .avatar {
+                opacity: 0.7;
+            }
             body .home-page section.home .posts-section .top-container button:hover {
                 background-color: inherit;
             }
@@ -1561,6 +1497,9 @@
             body .home-page section.home .posts-section .posts .wrapper .small-post:hover > .img-container .author-avatar {
                 width: 25px;
                 height: 25px;
+            }
+            body .search-page .search-container button:hover {
+                background-color: inherit;
             }
             body .footer button:hover {
                 background-color: unset;
@@ -1624,8 +1563,6 @@
             color: white;
             font-size: 1.2em;
             pointer-events: none;
-
-            /* color: var(--tg-theme-text-color); */
         }
         body .home-page .post .menu button i {
             display: none;
@@ -1706,8 +1643,6 @@
             color: white;
             font-size: 1.3em;
             pointer-events: none;
-
-            /* color: var(--tg-theme-text-color); */
         }
         body .home-page .post .menu button i {
             margin-left: auto;
@@ -1731,8 +1666,6 @@
 
         body .home-page .post .top-container .menu-container button i {
             transform: rotate(90deg);
-
-            /* color: var(--tg-theme-hint-color); */
         }
 
         @media (pointer:none), (pointer:coarse) {
@@ -1748,7 +1681,7 @@
         <header id="header" class="header home-page">
             <div id="main-header" class="main-header">
                 <p class="logo">Cecilia</p>
-                <button id="nav-search-btn" class="search-button ripple-element" data-ripple-opacity="0.3" data-ripple-duration="0.3s">
+                <button id="search" class="search-button ripple-element" data-ripple-opacity="0.3" data-ripple-duration="0.3s">
                     <i class="fa-regular fa-magnifying-glass"></i>
                 </button>
                 <button id="nav-profile-btn" class="profile-button ripple-element" data-ripple-opacity="0.3" data-ripple-duration="0.3s">
@@ -1768,7 +1701,7 @@
                 </svg>
             </div>
         </div>
-        <div id="home-page" class="home-page invisible">
+        <div id="home-page" class="home-page body-page invisible">
             <section class="home">
                 <div id="best-images-swiper" class="best-images-block swiper">
                     <div class="parallax-bg" data-swiper-parallax="-20%" style="background-image: url('https://github.com/JokelBaf/jokelbaf.github.io/blob/master/background.jpg?raw=true');">
@@ -2091,18 +2024,19 @@
             </section>
             <div class="bottom-padder"></div>
         </div>
-        <div id="search-page" class="search-page invisible">
+        <div id="search-page" class="search-page body-page invisible">
             <div id="search-container" class="search-container">
-                <button class="back">
+                <button id="search-back" class="back ripple-element" data-ripple-opacity="0.15" data-ripple-duration="0.2s">
                     <i class="fa-light fa-arrow-left"></i>
                 </button>
-                <input type="search" placeholder="Search posts and users">
-                <button class="voice-search">
+                <input id="search-input" type="search" placeholder="Search posts and users">
+                <button class="voice-search ripple-element" data-ripple-opacity="0.15" data-ripple-duration="0.2s">
                     <i class="fa-light fa-microphone"></i>
                 </button>
             </div>
         </div>
-        <div id="profile-page" class="profile-page invisible">
+        <div id="generate-page" class="generate-page body-page invisible"></div>
+        <div id="profile-page" class="profile-page body-page invisible">
             <div id="color-container" class="color-container">
                 <div class="shadow">
                     <div id="scroll-shadow" class="scroll-shadow"></div>
@@ -2216,9 +2150,9 @@
                 <i class="fa-solid fa-house"></i>
                 <p class="text">Home</p>
             </button>
-            <button id="search" class="ripple-element" data-ripple-opacity="0.3" data-ripple-duration="0.3s">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <p class="text">Search</p>
+            <button id="generate" class="ripple-element" data-ripple-opacity="0.3" data-ripple-duration="0.3s">
+                <i class="fa-solid fa-bolt"></i>
+                <p class="text">Generate</p>
             </button>
             <button id="profile" class="ripple-element" data-ripple-opacity="0.3" data-ripple-duration="0.3s">
                 <i class="fa-solid fa-user"></i>
@@ -2227,14 +2161,15 @@
         </div>
     </body>
     <script type="text/javascript">
-
         var currentPage = 'home';
+        var previousPage = 'home';
         var currentSection = 'home';
 
         scrollData = {
             'home': 0,
             'search': 0,
-            'profile': 0
+            'profile': 0,
+            'generate': 0
         }
 
         function detectIOS() {
@@ -2248,7 +2183,8 @@
             ].includes(navigator.platform)
             // iPad on iOS 13 detection
             || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
-            }
+        }
+        var isIOS = detectIOS();
 
         var bestImagesSwiper = new Swiper('#best-images-swiper', {
             direction: 'horizontal',
@@ -2298,18 +2234,10 @@
             swiper.update();
         }), 1000);
 
-        var isIOS = detectIOS();
-
-        Telegram.WebApp.ready();
-        Telegram.WebApp.MainButton.setText('null').hide();
-
-        var colorThief = new ColorThief();
-
         PullToRefresh.init({
             mainElement: '#info-top-container',
             onRefresh: function() {}
         });
-
 
         var nameI= 0;
         var name = 'okel Baf';
@@ -2343,7 +2271,6 @@
             }
             return Math.round(containerOffset + containerAddition - additional);
         }
-
 
         var myProfileSwiper = new Swiper('#my-stand-container', {});
 
@@ -2387,25 +2314,113 @@
             }
         });
 
-        
-        function getUrlParameter(sParam) {
-            var sPageURL = window.location.search.substring(1),
-                sURLVariables = sPageURL.split('&'),
-                sParameterName,
-                i;
+        function startSearchRecognision() {
+            const input = search.querySelector("input");
+            const label = search.querySelector("label");
+            const search = document.querySelector(".search");
+            const btnSearch = search.querySelector("#search");
+            const btnListen = search.querySelector("#dictate");
 
-            for (i = 0; i < sURLVariables.length; i++) {
-                sParameterName = sURLVariables[i].split('=');
+            let listening = false;
+            var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
 
-                if (sParameterName[0] === sParam) {
-                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
-                }
+            // if there's speech recognition, show the microphone
+            if (SpeechRecognition) {
+                setTimeout(function () {
+                    btnListen.classList.add("show");
+                    label.querySelector("span").classList.add("show");
+                }, 1000);
             }
-            return '';
-        };
 
+            // show/hide placeholder
+            input.addEventListener("input", function () {
+                if (this.value.length === 0) {
+                    label.classList.remove("a11y-hidden");
+                } else {
+                    label.classList.add("a11y-hidden");
+                }
+            });
 
-        $('#home, #search, #profile').on('click touchstart tap', function() 
+            // listen to speech
+            btnListen.addEventListener("click", function () {
+                if (!listening) {
+                    const recognition = new SpeechRecognition();
+
+                    recognition.onstart = function () {
+                        btnListen.classList.add("active");
+                        listening = true;
+                    };
+
+                    recognition.onspeechend = function () {
+                        recognition.stop();
+                        btnListen.classList.remove("active");
+                        listening = false;
+                    };
+
+                    recognition.onerror = function () {
+                        btnListen.classList.remove("active");
+                        listening = false;
+                    };
+
+                    recognition.onresult = function (event) {
+                        const transcript = event.results[0][0].transcript;
+                        const confidence = event.results[0][0].confidence;
+
+                        input.value = transcript;
+                        input.focus();
+                        if (transcript.length > 0) {
+                            label.classList.add("a11y-hidden");
+                        }
+                    };
+
+                    recognition.start();
+                }
+            });
+        }
+
+        $('#search-back').on('click touchstart tap', function() {
+            const searchPage = $('#search-page');
+
+            if (previousPage === 'home') {
+                header.addClass('home-page');
+                setTimeout(() => header.find('div.home-header').fadeIn(75), 75);
+            }
+
+            header.removeClass('invisible').fadeIn(150);
+            $('#search-container').addClass('slideOut');
+
+            searchPage.fadeOut(75, function() {
+                $('body > div.body-page').addClass('invisible');
+                $(`#${currentPage}-page`).removeClass('invisible').fadeIn(75);
+                $('html').animate({scrollTop: scrollData[currentPage]}, 0);
+                
+                if (currentPage === 'profile') {
+                    if (offsetTop === 0) {
+                        updateScrollVars();
+                    }
+                    if (!(nameI === name.length)) {
+                        setTimeout(nameWriter, 100);
+                    }
+                    colorScroll($(window), scrollData[searchPage]);
+                } 
+                else if (currentPage === 'home') {
+                    if (currentSection === 'home') 
+                    {
+                        const currentHImg = $('div.best-image.swiper-slide-active > div.img');
+                        currentHImg.addClass('fadeInLeft');
+
+                        setTimeout(() => {
+                            currentHImg.removeClass('fadeInLeft');
+                        }, 600);
+                    }
+                    homeColorScroll($(window), scrollData[previousPage]);
+                }
+            });
+            currentPage = previousPage;
+            previousPage = 'search';
+        });
+
+        $('#home, #generate, #profile, #search').on('click touchstart tap', function() 
         {
             if (!$('#loading-page').hasClass('invisible')) {
                 return;
@@ -2417,10 +2432,12 @@
                 return;
             }
             scrollData[currentPage] = $(window).scrollTop();
-            const previousPage = $(`#${currentPage}-page`);
+            const prevPage = $(`#${currentPage}-page`);
 
-            clickedButton.addClass('selected');
-            $(`#${currentPage}`).removeClass('selected');
+            if (!(clickedID === 'search')) {
+                clickedButton.siblings().add(clickedButton).removeClass('selected');
+                clickedButton.addClass('selected');
+            }
 
             if (clickedID === 'home') {
                 header.addClass('home-page');
@@ -2432,16 +2449,17 @@
 
             if (clickedID === 'search') {
                 $('#search-container').removeClass('slideOut');
-                header.fadeOut(75, () => header.addClass('invisible'));
-            } 
+                setTimeout(() => {
+                    header.fadeOut(0, () => header.addClass('invisible'));
+                }, 75);
+            }
             else if (currentPage === 'search') {
                 header.removeClass('invisible').fadeIn(150);
                 $('#search-container').addClass('slideOut');
             }
 
-            previousPage.fadeOut(75, function() {
-                previousPage.addClass('invisible');
-
+            prevPage.fadeOut(75, function() {
+                $('body > div.body-page').addClass('invisible');
                 $(`#${clickedID}-page`).removeClass('invisible').fadeIn(75);
                 $('html').animate({scrollTop: scrollData[clickedID]}, 0);
                 
@@ -2462,16 +2480,17 @@
                     setTimeout(() => {
                         currentHImg.removeClass('fadeInLeft');
                     }, 600);
+                } else if (clickedID === 'search') {
+                    $('#search-input').focus();
                 }
             });
+            previousPage = currentPage;
             currentPage = clickedID;
         });
-
 
         $('body').on('click touchstart tap', 'button.scroll-to-top', function() {
             $('html').animate({scrollTop: 0}, 500);
         });
-
 
         $('#my-liked').on('click touchstart tap', function() 
         {
@@ -2492,7 +2511,6 @@
             myProfileSwiper.slideNext();
         });
 
-
         $('#my-images').on('click touchstart tap', function() 
         {
             $('#my-liked').removeClass('selected');
@@ -2511,7 +2529,6 @@
             }
             myProfileSwiper.slidePrev();
         });
-
 
         var header = $('#header');
         var mainHeader = $('#main-header')
@@ -2667,8 +2684,6 @@
 
         function likeAnimation() 
         {
-            Telegram.WebApp.HapticFeedback.impactOccurred('rigid');
-
             const $this = $(this);
             const counter = $this.find('p.counter');
             const heart = $this.find('span.fa-heart');
@@ -2791,10 +2806,7 @@
         }
         $('body').on('click', 'button.like', _.throttle(likeAnimation, 500));
 
-
         function dbLikeAnimation() {
-            Telegram.WebApp.HapticFeedback.impactOccurred('rigid');
-
             const $this = $(this);
             const buttonHeart = $this.parent().parent().find('span.fa-heart');
 
@@ -2843,7 +2855,6 @@
         }
         $('body').on('dblclick', 'img.post-image', _.throttle(dbLikeAnimation, 500));
 
-
         $('body').on('click tap touchstart', 'button.post-menu', function() {
             if ($(this).hasClass('active')) 
             {
@@ -2863,7 +2874,6 @@
             }
         });
 
-
         $('html').on('click tap touchstart', function(event) {
             $('button.post-menu').each((i, t) => {
                 var t = $(t);
@@ -2882,7 +2892,6 @@
                 }
             })
         });
-
 
         var sectionsData = {
             'recommended-section': {
@@ -2947,7 +2956,6 @@
                     }, 400);
                 });
                 wrapper.css({'display': 'flex'}).animate({'height': `${oneHeight}px`}, 400);
-
                 setTimeout(() => {thisSwiper.enable(); thisSwiper.update()}, 400);
 
                 thisButton.removeClass('active');
@@ -3056,18 +3064,16 @@
                             }, 200);
                         });
                         wrapper.css({'display': 'block', 'height': `${oneHeight}px`}).animate({'height': `${totalHeight}px`}, 200);
-
                         container.addClass('active');
                     }, 200);
                 })
             }
-        }, 410));
+        }, 400));
 
 
         $('img.swiper-lazy').on('load', function() {
             recommendedSwiper.update();
         });
-
 
         var rippleSelector = `div.ripple-element, img.ripple-element, button.ripple-element, a.ripple-element`
         if (!isIOS) {
