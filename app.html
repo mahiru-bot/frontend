@@ -2199,14 +2199,10 @@
             freeMode: true,
             frameRate: 100,
             lazy: true,
-            animationTime: 1200,
             touchpadSupport: true,
             watchSlidesProgress: true,
             updateOnImagesReady: true
         });
-        recommendedSwiper.on('sliderMove', _.throttle((swiper) => {
-            swiper.update();
-        }), 1000);
 
         var recommendedUsersSwiper = new Swiper('#recommended-users-swiper', {
             direction: 'horizontal',
@@ -2219,9 +2215,6 @@
             watchSlidesProgress: true,
             updateOnImagesReady: true
         });
-        recommendedUsersSwiper.on('sliderMove', _.throttle((swiper) => {
-            swiper.update();
-        }), 1000);
 
         PullToRefresh.init({
             mainElement: '#info-top-container',
@@ -2399,7 +2392,7 @@
             setTimeout(() => homeColorScroll($window, sectionsScrollData[currentSection]), 75);
         });
 
-        $('#search-back').on('click touchstart tap', function() {
+        $('#search-back').on('click touchend tap', function() {
             const searchPage = $('#search-page');
 
             if (previousPage === 'home') {
@@ -2441,7 +2434,7 @@
             previousPage = 'search';
         });
 
-        $('#home, #generate, #profile, #search').on('click touchstart tap', function() 
+        $('#home, #generate, #profile, #search').on('click touchend tap', function() 
         {
             if (!$('#loading-page').hasClass('invisible')) {
                 return;
@@ -2509,11 +2502,11 @@
             currentPage = clickedID;
         });
 
-        $('body').on('click touchstart tap', 'button.scroll-to-top', function() {
+        $('body').on('click touchend tap', 'button.scroll-to-top', function() {
             $('html').animate({scrollTop: 0}, 500);
         });
 
-        $('#my-liked').on('click touchstart tap', function() 
+        $('#my-liked').on('click touchend tap', function() 
         {
             $('#my-images').removeClass('selected');
             $(this).addClass('selected');
@@ -2532,7 +2525,7 @@
             myProfileSwiper.slideNext();
         });
 
-        $('#my-images').on('click touchstart tap', function() 
+        $('#my-images').on('click touchend tap', function() 
         {
             $('#my-liked').removeClass('selected');
             $(this).addClass('selected');
@@ -2709,8 +2702,12 @@
         }, {passive: true});
 
 
-        function likeAnimation() 
+        function likeAnimation(event = null) 
         {
+            if (event) {
+                event.preventDefault();
+            }
+
             const $this = $(this);
             const counter = $this.find('p.counter');
             const heart = $this.find('span.fa-heart');
@@ -2831,7 +2828,7 @@
                 counter.css({'color': '#7d7d7d'});
             }
         }
-        $('body').on('click', 'button.like', _.throttle(likeAnimation, 500));
+        $('body').on('click tap touchend', 'button.like', _.throttle(likeAnimation, 500));
 
         function dbLikeAnimation() {
             const $this = $(this);
@@ -2882,7 +2879,7 @@
         }
         $('body').on('dblclick', 'img.post-image', _.throttle(dbLikeAnimation, 500));
 
-        $('body').on('click tap touchstart', 'button.post-menu', function() {
+        $('body').on('click tap touchend', 'button.post-menu', function() {
             if ($(this).hasClass('active')) 
             {
                 $(this).removeClass('active');
@@ -2927,7 +2924,7 @@
             }
         }
 
-        $('body').on('click tap touchstart', 'button.arrangement', _.throttle(function() 
+        $('body').on('click tap touchend', 'button.arrangement', _.throttle(function() 
         {
             const thisButton = $(this);
             const container = thisButton.parents(':eq(1)');
@@ -3195,6 +3192,15 @@
                     loaderPage.addClass('invisible');
                     homeHeader.css({'display': 'flex'}).fadeIn(75);
                     homePage.removeClass('invisible').fadeIn(75);
+
+                    $('div.swiper-wrapper').each((i, wrapper) => {
+                        const $wrapper = $(wrapper);
+                        if ($wrapper.parents(':eq(1)').hasClass('--components-preload')) {
+                            $wrapper.css(
+                                {'height': `${$wrapper.children().first().outerHeight()}px`
+                            })
+                        }
+                    });
 
                     updateHomeScrollVars();
                     homeColorScroll($(window), $(window).scrollTop());
