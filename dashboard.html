@@ -78,9 +78,9 @@
         }
 
         body header {
+            z-index: 5;
             height: 60px;
             width: 100vw;
-            height: auto;
             display: flex;
             position: fixed;
             align-items: center;
@@ -88,18 +88,27 @@
             backdrop-filter: blur(30px);
             background-color: rgb(31 31 31 / 90%);
         }
-        body header.invisible {
-            top: -60px;
+        body header .title {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: calc(100% - 120px);
         }
-        body header p {
+        body header .title p {
             color: #dcdcdc;
-            font-size: 1.5em;
+            font-size: 1.25em;
         }
 
         body .page {
             width: 100vw;
             height: auto;
         }
+        body .page .top-padder {
+            width: 100vw;
+            height: 60px;
+        }
+
         body .page .fast-actions {
             gap: 20px;
             width: 100vw;
@@ -112,6 +121,7 @@
         body .page .fast-actions .section {
             display: flex;
             padding: 20px;
+            cursor: pointer;
             overflow: hidden;
             position: relative;
             border-radius: 10px;
@@ -128,11 +138,13 @@
             font-size: 1.7em;
             margin-bottom: 15px;
             pointer-events: none;
+            --fa-secondary-opacity: 0.3;
             --fa-primary-color: #f5cdba;
             --fa-secondary-color: #f5cdba;
-            --fa-secondary-opacity: 0.3;
         }
-        body .page .fast-actions .section i.fa-terminal {
+        body .page .fast-actions .section i.fa-terminal,
+        body .page .fast-actions .section i.fa-user
+        {
             --fa-secondary-opacity: 0.7;
         }
         body .page .fast-actions .section h5 {
@@ -149,14 +161,18 @@
             pointer-events: none;
             color: rgb(155, 155, 155);
         }
+
+        body .page .divider {
+            width: 100vw;
+            height: 14px;
+        }
+
         body .page .b-title-container {
             width: 100%;
             display: flex;
             padding: 15px 20px;
             align-items: center;
             background-color: #181818;
-            border-top-left-radius: 15px;
-            border-top-right-radius: 15px;
         }
         body .page .b-title-container p {
             font-size: 1.1em;
@@ -172,14 +188,15 @@
             background: none;
             overflow: hidden;
             position: relative;
-            padding: 20px 20px;
+            padding: 18px 20px;
             align-items: center;
             background-color: #181818;
         }
         body .page button i {
-            font-size: 1.25em;
+            font-size: 1.4em;
             pointer-events: none;
             color: rgb(155, 155, 155);
+            --fa-secondary-opacity: 0.7;
         }
         body .page button p {
             color: white;
@@ -187,26 +204,32 @@
             margin-left: 20px;
             pointer-events: none;
         }
-        body .page .b-footer {
-            width: 100%;
-            height: 30px;
-            margin-top: 3px;
-            background-color: #181818;
-            border-bottom-left-radius: 15px;
-            border-bottom-right-radius: 15px;
+        body .page button i.fa-up-right-from-square {
+            font-size: 1.2em;
+            margin-left: auto;
+            pointer-events: none;
+            color: rgb(78 78 78);
+            --fa-secondary-opacity: 0.7;
         }
+
         body .page h6 {
             font-weight: 400;
             font-size: 0.9em;
-            margin: 20px 10px 20px 10px;
+            margin: 20px 10px 30px 10px;
             color: rgb(155, 155, 155);
         }
     </style>
     <body>
-        <header class="invisible">
-            <p>Settings</p>
+        <header>
+            <div class="title">
+                <p>Dashboard</p>
+            </div>
         </header>
+
         <div class="page sections-page">
+
+            <div class="top-padder"></div>
+
             <div class="fast-actions">
                 <div class="section ripple-element" data-ripple-opacity="0.07" data-ripple-duration="0.3s">
                     <i class="fa-duotone fa-comment fa-swap-opacity"></i>
@@ -224,16 +247,31 @@
                     <p>Click to configure</p>
                 </div>
                 <div class="section ripple-element" data-ripple-opacity="0.07" data-ripple-duration="0.3s">
-                    <i class="fa-duotone fa-triangle-exclamation fa-swap-opacity"></i>
-                    <h5>NSFW Content</h5>
-                    <p>Click to configure</p>
+                    <i class="fa-duotone fa-user"></i>
+                    <h5>Your Profile</h5>
+                    <p>Click to browse</p>
                 </div>
             </div>
+
             <div class="b-title-container">
                 <p>Sections</p>
             </div>
             <button class="ripple-element" data-ripple-opacity="0.05" data-ripple-duration="0.3s">
-                <i class="fa-solid fa-terminal"></i>
+                <i class="fa-duotone fa-list fa-swap-opacity"></i>
+                <p>Anime lists</p>
+            </button>
+            <button class="ripple-element" data-ripple-opacity="0.05" data-ripple-duration="0.3s">
+                <i class="fa-duotone fa-list fa-swap-opacity"></i>
+                <p>Manga lists</p>
+            </button>
+
+            <div class="divider"></div>
+
+            <div class="b-title-container">
+                <p>Settings</p>
+            </div>
+            <button class="ripple-element" data-ripple-opacity="0.05" data-ripple-duration="0.3s">
+                <i class="fa-duotone fa-terminal"></i>
                 <p>Commands</p>
             </button>
             <button class="ripple-element" data-ripple-opacity="0.05" data-ripple-duration="0.3s">
@@ -246,36 +284,79 @@
             </button>
             <button class="ripple-element" data-ripple-opacity="0.05" data-ripple-duration="0.3s">
                 <i class="fa-solid fa-brackets-curly"></i>
-                <p>For developers</p>
+                <p>For Developers</p>
             </button>
-            <div class="b-footer"></div>
+
+            <div class="divider"></div>
+
+            <div class="b-title-container">
+                <p>Information</p>
+            </div>
+            <button class="ripple-element" data-ripple-opacity="0.05" data-ripple-duration="0.3s">
+                <i class="fa-duotone fa-book"></i>
+                <p>Documentation</p>
+
+                <i class="fa-solid fa-up-right-from-square"></i>
+            </button>
+            <button class="ripple-element" data-ripple-opacity="0.05" data-ripple-duration="0.3s">
+                <i class="fa-brands fa-telegram"></i>
+                <p>Official Channel</p>
+
+                <i class="fa-solid fa-up-right-from-square"></i>
+            </button>
+            <button class="ripple-element" data-ripple-opacity="0.05" data-ripple-duration="0.3s">
+                <i class="fa-duotone fa-bullhorn"></i>
+                <p>Anime News</p>
+
+                <i class="fa-solid fa-up-right-from-square"></i>
+            </button>
+            <button class="ripple-element" data-ripple-opacity="0.05" data-ripple-duration="0.3s">
+                <i class="fa-duotone fa-newspaper fa-swap-opacity"></i>
+                <p>Anime Releases</p>
+
+                <i class="fa-solid fa-up-right-from-square"></i>
+            </button>
+
             <h6>MahiruShiinaBot • v1.0.0, last updated 03.03.2023</h6>
         </div>
     </body>
     <script type="text/javascript">
+
         var rippleEvent = ('ontouchstart' in document.documentElement) ? 'touchstart' : 'mousedown';
         var rippleEventEnd = ('ontouchstart' in document.documentElement) ? 'touchend' : 'mouseup';
 
-        $('body').on(rippleEvent, 'div.ripple-element, img.ripple-element, button.ripple-element, a.ripple-element', function(event) 
-        {
-            if (!(event.target === $(this)[0])) {
-                return;
-            }
+        $('body').on(
+            rippleEvent, 
+            `
+                div.ripple-element, 
+                img.ripple-element, 
+                button.ripple-element, 
+                a.ripple-element
+            `,
+        (event) => {
+            const $this = $(event.currentTarget);
 
-            const opacity = $(this).attr('data-ripple-opacity');
-            const duration = $(this).attr('data-ripple-duration');
+            const opacity = $this.attr('data-ripple-opacity');
+            const duration = $this.attr('data-ripple-duration');
 
             const circle = document.createElement('span');
-            const diameter = Math.max(event.currentTarget.clientWidth, event.currentTarget.clientHeight);
+            const diameter = Math.max(
+                event.currentTarget.clientWidth, 
+                event.currentTarget.clientHeight
+            );
 
             const curX = event.clientX ?? event.touches[0].clientX;
             const curY = event.clientY ?? event.touches[0].clientY;
 
             circle.style.width = circle.style.height = `${diameter}px`;
-            circle.style.left = `${curX - $(this).offset().left - diameter/2}px`;
-            circle.style.top = `${curY - $(this).offset().top - diameter/2 + $(window).scrollTop()}px`;
+            circle.style.left = `${curX - $this.offset().left - diameter/2}px`;
+            circle.style.top = `${curY - $this.offset().top - diameter/2 + $(window).scrollTop()}px`;
 
-            $(circle).css({'animation': `ripple ${duration} linear forwards`, 'background-color': `rgba(255, 255, 255, ${opacity})`})
+            $(circle).css({
+                'animation': 
+                    `ripple ${duration} linear forwards`, 
+                    'background-color': `rgba(255, 255, 255, ${opacity})`
+            });
 
             circle.classList.add('ripple');
 
@@ -296,7 +377,51 @@
                 }, 150)
             });
 
-            $(this).append(circle);
+            $this.append(circle);
         });
+
+
+        var lastScrollTop = 0;
+        var header = $('header');
+
+        function headerScroll(that, windowScrollTop) 
+        {
+            const headerTop = parseFloat(header.css('top'), 10);
+            const difference = Math.abs(windowScrollTop - lastScrollTop);
+            
+            if (lastScrollTop > windowScrollTop) {
+                // Scrolled up
+                if (headerTop + difference > 0) {
+                    // Prevent top > 0
+                    header.css({'top': '0px'});
+                }  
+                else {
+                    if (headerTop < 0) {
+                        header.css({'top': `${headerTop + difference}px`});
+                    }
+                }
+            } else {
+                // Scroll down
+                if (0 - (headerTop - difference) > header.outerHeight()) {
+                    // Prevent top being too low
+                    header.css({'top': `-${header.outerHeight()}px`});
+                } 
+                else {
+                    if (headerTop > 0 - header.outerHeight()) {
+                        header.css({'top': `${headerTop - difference}px`});
+                    }
+                }
+            }
+        }
+
+        $(window).on('scroll', () => {
+            const thisWindow = $(this);
+            const windowScrollTop = thisWindow.scrollTop();
+
+            headerScroll(thisWindow, windowScrollTop);
+
+            lastScrollTop = $(this).scrollTop();
+        });
+
     </script>
 </html>
